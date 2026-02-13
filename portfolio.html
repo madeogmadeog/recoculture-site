@@ -145,44 +145,134 @@
   font-weight: 700;
 }
 
-/* Summary stats */
-.portfolio-stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-  padding: 0 48px;
-  margin-top: -40px;
-  position: relative;
-  z-index: 1;
-}
-.portfolio-stat {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 32px 24px;
+/* ===== LIVE COUNTER ===== */
+.live-counter {
+  padding: 80px 48px;
   text-align: center;
-  box-shadow: var(--card-shadow);
+  background: var(--bg-primary);
+  position: relative;
+  overflow: hidden;
 }
-.portfolio-stat__num {
+.live-counter::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 900px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(237,108,0,0.06) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.live-counter__label {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  position: relative;
+}
+.live-counter__label span {
+  color: var(--orange);
+  font-weight: 700;
+}
+.live-counter__number {
   font-family: var(--font-en);
-  font-size: 36px;
+  font-size: clamp(48px, 8vw, 96px);
   font-weight: 900;
+  color: var(--text-primary);
+  letter-spacing: 2px;
+  line-height: 1;
+  margin-bottom: 12px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  min-height: 1.2em;
+}
+.live-counter__digit {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  height: 1.15em;
+  width: 0.62em;
+}
+.live-counter__digit-inner {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.live-counter__digit-inner span {
+  height: 1.15em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.live-counter__comma {
+  width: 0.3em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-300);
+  font-size: 0.6em;
+}
+.live-counter__pulse {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  margin-right: 8px;
+  animation: pulse 2s ease-in-out infinite;
+  vertical-align: middle;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+.live-counter__sub {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  position: relative;
+}
+.live-counter__sub strong {
+  color: var(--orange);
+  font-weight: 700;
+}
+
+/* Sub stats row */
+.live-counter__stats {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  margin-top: 36px;
+  position: relative;
+}
+.live-counter__stat {
+  text-align: center;
+}
+.live-counter__stat-num {
+  font-family: var(--font-en);
+  font-size: 28px;
+  font-weight: 800;
   color: var(--orange);
 }
-.portfolio-stat__label {
-  font-size: 14px;
-  color: var(--text-secondary);
-  margin-top: 4px;
+.live-counter__stat-label {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
 }
 
 @media (max-width: 1024px) {
   .channel-section { padding: 80px 32px; }
-  .portfolio-stats { padding: 0 32px; grid-template-columns: repeat(2, 1fr); }
+  .live-counter { padding: 60px 32px; }
 }
 @media (max-width: 768px) {
   .channel-section { padding: 60px 24px; }
   .videos-grid { grid-template-columns: 1fr; }
-  .portfolio-stats { padding: 0 24px; grid-template-columns: 1fr 1fr; margin-top: -24px; }
+  .live-counter { padding: 48px 24px; }
+  .live-counter__stats { gap: 24px; flex-wrap: wrap; }
+  .live-counter__stat-num { font-size: 22px; }
   .channel-name { font-size: 22px; }
   .channel-avatar { width: 56px; height: 56px; }
 }
@@ -222,129 +312,233 @@
   </div>
 </section>
 
-<!-- STATS (YouTube Data API 실시간 연동) -->
-<div class="portfolio-stats">
-  <div class="portfolio-stat">
-    <div class="portfolio-stat__num" id="stat-total-views">—</div>
-    <div class="portfolio-stat__label">누적 조회수</div>
+<!-- LIVE VIEW COUNTER -->
+<section class="live-counter" id="live-counter">
+  <p class="live-counter__label"><span class="live-counter__pulse"></span>레코컬쳐에서 만든 영상의 <span>누적 조회수</span></p>
+  <div class="live-counter__number" id="counter-display"></div>
+  <p class="live-counter__sub">10개 채널 · <strong id="counter-subs">—</strong> 구독자 · <strong id="counter-videos">—</strong>편 제작</p>
+  <div class="live-counter__stats">
+    <div class="live-counter__stat">
+      <div class="live-counter__stat-num">10</div>
+      <div class="live-counter__stat-label">운영 채널</div>
+    </div>
+    <div class="live-counter__stat">
+      <div class="live-counter__stat-num">3년+</div>
+      <div class="live-counter__stat-label">전문직 특화</div>
+    </div>
+    <div class="live-counter__stat">
+      <div class="live-counter__stat-num">24/7</div>
+      <div class="live-counter__stat-label">실시간 집계</div>
+    </div>
   </div>
-  <div class="portfolio-stat">
-    <div class="portfolio-stat__num" id="stat-total-subs">—</div>
-    <div class="portfolio-stat__label">총 구독자</div>
-  </div>
-  <div class="portfolio-stat">
-    <div class="portfolio-stat__num" id="stat-total-videos">—</div>
-    <div class="portfolio-stat__label">제작 영상</div>
-  </div>
-  <div class="portfolio-stat">
-    <div class="portfolio-stat__num">3년+</div>
-    <div class="portfolio-stat__label">전문직 특화</div>
-  </div>
-</div>
+</section>
 
 <script>
 // ============================================================
-// YouTube Data API v3 - 실시간 채널 통계
+// LIVE TICKER COUNTER — YouTube Data API v3
+// 1시간마다 실제 조회수 fetch → 사이 구간은 보간으로 카운트업
 // ============================================================
-// 사용법:
-// 1. https://console.cloud.google.com 에서 프로젝트 생성
-// 2. YouTube Data API v3 활성화
-// 3. API 키 생성 (HTTP 리퍼러 제한: recoculture.com/*)
-// 4. 아래 YOUTUBE_API_KEY에 키 입력
-// 5. CHANNEL_IDS에 운영 채널 ID 모두 추가
-// ============================================================
+const CONFIG = {
+  API_KEY: 'AIzaSyDegAUyaLZzxZOmqPZ7Cknr6BLQVo_Z1Zk',
+  CHANNEL_IDS: [
+    'UCa4XAtZ_04zXUAh28HFbJQw',  // 이바다이야기
+    'UCa16_cbdgo7BDjHbJvJowGw',  // 친절한 송이씨
+    'UCdRgh9GCeMs8Bo86QMSuiuA',  // 권의시선 : 치과의사 권낙현
+    'UCvQCmSsCRb8z3q0SO5JW8Pw',  // 하원장 강동현
+    'UCQs5sRayqKqrdxTaV38OVRA',  // 태오네모세모
+    'UCj_RY4FlDqfafum6Gy5nUiA',  // 진로사이다 (Dr. Rosa Talk)
+    'UCDy8IPYmRu6WbDUyAs1ffyg',  // 바른의사 백승우
+    'UC9yDBiSGrXpooefuaXO6BaA',  // Prepatina 차랑꾼
+    'UC2kME1ttakYQVNxBQJJo6Sw',  // 우선이선우
+    'UCwDwL7htetGbWwypB1sYK5A',  // 이태호 수의사
+  ],
+  FETCH_INTERVAL: 60 * 60 * 1000,  // 1시간
+  TICK_INTERVAL: 80,                // 80ms마다 UI 업데이트
+  FALLBACK_VIEWS: 56923406,         // API 실패 시 폴백
+  FALLBACK_SUBS: 309480,
+  FALLBACK_VIDEOS: 1124,
+  FALLBACK_VPS: 0.45,               // 초당 예상 조회수 증가
+};
 
-const YOUTUBE_API_KEY = 'AIzaSyDegAUyaLZzxZOmqPZ7Cknr6BLQVo_Z1Zk';
-
-const CHANNEL_IDS = [
-  'UCa4XAtZ_04zXUAh28HFbJQw',  // 이바다이야기
-  'UCa16_cbdgo7BDjHbJvJowGw',  // 친절한 송이씨 (다태나의원)
-  'UCdRgh9GCeMs8Bo86QMSuiuA',  // 권의시선 : 치과의사 권낙현
-  'UCvQCmSsCRb8z3q0SO5JW8Pw',  // 하원장 강동현
-  // 채널 추가: 'CHANNEL_ID', // 채널명
-];
-
-// 숫자 애니메이션
-function animateNumber(el, target, suffix = '') {
-  const duration = 1500;
-  const start = performance.now();
-  const initial = 0;
-  
-  function update(now) {
-    const elapsed = now - start;
-    const progress = Math.min(elapsed / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
-    const current = Math.floor(initial + (target - initial) * eased);
-    el.textContent = formatNumber(current) + suffix;
-    if (progress < 1) requestAnimationFrame(update);
-  }
-  requestAnimationFrame(update);
-}
-
-// 숫자 포맷 (만 단위)
-function formatNumber(n) {
-  if (n >= 100000000) return (n / 100000000).toFixed(1).replace(/\.0$/, '') + '억';
-  if (n >= 10000) return (n / 10000).toFixed(1).replace(/\.0$/, '') + '만';
-  return n.toLocaleString();
-}
-
-// API 호출
-async function fetchYouTubeStats() {
-  if (!YOUTUBE_API_KEY) {
-    // API 키 없으면 fallback 값 표시 (yt-dlp로 뽑은 스냅샷)
-    showFallbackStats();
-    return;
+class LiveCounter {
+  constructor() {
+    this.currentViews = 0;
+    this.displayViews = 0;
+    this.targetViews = 0;
+    this.viewsPerSecond = CONFIG.FALLBACK_VPS;
+    this.lastFetchTime = 0;
+    this.lastFetchViews = 0;
+    this.prevFetchViews = 0;
+    this.prevFetchTime = 0;
+    this.initialized = false;
+    this.counterEl = document.getElementById('counter-display');
+    this.subsEl = document.getElementById('counter-subs');
+    this.videosEl = document.getElementById('counter-videos');
   }
 
-  try {
-    const ids = CHANNEL_IDS.join(',');
-    const url = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${ids}&key=${YOUTUBE_API_KEY}`;
-    const res = await fetch(url);
-    const data = await res.json();
+  async init() {
+    await this.fetchStats();
+    this.startTicker();
+    // 1시간마다 재집계
+    setInterval(() => this.fetchStats(), CONFIG.FETCH_INTERVAL);
+  }
 
-    if (!data.items) {
-      showFallbackStats();
+  async fetchStats() {
+    try {
+      const ids = CONFIG.CHANNEL_IDS.join(',');
+      const url = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${ids}&key=${CONFIG.API_KEY}`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if (!data.items || data.items.length === 0) throw new Error('No data');
+
+      let totalViews = 0, totalSubs = 0, totalVideos = 0;
+      data.items.forEach(ch => {
+        const s = ch.statistics;
+        totalViews += parseInt(s.viewCount || 0);
+        totalSubs += parseInt(s.subscriberCount || 0);
+        totalVideos += parseInt(s.videoCount || 0);
+      });
+
+      // views per second 계산 (2번째 fetch부터)
+      const now = Date.now();
+      if (this.lastFetchTime > 0 && totalViews > this.lastFetchViews) {
+        const elapsed = (now - this.lastFetchTime) / 1000;
+        if (elapsed > 60) {
+          this.viewsPerSecond = (totalViews - this.lastFetchViews) / elapsed;
+        }
+      }
+
+      this.prevFetchViews = this.lastFetchViews;
+      this.prevFetchTime = this.lastFetchTime;
+      this.lastFetchViews = totalViews;
+      this.lastFetchTime = now;
+
+      if (!this.initialized) {
+        this.currentViews = totalViews;
+        this.displayViews = totalViews;
+        this.initialized = true;
+      }
+      this.targetViews = totalViews;
+
+      // 구독자·영상 수 표시
+      this.subsEl.textContent = this.formatCompact(totalSubs);
+      this.videosEl.textContent = totalVideos.toLocaleString();
+
+      // localStorage에 캐시
+      localStorage.setItem('rc_views', JSON.stringify({
+        views: totalViews, subs: totalSubs, videos: totalVideos,
+        vps: this.viewsPerSecond, time: now
+      }));
+
+    } catch (e) {
+      // 캐시 또는 폴백 사용
+      const cached = JSON.parse(localStorage.getItem('rc_views') || 'null');
+      if (cached) {
+        const elapsed = (Date.now() - cached.time) / 1000;
+        const estimated = Math.floor(cached.views + elapsed * (cached.vps || CONFIG.FALLBACK_VPS));
+        this.currentViews = estimated;
+        this.displayViews = estimated;
+        this.targetViews = estimated;
+        this.viewsPerSecond = cached.vps || CONFIG.FALLBACK_VPS;
+        this.subsEl.textContent = this.formatCompact(cached.subs);
+        this.videosEl.textContent = cached.videos.toLocaleString();
+      } else {
+        this.currentViews = CONFIG.FALLBACK_VIEWS;
+        this.displayViews = CONFIG.FALLBACK_VIEWS;
+        this.targetViews = CONFIG.FALLBACK_VIEWS;
+        this.subsEl.textContent = this.formatCompact(CONFIG.FALLBACK_SUBS);
+        this.videosEl.textContent = CONFIG.FALLBACK_VIDEOS.toLocaleString();
+      }
+      this.initialized = true;
+    }
+  }
+
+  startTicker() {
+    let lastTick = performance.now();
+
+    const tick = (now) => {
+      const dt = (now - lastTick) / 1000;
+      lastTick = now;
+
+      // 부드럽게 증가
+      this.currentViews += this.viewsPerSecond * dt;
+
+      // 정수로 반올림한 값이 바뀌었을 때만 DOM 업데이트
+      const rounded = Math.floor(this.currentViews);
+      if (rounded !== this.displayViews) {
+        this.displayViews = rounded;
+        this.renderDigits(rounded);
+      }
+
+      requestAnimationFrame(tick);
+    };
+
+    // 초기 렌더
+    this.renderDigits(Math.floor(this.currentViews));
+    requestAnimationFrame(tick);
+  }
+
+  renderDigits(num) {
+    const str = num.toLocaleString('en-US');
+    const el = this.counterEl;
+
+    // 첫 렌더 또는 자릿수 변경 시 DOM 재구축
+    if (!this._digitEls || this._lastLen !== str.length) {
+      el.innerHTML = '';
+      this._digitEls = [];
+      this._lastDigits = [];
+
+      for (let i = 0; i < str.length; i++) {
+        const ch = str[i];
+        if (ch === ',') {
+          const comma = document.createElement('span');
+          comma.className = 'live-counter__comma';
+          comma.textContent = ',';
+          el.appendChild(comma);
+          this._digitEls.push(null);
+          this._lastDigits.push(',');
+        } else {
+          const wrapper = document.createElement('span');
+          wrapper.className = 'live-counter__digit';
+          const inner = document.createElement('span');
+          inner.className = 'live-counter__digit-inner';
+          // 0~9 스택
+          for (let d = 0; d <= 9; d++) {
+            const s = document.createElement('span');
+            s.textContent = d;
+            inner.appendChild(s);
+          }
+          wrapper.appendChild(inner);
+          el.appendChild(wrapper);
+          inner.style.transform = `translateY(-${parseInt(ch) * (100 / 11)}%)`;
+          this._digitEls.push(inner);
+          this._lastDigits.push(ch);
+        }
+      }
+      this._lastLen = str.length;
       return;
     }
 
-    let totalViews = 0;
-    let totalSubs = 0;
-    let totalVideos = 0;
+    // 기존 DOM에서 변경된 자릿수만 업데이트
+    for (let i = 0; i < str.length; i++) {
+      const ch = str[i];
+      if (ch !== ',' && this._lastDigits[i] !== ch && this._digitEls[i]) {
+        this._digitEls[i].style.transform = `translateY(-${parseInt(ch) * (100 / 11)}%)`;
+        this._lastDigits[i] = ch;
+      }
+    }
+  }
 
-    data.items.forEach(ch => {
-      const s = ch.statistics;
-      totalViews += parseInt(s.viewCount || 0);
-      totalSubs += parseInt(s.subscriberCount || 0);
-      totalVideos += parseInt(s.videoCount || 0);
-    });
-
-    animateNumber(document.getElementById('stat-total-views'), totalViews, '+');
-    animateNumber(document.getElementById('stat-total-subs'), totalSubs, '+');
-    animateNumber(document.getElementById('stat-total-videos'), totalVideos, '편');
-
-  } catch (e) {
-    showFallbackStats();
+  formatCompact(n) {
+    if (n >= 10000) return (n / 10000).toFixed(1).replace(/\.0$/, '') + '만';
+    return n.toLocaleString();
   }
 }
 
-function showFallbackStats() {
-  // API 키 없을 때의 폴백 값 (주기적으로 업데이트 필요)
-  animateNumber(document.getElementById('stat-total-views'), 8500000, '+');
-  animateNumber(document.getElementById('stat-total-subs'), 95000, '+');
-  animateNumber(document.getElementById('stat-total-videos'), 450, '편+');
-}
-
-// Intersection Observer로 화면에 보일 때 로드
-const statsSection = document.querySelector('.portfolio-stats');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      fetchYouTubeStats();
-      observer.disconnect();
-    }
-  });
-}, { threshold: 0.3 });
-observer.observe(statsSection);
+// 페이지 로드 시 시작
+const counter = new LiveCounter();
+counter.init();
 </script>
 
 <!-- CHANNEL 1: 이바다이야기 -->
