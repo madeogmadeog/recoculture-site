@@ -13,20 +13,16 @@
   position: sticky;
   top: 72px;
   z-index: 100;
-  background: rgba(255,255,255,0.92);
+  background: rgba(10,10,10,0.92);
   backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
   padding: 20px 48px;
   text-align: center;
-  transition: box-shadow 0.3s;
-}
-.portfolio-counter.has-shadow {
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
 }
 .pc__label {
   font-size: 13px;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: #888;
   margin-bottom: 8px;
 }
 .pc__label .orange { color: var(--orange); }
@@ -47,7 +43,7 @@
   font-family: 'Inter', var(--font-en);
   font-size: clamp(32px, 5vw, 56px);
   font-weight: 800;
-  color: var(--text-primary);
+  color: #fff;
   line-height: 1;
   display: inline-flex;
   align-items: flex-end;
@@ -311,13 +307,12 @@
 </div>
 
 <!-- SPACER for nav -->
-<div style="height: 72px;"></div>
+<div style="height: 72px; background: #0a0a0a;"></div>
 
 <!-- STICKY COUNTER -->
 <div class="portfolio-counter" id="counter-bar">
   <p class="pc__label"><span class="pc__pulse"></span>레코컬쳐에서 만든 영상의 <span class="orange">누적 조회수</span></p>
   <div class="pc__number" id="counter-display">0</div>
-  <p class="pc__sub">10 channels · views and counting</p>
 </div>
 
 <!-- THUMBNAIL WALL -->
