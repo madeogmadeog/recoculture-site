@@ -5,180 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>포트폴리오 | RECOCULTURE</title>
 <meta name="description" content="레코컬쳐의 실제 성과 사례. 전문직 유튜브 채널 운영을 통해 달성한 비즈니스 성장 결과를 확인하세요.">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
-/* Portfolio page specific styles */
-.channel-section {
-  padding: 100px 48px;
-  position: relative;
-}
-.channel-section:nth-child(even) {
-  background: var(--bg-secondary);
-}
-.channel-header {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  margin-bottom: 48px;
-}
-.channel-avatar {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid var(--orange-bg2);
-  flex-shrink: 0;
-}
-.channel-name {
-  font-size: 28px;
-  font-weight: 800;
-  color: var(--text-primary);
-  line-height: 1.3;
-}
-.channel-handle {
-  font-family: var(--font-en);
-  font-size: 13px;
-  color: var(--text-tertiary);
-  margin-top: 4px;
-}
-.channel-handle a {
-  color: var(--orange);
-  transition: opacity 0.2s;
-}
-.channel-handle a:hover {
-  opacity: 0.7;
-}
-.videos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 24px;
-}
-.video-card {
-  background: var(--white);
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  box-shadow: var(--card-shadow);
-  transition: all 0.4s var(--ease-out);
-  cursor: pointer;
-}
-.video-card:hover {
-  transform: translateY(-6px);
-  border-color: var(--border-hover);
-  box-shadow: var(--card-shadow-hover);
-}
-.video-card__thumb {
-  position: relative;
-  aspect-ratio: 16/9;
-  overflow: hidden;
-  background: var(--gray-100);
-}
-.video-card__thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s var(--ease-out);
-}
-.video-card:hover .video-card__thumb img {
-  transform: scale(1.05);
-}
-.video-card__play {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,0.15);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-.video-card:hover .video-card__play {
-  opacity: 1;
-}
-.video-card__play-btn {
-  width: 56px;
-  height: 56px;
-  background: var(--orange);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--white);
-  font-size: 22px;
-  box-shadow: 0 4px 20px rgba(237,108,0,0.4);
-}
-.video-card__duration {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  background: rgba(0,0,0,0.8);
-  color: var(--white);
-  font-family: var(--font-en);
-  font-size: 12px;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 4px;
-}
-.video-card__body {
-  padding: 20px;
-}
-.video-card__title {
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 1.5;
-  color: var(--text-primary);
-  margin-bottom: 10px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.video-card__views {
-  font-family: var(--font-en);
-  font-size: 13px;
-  color: var(--text-tertiary);
-  font-weight: 500;
-}
-.video-card__views span {
-  color: var(--orange);
-  font-weight: 700;
-}
-
 /* ===== LIVE COUNTER ===== */
 .live-counter {
-  padding: 80px 48px 60px;
+  padding: 60px 48px 40px;
   text-align: center;
   background: var(--bg-primary);
   position: relative;
-  overflow: hidden;
-}
-.live-counter::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 900px;
-  height: 400px;
-  background: radial-gradient(ellipse, rgba(237,108,0,0.06) 0%, transparent 70%);
-  border-radius: 50%;
 }
 .live-counter__label {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text-secondary);
-  margin-bottom: 24px;
-  position: relative;
+  margin-bottom: 20px;
 }
-.live-counter__label .orange {
-  color: var(--orange);
-  font-weight: 700;
-}
+.live-counter__label .orange { color: var(--orange); font-weight: 700; }
 .live-counter__pulse {
   display: inline-block;
-  width: 8px;
-  height: 8px;
+  width: 8px; height: 8px;
   background: #22c55e;
   border-radius: 50%;
   margin-right: 8px;
@@ -186,23 +32,22 @@
   vertical-align: middle;
 }
 @keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.8); }
+  0%,100% { opacity:1; transform:scale(1); }
+  50% { opacity:0.5; transform:scale(0.8); }
 }
 .live-counter__number {
   font-family: 'Inter', var(--font-en), sans-serif;
-  font-size: clamp(48px, 8vw, 92px);
+  font-size: clamp(48px, 8vw, 88px);
   font-weight: 800;
   color: var(--text-primary);
   line-height: 1;
-  margin-bottom: 20px;
-  position: relative;
+  margin-bottom: 12px;
   display: inline-flex;
   justify-content: center;
   align-items: flex-end;
-  padding: 0 4px;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
+  padding: 0 4px;
 }
 .live-counter__digit {
   display: inline-block;
@@ -234,24 +79,142 @@
   padding-bottom: 0.08em;
 }
 .live-counter__unit {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text-tertiary);
-  position: relative;
   font-weight: 500;
 }
 
-@media (max-width: 1024px) {
-  .channel-section { padding: 80px 32px; }
-  .live-counter { padding: 60px 32px; }
+/* ===== BUBBLE MAP ===== */
+.bubble-map {
+  position: relative;
+  width: 100%;
+  min-height: 80vh;
+  overflow: hidden;
+  background: var(--bg-primary);
+  cursor: grab;
+  user-select: none;
 }
+.bubble-map:active { cursor: grabbing; }
+.bubble-map__container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.23,1,0.32,1), box-shadow 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bubble:hover {
+  transform: scale(1.15);
+  z-index: 100 !important;
+  box-shadow: 0 8px 30px rgba(237,108,0,0.25);
+}
+.bubble__inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-en);
+  font-weight: 700;
+  color: white;
+  text-align: center;
+  line-height: 1.1;
+  overflow: hidden;
+}
+
+/* Tooltip (썸네일 팝업) */
+.bubble-tooltip {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.8) translateY(8px);
+  transition: opacity 0.2s, transform 0.25s cubic-bezier(0.23,1,0.32,1);
+  width: 320px;
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.bubble-tooltip.is-visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+.bubble-tooltip__thumb {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  display: block;
+}
+.bubble-tooltip__body {
+  padding: 14px 16px;
+}
+.bubble-tooltip__channel {
+  font-family: var(--font-en);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--orange);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.bubble-tooltip__title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+  margin-bottom: 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.bubble-tooltip__views {
+  font-family: var(--font-en);
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+.bubble-tooltip__views strong {
+  color: var(--orange);
+}
+
+/* Legend */
+.bubble-legend {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 24px 48px 60px;
+  background: var(--bg-primary);
+  flex-wrap: wrap;
+}
+.bubble-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+.bubble-legend__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
 @media (max-width: 768px) {
-  .channel-section { padding: 60px 24px; }
-  .videos-grid { grid-template-columns: 1fr; }
-  .live-counter { padding: 48px 24px; }
-  .live-counter__stats { gap: 24px; flex-wrap: wrap; }
-  .live-counter__stat-num { font-size: 22px; }
-  .channel-name { font-size: 22px; }
-  .channel-avatar { width: 56px; height: 56px; }
+  .live-counter { padding: 40px 24px 24px; }
+  .bubble-map { min-height: 60vh; }
+  .bubble-tooltip { width: 260px; }
+  .bubble-legend { padding: 16px 24px 40px; gap: 12px; }
 }
 </style>
 </head>
@@ -280,504 +243,37 @@
 </div>
 
 <!-- PAGE HERO -->
-<section class="page-hero" style="padding-bottom: 100px;">
+<section class="page-hero" style="padding-bottom: 40px;">
   <div class="page-hero__bg"></div>
   <div class="page-hero__content">
     <p class="page-hero__label">Portfolio</p>
     <h1 class="page-hero__title">우리가 만든<br><em>채널의 성과</em></h1>
-    <p class="page-hero__desc">레코컬쳐가 운영하는 채널들의 실제 인기 영상입니다. 조회수가 아닌 비즈니스 성장을 만드는 콘텐츠.</p>
+    <p class="page-hero__desc">543개 영상. 10개 채널. 각 원의 크기는 조회수에 비례합니다.</p>
   </div>
 </section>
 
-<!-- LIVE VIEW COUNTER -->
-<section class="live-counter" id="live-counter">
+<!-- LIVE COUNTER -->
+<section class="live-counter">
   <p class="live-counter__label"><span class="live-counter__pulse"></span>레코컬쳐에서 만든 영상의 <span class="orange">누적 조회수</span></p>
   <div class="live-counter__number" id="counter-display">0</div>
   <p class="live-counter__unit">views and counting</p>
 </section>
 
-<script>
-// ============================================================
-// LIVE TICKER — 단순 텍스트 카운터
-// 1시간마다 YouTube API fetch, 사이 구간은 보간 카운트업
-// ============================================================
-(function() {
-  const API_KEY = 'AIzaSyDegAUyaLZzxZOmqPZ7Cknr6BLQVo_Z1Zk';
-  const CHANNELS = [
-    'UCa4XAtZ_04zXUAh28HFbJQw', 'UCa16_cbdgo7BDjHbJvJowGw',
-    'UCdRgh9GCeMs8Bo86QMSuiuA', 'UCvQCmSsCRb8z3q0SO5JW8Pw',
-    'UCQs5sRayqKqrdxTaV38OVRA', 'UCj_RY4FlDqfafum6Gy5nUiA',
-    'UCDy8IPYmRu6WbDUyAs1ffyg', 'UC9yDBiSGrXpooefuaXO6BaA',
-    'UC2kME1ttakYQVNxBQJJo6Sw', 'UCwDwL7htetGbWwypB1sYK5A',
-  ];
-  const FALLBACK = 56923406;
-  const el = document.getElementById('counter-display');
+<!-- BUBBLE MAP -->
+<div class="bubble-map" id="bubble-map"></div>
 
-  let current = 0;
-  let vps = 0.5; // views per second 초기 추정
-  let lastDisplay = -1;
-  let started = false;
+<!-- LEGEND -->
+<div class="bubble-legend" id="bubble-legend"></div>
 
-  let digitEls = [];  // 각 자릿수의 inner 요소
-  let lastDigits = []; // 마지막으로 표시한 숫자들
-  let built = false;
-
-  // DOM 구축: 자릿수 개수만큼 슬롯 생성
-  function buildSlots(numStr) {
-    el.innerHTML = '';
-    digitEls = [];
-    lastDigits = [];
-    for (let i = 0; i < numStr.length; i++) {
-      const ch = numStr[i];
-      if (ch === ',') {
-        const sep = document.createElement('span');
-        sep.className = 'live-counter__sep';
-        sep.textContent = ',';
-        el.appendChild(sep);
-        digitEls.push(null);
-        lastDigits.push(',');
-      } else {
-        const wrapper = document.createElement('span');
-        wrapper.className = 'live-counter__digit';
-        const inner = document.createElement('span');
-        inner.className = 'live-counter__digit-inner';
-        for (let d = 0; d <= 9; d++) {
-          const s = document.createElement('span');
-          s.textContent = d;
-          inner.appendChild(s);
-        }
-        wrapper.appendChild(inner);
-        el.appendChild(wrapper);
-        digitEls.push(inner);
-        lastDigits.push(ch);
-      }
-    }
-    built = true;
-  }
-
-  // 슬롯 업데이트: 바뀐 자릿수만 애니메이션
-  function setDigits(numStr) {
-    if (!built || numStr.length !== lastDigits.length) {
-      buildSlots(numStr);
-    }
-    for (let i = 0; i < numStr.length; i++) {
-      const ch = numStr[i];
-      if (ch !== ',' && ch !== lastDigits[i] && digitEls[i]) {
-        digitEls[i].style.transform = 'translateY(-' + parseInt(ch) + 'em)';
-        lastDigits[i] = ch;
-      }
-    }
-  }
-
-  // 초기 빌드 (즉시 올바른 위치로, 애니메이션 없이)
-  function initDigits(numStr) {
-    buildSlots(numStr);
-    // 트랜지션 비활성화 후 위치 설정
-    for (let i = 0; i < numStr.length; i++) {
-      const ch = numStr[i];
-      if (ch !== ',' && digitEls[i]) {
-        digitEls[i].style.transition = 'none';
-        digitEls[i].style.transform = 'translateY(-' + parseInt(ch) + 'em)';
-      }
-    }
-    // 다음 프레임에서 트랜지션 복원
-    requestAnimationFrame(() => {
-      digitEls.forEach(d => { if (d) d.style.transition = ''; });
-    });
-  }
-
-  function fmt(n) { return Math.floor(n).toLocaleString('en-US'); }
-
-  // API fetch
-  async function fetchTotal() {
-    try {
-      const url = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNELS.join(',')}&key=${API_KEY}`;
-      const res = await fetch(url);
-      const data = await res.json();
-      if (!data.items) throw new Error();
-      let total = 0;
-      data.items.forEach(ch => { total += parseInt(ch.statistics.viewCount || 0); });
-
-      const cached = JSON.parse(localStorage.getItem('rc_counter') || 'null');
-      if (cached && total > cached.v) {
-        const dt = (Date.now() - cached.t) / 1000;
-        if (dt > 300) vps = Math.max(0.1, (total - cached.v) / dt);
-      }
-      localStorage.setItem('rc_counter', JSON.stringify({ v: total, t: Date.now(), vps }));
-      return total;
-    } catch (e) {
-      const cached = JSON.parse(localStorage.getItem('rc_counter') || 'null');
-      if (cached) {
-        vps = cached.vps || 0.5;
-        return cached.v + Math.floor((Date.now() - cached.t) / 1000 * vps);
-      }
-      return FALLBACK;
-    }
-  }
-
-  // 실시간 틱
-  function startTicking() {
-    if (started) return;
-    started = true;
-    let last = performance.now();
-    function tick(now) {
-      const dt = (now - last) / 1000;
-      last = now;
-      current += vps * dt;
-      const rounded = Math.floor(current);
-      if (rounded !== lastDisplay) {
-        lastDisplay = rounded;
-        setDigits(fmt(rounded));
-      }
-      requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  }
-
-  // 시작
-  fetchTotal().then(total => {
-    current = total;
-    initDigits(fmt(total));
-    lastDisplay = total;
-    // 약간의 딜레이 후 틱 시작
-    setTimeout(() => startTicking(), 500);
-    // 1시간마다 재집계
-    setInterval(async () => {
-      const fresh = await fetchTotal();
-      if (fresh > current) current = fresh;
-    }, 3600000);
-  });
-})();
-</script>
-
-<!-- CHANNEL 1: 이바다이야기 -->
-<section class="channel-section">
-  <div class="channel-header">
-    <img class="channel-avatar" src="https://yt3.googleusercontent.com/gbUgihv9jvIyxzUQRTKuaodI8D3HLgA8eyWpRz8z1FepG2A9KRm7ONdSZ_fFhTNx3YH1vP4O=s176-c-k-c0x00ffffff-no-rj" alt="이바다이야기">
-    <div>
-      <div class="channel-name">이바다이야기</div>
-      <div class="channel-handle"><a href="https://www.youtube.com/@이바다이야기" target="_blank">@이바다이야기 →</a></div>
-    </div>
+<!-- TOOLTIP -->
+<div class="bubble-tooltip" id="tooltip">
+  <img class="bubble-tooltip__thumb" id="tt-thumb" src="" alt="">
+  <div class="bubble-tooltip__body">
+    <div class="bubble-tooltip__channel" id="tt-channel"></div>
+    <div class="bubble-tooltip__title" id="tt-title"></div>
+    <div class="bubble-tooltip__views" id="tt-views"></div>
   </div>
-  <div class="videos-grid">
-    <a href="https://www.youtube.com/watch?v=VoEbn0wj1ZA" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/VoEbn0wj1ZA/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">15:33</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">"거의 다 무시하고 안 해줍니다." 치과에서 해달라고 해도 안해주는 '이거' 스케일링보다 중요합니다</div>
-        <div class="video-card__views">조회수 <span>1,635,900</span></div>
-      </div>
-    </a>
-    <a href="https://www.youtube.com/watch?v=G_uhP-p1G_w" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/G_uhP-p1G_w/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">15:10</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">"사랑니 3초컷", 사랑니 3만개 발치한 의사가 말하는 사랑니 꼭 뽑아야 하는 이유</div>
-        <div class="video-card__views">조회수 <span>664,914</span></div>
-      </div>
-    </a>
-    <a href="https://www.youtube.com/watch?v=r5bB6IPOs44" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/r5bB6IPOs44/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">11:19</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">양치할 때 '여기'를 닦아야 합니다. l 치과올 일 없어지는 기적의 양치법</div>
-        <div class="video-card__views">조회수 <span>484,149</span></div>
-      </div>
-    </a>
-    <a href="https://www.youtube.com/watch?v=khmyElTuabE" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/khmyElTuabE/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">24:37</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">"다이소가면 무조건 사오세요" 치과의사가 매일 쓰는 다이소 꿀템 추천</div>
-        <div class="video-card__views">조회수 <span>400,242</span></div>
-      </div>
-    </a>
-    <a href="https://www.youtube.com/watch?v=i4VLRz_Rs8A" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/i4VLRz_Rs8A/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">17:51</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">"홈페이지 보면 바로 보여요…" 절대 가면 안되는 치과 유형 5가지</div>
-        <div class="video-card__views">조회수 <span>383,648</span></div>
-      </div>
-    </a>
-  </div>
-</section>
-
-<!-- CHANNEL 2: 친절한 송이씨 -->
-<section class="channel-section">
-  <div class="channel-header">
-    <img class="channel-avatar" src="https://yt3.googleusercontent.com/t51xZ5pSib1u29Sul-Qy46Qmqi75VrFy4buA8vxKo614FTCNjK_Uv4OQFAJ89ztdwVObaS8-=s176-c-k-c0x00ffffff-no-rj" alt="친절한 송이씨">
-    <div>
-      <div class="channel-name">친절한 송이씨</div>
-      <div class="channel-handle"><a href="https://www.youtube.com/@송이씨" target="_blank">@송이씨 →</a></div>
-    </div>
-  </div>
-  <div class="videos-grid">
-    <a href="https://www.youtube.com/watch?v=STmZUHuo_Hs" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/STmZUHuo_Hs/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">10:33</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">입술필러 맞을 때 99%가 모르는 것 l 입술필러 전 꼭 알아야 할 사실들</div>
-        <div class="video-card__views">조회수 <span>242,335</span></div>
-      </div>
-    </a>
-    <a href="https://www.youtube.com/watch?v=-oopntYoHXY" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/-oopntYoHXY/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">19:22</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">경력 10년차 의사가 남편에게 매년 하는 시술</div>
-        <div class="video-card__views">조회수 <span>128,850</span></div>
-      </div>
-    </a>
-    <a href="https://www.youtube.com/watch?v=n8ivh9bEba8" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/n8ivh9bEba8/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">18:00</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">안 듣는다는 사람을 본 적이 없는 l 10살 어려 보이게 만드는 거의 만병통치약</div>
-        <div class="video-card__views">조회수 <span>106,408</span></div>
-      </div>
-    </a>
-    <a href="https://www.youtube.com/watch?v=CEwOucUdqjE" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/CEwOucUdqjE/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">9:28</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">피부과 시술의 어두운 면 l "나도 모르는 사이에 시술 받고 있었다고..?"</div>
-        <div class="video-card__views">조회수 <span>105,530</span></div>
-      </div>
-    </a>
-    <a href="https://www.youtube.com/watch?v=JlsvmToXBCg" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/JlsvmToXBCg/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">23:29</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">슬로우에이징 피부 공식: 피부과 의사의 데일리 스킨케어 루틴 & 필수템 공개!</div>
-        <div class="video-card__views">조회수 <span>85,767</span></div>
-      </div>
-    </a>
-  </div>
-</section>
-
-<!-- CHANNEL 3: 권의시선 : 치과의사 권낙현 -->
-<section class="channel-section">
-  <div class="channel-header">
-    <img class="channel-avatar" src="https://yt3.googleusercontent.com/52zgOhFSlCLEAWegHtDbnbJc-3IZtyWWnR98LpSTdmSRfIeVCld8m8egOoxyMxaenNAfnJcnAg=s176-c-k-c0x00ffffff-no-rj" alt="권의시선">
-    <div>
-      <div class="channel-name">권의시선 : 치과의사 권낙현</div>
-      <div class="channel-handle"><a href="https://www.youtube.com/@seoulkwondental" target="_blank">@seoulkwondental →</a></div>
-    </div>
-  </div>
-  <div class="videos-grid">
-    <a href="https://www.youtube.com/watch?v=7br2PgKxB3A" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/7br2PgKxB3A/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">17:18</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">"요즘 최신 치료는 이겁니다" l 충치치료 받기 전 보고가세요</div>
-        <div class="video-card__views">조회수 <span>181,169</span></div>
-      </div>
-    </a>
-    <a href="https://www.youtube.com/watch?v=rT9gVrzKkvA" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/rT9gVrzKkvA/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">18:42</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">내려간 잇몸 치아 빼지 않고 치료할 수 있습니다 l 잇몸퇴축 최신 치료법</div>
-        <div class="video-card__views">조회수 <span>181,153</span></div>
-      </div>
-    </a>
-    <a href="https://www.youtube.com/watch?v=dywNNezAiR4" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/dywNNezAiR4/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">23:24</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">"뼈이식은 필수입니다" 임플란트 전 명심하세요! l 임플란트 뼈이식의 진실</div>
-        <div class="video-card__views">조회수 <span>19,256</span></div>
-      </div>
-    </a>
-    <a href="https://www.youtube.com/watch?v=aU3qvB8b980" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/aU3qvB8b980/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">20:59</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">치과의사가 알려주는 치과 고르는 꿀팁 "이것만 확인하면 알 수 있어요"</div>
-        <div class="video-card__views">조회수 <span>13,076</span></div>
-      </div>
-    </a>
-    <a href="https://www.youtube.com/watch?v=q0XBIMxeVD8" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/q0XBIMxeVD8/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">15:34</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">벌어진 앞니 치료법 l "저는 이게 최고라고 생각합니다" l 바이오클리어?!</div>
-        <div class="video-card__views">조회수 <span>6,529</span></div>
-      </div>
-    </a>
-  </div>
-</section>
-
-<!-- CHANNEL 4: Prepatina 차랑꾼 -->
-<section class="channel-section">
-  <div class="channel-header">
-    <img class="channel-avatar" src="https://yt3.googleusercontent.com/RR7kTzBrzy2oxpRMjUY8XZ_PbSv89At6m0aM38GXlhkj5ok65dfKLDnTtQUfp77MJZ97Y_Oq3jc=s176-c-k-c0x00ffffff-no-rj" alt="Prepatina 차랑꾼">
-    <div>
-      <div class="channel-name">Prepatina 차랑꾼</div>
-      <div class="channel-handle"><a href="https://www.youtube.com/@prepatina" target="_blank">@prepatina →</a></div>
-    </div>
-  </div>
-  <div class="videos-grid">
-    <a href="https://www.youtube.com/watch?v=r0QMjBWJIs0" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/r0QMjBWJIs0/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">32:51</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">90년대 진짜 "벤쓰" S600 입양기</div>
-        <div class="video-card__views">조회수 <span>57,125</span></div>
-      </div>
-    </a>
-    <a href="https://www.youtube.com/watch?v=MUlRvHv3JEs" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/MUlRvHv3JEs/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">11:58</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">"돈 있어도 못구하는" 전설의 BMW feat.클카쇼</div>
-        <div class="video-card__views">조회수 <span>36,613</span></div>
-      </div>
-    </a>
-    <a href="https://www.youtube.com/watch?v=Nc8FE6rUtG8" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/Nc8FE6rUtG8/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">24:36</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">AMG가 독립회사 일때 마지막 모델! 1998 W210 E55</div>
-        <div class="video-card__views">조회수 <span>28,906</span></div>
-      </div>
-    </a>
-    <a href="https://www.youtube.com/watch?v=babRP79M2Rc" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/babRP79M2Rc/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">26:39</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">오디오+로워링 등 작업 한것들 공유</div>
-        <div class="video-card__views">조회수 <span>13,602</span></div>
-      </div>
-    </a>
-  </div>
-</section>
-
-<!-- CHANNEL 5: 하원장 강동현 -->
-<section class="channel-section">
-  <div class="channel-header">
-    <img class="channel-avatar" src="https://yt3.googleusercontent.com/H53oBxBzG9HziDhEEPbBJff7PtnYGdPXMm3FxeRaQ0vXW1wsFS03EugJ89jDa1kDyLpE00E2=s176-c-k-c0x00ffffff-no-rj" alt="하원장 강동현">
-    <div>
-      <div class="channel-name">하원장 강동현</div>
-      <div class="channel-handle"><a href="https://www.youtube.com/@haclinic" target="_blank">@haclinic →</a></div>
-    </div>
-  </div>
-  <div class="videos-grid">
-    <a href="https://www.youtube.com/watch?v=jocmSu90360" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/jocmSu90360/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">11:51</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">절대로 알려주지 않는 바세린 올바르게 사용하는 방법</div>
-        <div class="video-card__views">조회수 <span>7,494,564</span></div>
-      </div>
-    </a>
-    <a href="https://www.youtube.com/watch?v=2dYrl89dfGU" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/2dYrl89dfGU/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">15:12</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">피부좋아지는 사람들이 하는 세안법, 피부좋은 사람은 이렇게 세수합니다.</div>
-        <div class="video-card__views">조회수 <span>2,926,040</span></div>
-      </div>
-    </a>
-    <a href="https://www.youtube.com/watch?v=5EgE6T3O8qg" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/5EgE6T3O8qg/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">11:31</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">선크림 정확히 바르는 방법 알려드릴게요. 선크림만 제대로 발라도 피부 트러블없이 노화를 막아줍니다.</div>
-        <div class="video-card__views">조회수 <span>878,696</span></div>
-      </div>
-    </a>
-    <a href="https://www.youtube.com/watch?v=F0aXXfWf7vo" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/F0aXXfWf7vo/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">9:03</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">돈 안 들이고 집에서 쉽게 눈밑처짐 없애는 법</div>
-        <div class="video-card__views">조회수 <span>529,021</span></div>
-      </div>
-    </a>
-    <a href="https://www.youtube.com/watch?v=M101d1JT77Y" target="_blank" class="video-card">
-      <div class="video-card__thumb">
-        <img src="https://i.ytimg.com/vi/M101d1JT77Y/maxresdefault.jpg" alt="thumbnail">
-        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
-        <div class="video-card__duration">13:24</div>
-      </div>
-      <div class="video-card__body">
-        <div class="video-card__title">백옥주사? 이제 맞지 마세요 ㅋㅋㅋㅋ 단돈 2만원으로 백옥 같은 피부 됩니다!</div>
-        <div class="video-card__views">조회수 <span>242,535</span></div>
-      </div>
-    </a>
-  </div>
-</section>
+</div>
 
 <!-- CTA -->
 <section class="cta-section">
@@ -817,6 +313,236 @@
     </div>
   </div>
 </footer>
+
+<script>
+// ===== CHANNEL COLORS =====
+const CHANNEL_COLORS = {
+  '이바다이야기': '#ED6C00',
+  '친절한 송이씨': '#E8488A',
+  '권의시선': '#3B82F6',
+  '하원장 강동현': '#8B5CF6',
+  'Prepatina 차랑꾼': '#1a1a1a',
+  '태오네모세모': '#06B6D4',
+  '진로사이다': '#F59E0B',
+  '바른의사 백승우': '#10B981',
+  '우선이선우': '#EC4899',
+  '이태호 수의사': '#6366F1',
+};
+
+// ===== LIVE COUNTER =====
+(function() {
+  const API_KEY = 'AIzaSyDegAUyaLZzxZOmqPZ7Cknr6BLQVo_Z1Zk';
+  const CHANNELS = [
+    'UCa4XAtZ_04zXUAh28HFbJQw','UCa16_cbdgo7BDjHbJvJowGw',
+    'UCdRgh9GCeMs8Bo86QMSuiuA','UCvQCmSsCRb8z3q0SO5JW8Pw',
+    'UCQs5sRayqKqrdxTaV38OVRA','UCj_RY4FlDqfafum6Gy5nUiA',
+    'UCDy8IPYmRu6WbDUyAs1ffyg','UC9yDBiSGrXpooefuaXO6BaA',
+    'UC2kME1ttakYQVNxBQJJo6Sw','UCwDwL7htetGbWwypB1sYK5A',
+  ];
+  const FALLBACK = 56923406;
+  const el = document.getElementById('counter-display');
+  let current = 0, vps = 0.5, lastDisplay = -1, started = false;
+  let digitEls = [], lastChars = [], built = false;
+
+  function buildSlots(s) {
+    el.innerHTML = ''; digitEls = []; lastChars = [];
+    for (const ch of s) {
+      if (ch === ',') {
+        const sep = document.createElement('span');
+        sep.className = 'live-counter__sep'; sep.textContent = ',';
+        el.appendChild(sep); digitEls.push(null); lastChars.push(',');
+      } else {
+        const w = document.createElement('span'); w.className = 'live-counter__digit';
+        const inner = document.createElement('span'); inner.className = 'live-counter__digit-inner';
+        for (let d=0;d<=9;d++){const s2=document.createElement('span');s2.textContent=d;inner.appendChild(s2);}
+        w.appendChild(inner); el.appendChild(w);
+        inner.style.transition='none'; inner.style.transform=`translateY(-${parseInt(ch)}em)`;
+        digitEls.push(inner); lastChars.push(ch);
+      }
+    }
+    built = true;
+    requestAnimationFrame(()=>{ digitEls.forEach(i=>{if(i)i.style.transition='';}); });
+  }
+  function setDigits(s) {
+    if (!built || s.length !== lastChars.length) { buildSlots(s); return; }
+    for (let i=0;i<s.length;i++) {
+      const ch=s[i];
+      if(ch!==','&&ch!==lastChars[i]&&digitEls[i]){digitEls[i].style.transform=`translateY(-${parseInt(ch)}em)`;lastChars[i]=ch;}
+    }
+  }
+  function fmt(n){return Math.floor(n).toLocaleString('en-US');}
+  async function fetchTotal(){
+    try{
+      const r=await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNELS.join(',')}&key=${API_KEY}`);
+      const d=await r.json(); if(!d.items)throw 0;
+      let t=0; d.items.forEach(c=>{t+=parseInt(c.statistics.viewCount||0);});
+      const c2=JSON.parse(localStorage.getItem('rc_counter')||'null');
+      if(c2&&t>c2.v){const dt=(Date.now()-c2.t)/1000;if(dt>300)vps=Math.max(0.1,(t-c2.v)/dt);}
+      localStorage.setItem('rc_counter',JSON.stringify({v:t,t:Date.now(),vps}));
+      return t;
+    }catch(e){
+      const c2=JSON.parse(localStorage.getItem('rc_counter')||'null');
+      if(c2){vps=c2.vps||0.5;return c2.v+Math.floor((Date.now()-c2.t)/1000*vps);}
+      return FALLBACK;
+    }
+  }
+  function startTick(){
+    if(started)return; started=true; let last=performance.now();
+    function tick(now){const dt=(now-last)/1000;last=now;current+=vps*dt;const r=Math.floor(current);if(r!==lastDisplay){lastDisplay=r;setDigits(fmt(r));}requestAnimationFrame(tick);}
+    requestAnimationFrame(tick);
+  }
+  fetchTotal().then(t=>{current=t;buildSlots(fmt(t));lastDisplay=t;setTimeout(()=>startTick(),500);setInterval(async()=>{const f=await fetchTotal();if(f>current)current=f;},3600000);});
+})();
+
+// ===== BUBBLE MAP =====
+(function() {
+  const mapEl = document.getElementById('bubble-map');
+  const tooltip = document.getElementById('tooltip');
+  const ttThumb = document.getElementById('tt-thumb');
+  const ttChannel = document.getElementById('tt-channel');
+  const ttTitle = document.getElementById('tt-title');
+  const ttViews = document.getElementById('tt-views');
+  const legendEl = document.getElementById('bubble-legend');
+
+  // Size mapping: size 1→12px, size 10→70px
+  function getRadius(size) { return 8 + size * 6; }
+
+  // Pack circles in a roughly circular/organic layout
+  function layoutBubbles(videos) {
+    const n = videos.length;
+    const sorted = [...videos].sort((a, b) => b.s - a.s); // big ones first for packing
+    const placed = [];
+    const centerX = 0, centerY = 0;
+
+    for (let i = 0; i < sorted.length; i++) {
+      const r = getRadius(sorted[i].s);
+      let bestX = 0, bestY = 0, bestDist = Infinity;
+
+      // Spiral placement
+      const angle = i * 2.399963; // golden angle
+      const spiralR = Math.sqrt(i) * (r * 1.1 + 4);
+      let cx = centerX + Math.cos(angle) * spiralR;
+      let cy = centerY + Math.sin(angle) * spiralR;
+
+      // Push away from overlaps
+      for (let iter = 0; iter < 20; iter++) {
+        let overlap = false;
+        for (const p of placed) {
+          const dx = cx - p.x, dy = cy - p.y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          const minDist = r + p.r + 3;
+          if (dist < minDist) {
+            const push = (minDist - dist) / 2 + 0.5;
+            const nx = dx / (dist || 1), ny = dy / (dist || 1);
+            cx += nx * push;
+            cy += ny * push;
+            overlap = true;
+          }
+        }
+        if (!overlap) break;
+      }
+
+      sorted[i]._x = cx;
+      sorted[i]._y = cy;
+      sorted[i]._r = r;
+      placed.push({ x: cx, y: cy, r });
+    }
+    return sorted;
+  }
+
+  fetch('portfolio-data-compact.json')
+    .then(r => r.json())
+    .then(videos => {
+      const laid = layoutBubbles(videos);
+
+      // Find bounds
+      let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
+      laid.forEach(v => {
+        minX = Math.min(minX, v._x - v._r);
+        maxX = Math.max(maxX, v._x + v._r);
+        minY = Math.min(minY, v._y - v._r);
+        maxY = Math.max(maxY, v._y + v._r);
+      });
+      const w = maxX - minX + 40, h = maxY - minY + 40;
+
+      const container = document.createElement('div');
+      container.className = 'bubble-map__container';
+      container.style.width = w + 'px';
+      container.style.height = h + 'px';
+      container.style.position = 'relative';
+
+      laid.forEach((v, idx) => {
+        const el = document.createElement('a');
+        el.className = 'bubble';
+        el.href = `https://www.youtube.com/watch?v=${v.i}`;
+        el.target = '_blank';
+        const d = v._r * 2;
+        const color = CHANNEL_COLORS[v.c] || '#ED6C00';
+        el.style.cssText = `
+          width:${d}px;height:${d}px;
+          left:${v._x - minX + 20 - v._r}px;
+          top:${v._y - minY + 20 - v._r}px;
+          z-index:${v.s};
+        `;
+        const inner = document.createElement('div');
+        inner.className = 'bubble__inner';
+        inner.style.background = color;
+        inner.style.fontSize = Math.max(8, v._r * 0.55) + 'px';
+        if (v.s >= 7) {
+          inner.textContent = (v.v >= 10000) ? Math.floor(v.v/10000) + '만' : Math.floor(v.v/1000) + 'K';
+        }
+        el.appendChild(inner);
+
+        // Hover
+        el.addEventListener('mouseenter', (e) => {
+          ttThumb.src = `https://i.ytimg.com/vi/${v.i}/mqdefault.jpg`;
+          ttChannel.textContent = v.c;
+          ttTitle.textContent = v.t;
+          ttViews.innerHTML = `조회수 <strong>${v.v.toLocaleString()}</strong>`;
+          tooltip.classList.add('is-visible');
+          positionTooltip(e);
+        });
+        el.addEventListener('mousemove', positionTooltip);
+        el.addEventListener('mouseleave', () => {
+          tooltip.classList.remove('is-visible');
+        });
+
+        container.appendChild(el);
+      });
+
+      mapEl.appendChild(container);
+
+      // Scale to fit viewport
+      const mapRect = mapEl.getBoundingClientRect();
+      const scale = Math.min(mapRect.width / w, mapRect.height / h, 1) * 0.92;
+      container.style.transform = `translate(-50%,-50%) scale(${scale})`;
+
+      // Legend
+      const channels = [...new Set(videos.map(v => v.c))];
+      channels.forEach(ch => {
+        const item = document.createElement('div');
+        item.className = 'bubble-legend__item';
+        const dot = document.createElement('span');
+        dot.className = 'bubble-legend__dot';
+        dot.style.background = CHANNEL_COLORS[ch] || '#ED6C00';
+        const label = document.createElement('span');
+        label.textContent = ch;
+        item.appendChild(dot);
+        item.appendChild(label);
+        legendEl.appendChild(item);
+      });
+    });
+
+  function positionTooltip(e) {
+    const tw = 320, th = 240;
+    let x = e.clientX + 16, y = e.clientY + 16;
+    if (x + tw > window.innerWidth) x = e.clientX - tw - 16;
+    if (y + th > window.innerHeight) y = e.clientY - th - 16;
+    tooltip.style.left = x + 'px';
+    tooltip.style.top = y + 'px';
+  }
+})();
+</script>
 
 </body>
 </html>
