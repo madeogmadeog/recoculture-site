@@ -4,217 +4,252 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>포트폴리오 | RECOCULTURE</title>
-<meta name="description" content="레코컬쳐의 실제 성과 사례. 전문직 유튜브 채널 운영을 통해 달성한 비즈니스 성장 결과를 확인하세요.">
+<meta name="description" content="레코컬쳐가 만든 543개 영상, 5700만+ 누적 조회수. 전문직 유튜브 브랜딩의 실제 성과.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
-/* ===== LIVE COUNTER ===== */
-.live-counter {
-  padding: 60px 48px 40px;
+/* ===== COUNTER (sticky) ===== */
+.portfolio-counter {
+  position: sticky;
+  top: 72px;
+  z-index: 100;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 48px;
   text-align: center;
-  background: var(--bg-primary);
-  position: relative;
+  transition: box-shadow 0.3s;
 }
-.live-counter__label {
-  font-size: 14px;
+.portfolio-counter.has-shadow {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+.pc__label {
+  font-size: 13px;
   font-weight: 600;
   color: var(--text-secondary);
-  margin-bottom: 20px;
+  margin-bottom: 8px;
 }
-.live-counter__label .orange { color: var(--orange); font-weight: 700; }
-.live-counter__pulse {
+.pc__label .orange { color: var(--orange); }
+.pc__pulse {
   display: inline-block;
-  width: 8px; height: 8px;
+  width: 7px; height: 7px;
   background: #22c55e;
   border-radius: 50%;
-  margin-right: 8px;
+  margin-right: 6px;
   animation: pulse 2s ease-in-out infinite;
   vertical-align: middle;
 }
 @keyframes pulse {
-  0%,100% { opacity:1; transform:scale(1); }
-  50% { opacity:0.5; transform:scale(0.8); }
+  0%,100%{opacity:1;transform:scale(1);}
+  50%{opacity:0.4;transform:scale(0.7);}
 }
-.live-counter__number {
-  font-family: 'Inter', var(--font-en), sans-serif;
-  font-size: clamp(48px, 8vw, 88px);
+.pc__number {
+  font-family: 'Inter', var(--font-en);
+  font-size: clamp(32px, 5vw, 56px);
   font-weight: 800;
   color: var(--text-primary);
   line-height: 1;
-  margin-bottom: 12px;
   display: inline-flex;
-  justify-content: center;
   align-items: flex-end;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
-  padding: 0 4px;
 }
-.live-counter__digit {
+.pc__digit {
   display: inline-block;
   height: 1em;
-  width: 0.64em;
+  width: 0.62em;
   overflow: hidden;
   line-height: 1;
 }
-.live-counter__digit-inner {
+.pc__digit-inner {
   display: block;
-  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: transform 0.5s cubic-bezier(0.23,1,0.32,1);
   will-change: transform;
 }
-.live-counter__digit-inner span {
+.pc__digit-inner span {
   display: block;
   height: 1em;
   line-height: 1;
   text-align: center;
 }
-.live-counter__sep {
+.pc__sep {
   display: inline-flex;
   align-items: flex-end;
   justify-content: center;
-  width: 0.22em;
+  width: 0.2em;
   height: 1em;
   color: var(--orange);
   font-weight: 400;
-  font-size: 0.55em;
+  font-size: 0.5em;
   padding-bottom: 0.08em;
 }
-.live-counter__unit {
-  font-size: 13px;
+.pc__sub {
+  font-size: 12px;
   color: var(--text-tertiary);
-  font-weight: 500;
+  margin-top: 4px;
 }
 
-/* ===== BUBBLE MAP ===== */
-.bubble-map {
+/* ===== ZOOM CONTAINER ===== */
+.zoom-wrap {
   position: relative;
-  width: 100%;
-  min-height: 80vh;
   overflow: hidden;
-  background: var(--bg-primary);
-  cursor: grab;
-  user-select: none;
 }
-.bubble-map:active { cursor: grabbing; }
-.bubble-map__container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.zoom-spacer {
+  /* JS로 높이 계산 — 줌아웃 스크롤 공간 확보 */
+  position: relative;
 }
-.bubble {
-  position: absolute;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: transform 0.25s cubic-bezier(0.23,1,0.32,1), box-shadow 0.25s ease;
+.zoom-viewport {
+  position: sticky;
+  top: 160px; /* counter 높이 아래 */
+  overflow: hidden;
+  height: calc(100vh - 160px);
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.bubble:hover {
-  transform: scale(1.15);
-  z-index: 100 !important;
-  box-shadow: 0 8px 30px rgba(237,108,0,0.25);
+
+/* ===== THUMBNAIL WALL ===== */
+.thumb-wall {
+  display: grid;
+  gap: 3px;
+  transform-origin: center center;
+  will-change: transform;
 }
-.bubble__inner {
+.thumb-wall a {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: 6px;
+  background: var(--gray-100);
+  aspect-ratio: 1/1;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.thumb-wall a:hover {
+  transform: scale(1.06);
+  z-index: 50;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+}
+.thumb-wall a img {
   width: 100%;
   height: 100%;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-en);
-  font-weight: 700;
-  color: white;
-  text-align: center;
-  line-height: 1.1;
-  overflow: hidden;
-}
-
-/* Tooltip (썸네일 팝업) */
-.bubble-tooltip {
-  position: fixed;
-  z-index: 9999;
-  pointer-events: none;
-  opacity: 0;
-  transform: scale(0.8) translateY(8px);
-  transition: opacity 0.2s, transform 0.25s cubic-bezier(0.23,1,0.32,1);
-  width: 320px;
-  background: var(--white);
-  border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-  overflow: hidden;
-  border: 1px solid var(--border);
-}
-.bubble-tooltip.is-visible {
-  opacity: 1;
-  transform: scale(1) translateY(0);
-}
-.bubble-tooltip__thumb {
-  width: 100%;
-  aspect-ratio: 16/9;
   object-fit: cover;
   display: block;
+  transition: opacity 0.4s;
 }
-.bubble-tooltip__body {
-  padding: 14px 16px;
+.thumb-wall a img[data-src] {
+  opacity: 0;
 }
-.bubble-tooltip__channel {
+/* 채널 하단 바 */
+.thumb-wall a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+/* 호버 오버레이 */
+.thumb-wall a .overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 10px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  border-radius: 6px;
+}
+.thumb-wall a:hover .overlay {
+  opacity: 1;
+}
+.overlay__channel {
   font-family: var(--font-en);
-  font-size: 11px;
+  font-size: 9px;
   font-weight: 700;
-  color: var(--orange);
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  margin-bottom: 4px;
+  color: var(--orange);
+  margin-bottom: 3px;
 }
-.bubble-tooltip__title {
-  font-size: 13px;
+.overlay__title {
+  font-size: 11px;
   font-weight: 600;
-  color: var(--text-primary);
-  line-height: 1.4;
-  margin-bottom: 6px;
+  color: #fff;
+  line-height: 1.3;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  margin-bottom: 4px;
 }
-.bubble-tooltip__views {
+.overlay__views {
   font-family: var(--font-en);
-  font-size: 12px;
-  color: var(--text-tertiary);
+  font-size: 10px;
+  color: rgba(255,255,255,0.7);
 }
-.bubble-tooltip__views strong {
+.overlay__views strong {
   color: var(--orange);
 }
+/* 2x, 3x 크기 영상 */
+.thumb-wall a.size-2 { grid-column: span 2; grid-row: span 2; }
+.thumb-wall a.size-3 { grid-column: span 3; grid-row: span 3; }
 
-/* Legend */
-.bubble-legend {
+/* 범례 */
+.wall-legend {
   display: flex;
   justify-content: center;
-  gap: 24px;
-  padding: 24px 48px 60px;
-  background: var(--bg-primary);
+  gap: 20px;
+  padding: 32px 48px 48px;
   flex-wrap: wrap;
+  background: var(--bg-primary);
 }
-.bubble-legend__item {
+.wall-legend__item {
   display: flex;
   align-items: center;
   gap: 6px;
   font-size: 12px;
   color: var(--text-tertiary);
 }
-.bubble-legend__dot {
+.wall-legend__dot {
   width: 10px;
   height: 10px;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
+/* ===== ZOOM GUIDE ===== */
+.zoom-guide {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 13px;
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+  animation: fadeGuide 3s ease-in-out infinite;
+  pointer-events: none;
+}
+.zoom-guide__arrow {
+  animation: bounceDown 1.5s ease-in-out infinite;
+}
+@keyframes bounceDown {
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(6px);}
+}
+@keyframes fadeGuide {
+  0%,100%{opacity:0.6;}
+  50%{opacity:1;}
+}
+
 @media (max-width: 768px) {
-  .live-counter { padding: 40px 24px 24px; }
-  .bubble-map { min-height: 60vh; }
-  .bubble-tooltip { width: 260px; }
-  .bubble-legend { padding: 16px 24px 40px; gap: 12px; }
+  .portfolio-counter { padding: 16px 24px; top: 72px; }
+  .zoom-viewport { top: 130px; height: calc(100vh - 130px); }
+  .wall-legend { padding: 24px; gap: 12px; }
 }
 </style>
 </head>
@@ -242,38 +277,28 @@
   <a href="/services.html#contact">무료 상담</a>
 </div>
 
-<!-- PAGE HERO -->
-<section class="page-hero" style="padding-bottom: 40px;">
-  <div class="page-hero__bg"></div>
-  <div class="page-hero__content">
-    <p class="page-hero__label">Portfolio</p>
-    <h1 class="page-hero__title">우리가 만든<br><em>채널의 성과</em></h1>
-    <p class="page-hero__desc">543개 영상. 10개 채널. 각 원의 크기는 조회수에 비례합니다.</p>
-  </div>
-</section>
+<!-- STICKY COUNTER -->
+<div class="portfolio-counter" id="counter-bar">
+  <p class="pc__label"><span class="pc__pulse"></span>레코컬쳐에서 만든 영상의 <span class="orange">누적 조회수</span></p>
+  <div class="pc__number" id="counter-display">0</div>
+  <p class="pc__sub">543 videos · 10 channels · views and counting</p>
+</div>
 
-<!-- LIVE COUNTER -->
-<section class="live-counter">
-  <p class="live-counter__label"><span class="live-counter__pulse"></span>레코컬쳐에서 만든 영상의 <span class="orange">누적 조회수</span></p>
-  <div class="live-counter__number" id="counter-display">0</div>
-  <p class="live-counter__unit">views and counting</p>
-</section>
-
-<!-- BUBBLE MAP -->
-<div class="bubble-map" id="bubble-map"></div>
-
-<!-- LEGEND -->
-<div class="bubble-legend" id="bubble-legend"></div>
-
-<!-- TOOLTIP -->
-<div class="bubble-tooltip" id="tooltip">
-  <img class="bubble-tooltip__thumb" id="tt-thumb" src="" alt="">
-  <div class="bubble-tooltip__body">
-    <div class="bubble-tooltip__channel" id="tt-channel"></div>
-    <div class="bubble-tooltip__title" id="tt-title"></div>
-    <div class="bubble-tooltip__views" id="tt-views"></div>
+<!-- ZOOM WALL -->
+<div class="zoom-wrap">
+  <div class="zoom-spacer" id="zoom-spacer">
+    <div class="zoom-viewport" id="zoom-viewport">
+      <div class="thumb-wall" id="thumb-wall"></div>
+      <div class="zoom-guide" id="zoom-guide">
+        <span>스크롤하여 탐색</span>
+        <span class="zoom-guide__arrow">↓</span>
+      </div>
+    </div>
   </div>
 </div>
+
+<!-- LEGEND -->
+<div class="wall-legend" id="wall-legend"></div>
 
 <!-- CTA -->
 <section class="cta-section">
@@ -315,232 +340,229 @@
 </footer>
 
 <script>
-// ===== CHANNEL COLORS =====
+// ===== CONFIG =====
 const CHANNEL_COLORS = {
-  '이바다이야기': '#ED6C00',
-  '친절한 송이씨': '#E8488A',
-  '권의시선': '#3B82F6',
-  '하원장 강동현': '#8B5CF6',
-  'Prepatina 차랑꾼': '#1a1a1a',
-  '태오네모세모': '#06B6D4',
-  '진로사이다': '#F59E0B',
-  '바른의사 백승우': '#10B981',
-  '우선이선우': '#EC4899',
-  '이태호 수의사': '#6366F1',
+  '이바다이야기':'#ED6C00','친절한 송이씨':'#E8488A','권의시선':'#3B82F6',
+  '하원장 강동현':'#8B5CF6','Prepatina 차랑꾼':'#1a1a1a','태오네모세모':'#06B6D4',
+  '진로사이다':'#F59E0B','바른의사 백승우':'#10B981','우선이선우':'#EC4899',
+  '이태호 수의사':'#6366F1',
 };
+const API_KEY = 'AIzaSyDegAUyaLZzxZOmqPZ7Cknr6BLQVo_Z1Zk';
+const CHANNELS = [
+  'UCa4XAtZ_04zXUAh28HFbJQw','UCa16_cbdgo7BDjHbJvJowGw','UCdRgh9GCeMs8Bo86QMSuiuA',
+  'UCvQCmSsCRb8z3q0SO5JW8Pw','UCQs5sRayqKqrdxTaV38OVRA','UCj_RY4FlDqfafum6Gy5nUiA',
+  'UCDy8IPYmRu6WbDUyAs1ffyg','UC9yDBiSGrXpooefuaXO6BaA','UC2kME1ttakYQVNxBQJJo6Sw',
+  'UCwDwL7htetGbWwypB1sYK5A',
+];
 
-// ===== LIVE COUNTER =====
-(function() {
-  const API_KEY = 'AIzaSyDegAUyaLZzxZOmqPZ7Cknr6BLQVo_Z1Zk';
-  const CHANNELS = [
-    'UCa4XAtZ_04zXUAh28HFbJQw','UCa16_cbdgo7BDjHbJvJowGw',
-    'UCdRgh9GCeMs8Bo86QMSuiuA','UCvQCmSsCRb8z3q0SO5JW8Pw',
-    'UCQs5sRayqKqrdxTaV38OVRA','UCj_RY4FlDqfafum6Gy5nUiA',
-    'UCDy8IPYmRu6WbDUyAs1ffyg','UC9yDBiSGrXpooefuaXO6BaA',
-    'UC2kME1ttakYQVNxBQJJo6Sw','UCwDwL7htetGbWwypB1sYK5A',
-  ];
-  const FALLBACK = 56923406;
-  const el = document.getElementById('counter-display');
-  let current = 0, vps = 0.5, lastDisplay = -1, started = false;
-  let digitEls = [], lastChars = [], built = false;
-
-  function buildSlots(s) {
-    el.innerHTML = ''; digitEls = []; lastChars = [];
-    for (const ch of s) {
-      if (ch === ',') {
-        const sep = document.createElement('span');
-        sep.className = 'live-counter__sep'; sep.textContent = ',';
-        el.appendChild(sep); digitEls.push(null); lastChars.push(',');
-      } else {
-        const w = document.createElement('span'); w.className = 'live-counter__digit';
-        const inner = document.createElement('span'); inner.className = 'live-counter__digit-inner';
-        for (let d=0;d<=9;d++){const s2=document.createElement('span');s2.textContent=d;inner.appendChild(s2);}
-        w.appendChild(inner); el.appendChild(w);
-        inner.style.transition='none'; inner.style.transform=`translateY(-${parseInt(ch)}em)`;
-        digitEls.push(inner); lastChars.push(ch);
+// ===== COUNTER (slot machine) =====
+(function(){
+  const el=document.getElementById('counter-display');
+  let current=0,vps=0.5,lastDisplay=-1,started=false;
+  let digitEls=[],lastChars=[],built=false;
+  function buildSlots(s){
+    el.innerHTML='';digitEls=[];lastChars=[];
+    for(const ch of s){
+      if(ch===','){
+        const sep=document.createElement('span');sep.className='pc__sep';sep.textContent=',';
+        el.appendChild(sep);digitEls.push(null);lastChars.push(',');
+      }else{
+        const w=document.createElement('span');w.className='pc__digit';
+        const inner=document.createElement('span');inner.className='pc__digit-inner';
+        for(let d=0;d<=9;d++){const s2=document.createElement('span');s2.textContent=d;inner.appendChild(s2);}
+        w.appendChild(inner);el.appendChild(w);
+        inner.style.transition='none';inner.style.transform=`translateY(-${parseInt(ch)}em)`;
+        digitEls.push(inner);lastChars.push(ch);
       }
     }
-    built = true;
-    requestAnimationFrame(()=>{ digitEls.forEach(i=>{if(i)i.style.transition='';}); });
+    built=true;
+    requestAnimationFrame(()=>{digitEls.forEach(i=>{if(i)i.style.transition='';});});
   }
-  function setDigits(s) {
-    if (!built || s.length !== lastChars.length) { buildSlots(s); return; }
-    for (let i=0;i<s.length;i++) {
-      const ch=s[i];
-      if(ch!==','&&ch!==lastChars[i]&&digitEls[i]){digitEls[i].style.transform=`translateY(-${parseInt(ch)}em)`;lastChars[i]=ch;}
-    }
+  function setDigits(s){
+    if(!built||s.length!==lastChars.length){buildSlots(s);return;}
+    for(let i=0;i<s.length;i++){const ch=s[i];if(ch!==','&&ch!==lastChars[i]&&digitEls[i]){digitEls[i].style.transform=`translateY(-${parseInt(ch)}em)`;lastChars[i]=ch;}}
   }
   function fmt(n){return Math.floor(n).toLocaleString('en-US');}
   async function fetchTotal(){
     try{
       const r=await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNELS.join(',')}&key=${API_KEY}`);
-      const d=await r.json(); if(!d.items)throw 0;
-      let t=0; d.items.forEach(c=>{t+=parseInt(c.statistics.viewCount||0);});
+      const d=await r.json();if(!d.items)throw 0;
+      let t=0;d.items.forEach(c=>{t+=parseInt(c.statistics.viewCount||0);});
       const c2=JSON.parse(localStorage.getItem('rc_counter')||'null');
       if(c2&&t>c2.v){const dt=(Date.now()-c2.t)/1000;if(dt>300)vps=Math.max(0.1,(t-c2.v)/dt);}
-      localStorage.setItem('rc_counter',JSON.stringify({v:t,t:Date.now(),vps}));
-      return t;
+      localStorage.setItem('rc_counter',JSON.stringify({v:t,t:Date.now(),vps}));return t;
     }catch(e){
       const c2=JSON.parse(localStorage.getItem('rc_counter')||'null');
       if(c2){vps=c2.vps||0.5;return c2.v+Math.floor((Date.now()-c2.t)/1000*vps);}
-      return FALLBACK;
+      return 56923406;
     }
   }
   function startTick(){
-    if(started)return; started=true; let last=performance.now();
+    if(started)return;started=true;let last=performance.now();
     function tick(now){const dt=(now-last)/1000;last=now;current+=vps*dt;const r=Math.floor(current);if(r!==lastDisplay){lastDisplay=r;setDigits(fmt(r));}requestAnimationFrame(tick);}
     requestAnimationFrame(tick);
   }
-  fetchTotal().then(t=>{current=t;buildSlots(fmt(t));lastDisplay=t;setTimeout(()=>startTick(),500);setInterval(async()=>{const f=await fetchTotal();if(f>current)current=f;},3600000);});
+  fetchTotal().then(t=>{current=t;buildSlots(fmt(t));lastDisplay=t;setTimeout(()=>startTick(),300);setInterval(async()=>{const f=await fetchTotal();if(f>current)current=f;},3600000);});
 })();
 
-// ===== BUBBLE MAP =====
-(function() {
-  const mapEl = document.getElementById('bubble-map');
-  const tooltip = document.getElementById('tooltip');
-  const ttThumb = document.getElementById('tt-thumb');
-  const ttChannel = document.getElementById('tt-channel');
-  const ttTitle = document.getElementById('tt-title');
-  const ttViews = document.getElementById('tt-views');
-  const legendEl = document.getElementById('bubble-legend');
+// ===== THUMBNAIL WALL + ZOOM =====
+(function(){
+  const wall = document.getElementById('thumb-wall');
+  const spacer = document.getElementById('zoom-spacer');
+  const viewport = document.getElementById('zoom-viewport');
+  const guide = document.getElementById('zoom-guide');
+  const legendEl = document.getElementById('wall-legend');
+  const counterBar = document.getElementById('counter-bar');
 
-  // Size mapping: size 1→12px, size 10→70px
-  function getRadius(size) { return 8 + size * 6; }
-
-  // Pack circles in a roughly circular/organic layout
-  function layoutBubbles(videos) {
-    const n = videos.length;
-    const sorted = [...videos].sort((a, b) => b.s - a.s); // big ones first for packing
-    const placed = [];
-    const centerX = 0, centerY = 0;
-
-    for (let i = 0; i < sorted.length; i++) {
-      const r = getRadius(sorted[i].s);
-      let bestX = 0, bestY = 0, bestDist = Infinity;
-
-      // Spiral placement
-      const angle = i * 2.399963; // golden angle
-      const spiralR = Math.sqrt(i) * (r * 1.1 + 4);
-      let cx = centerX + Math.cos(angle) * spiralR;
-      let cy = centerY + Math.sin(angle) * spiralR;
-
-      // Push away from overlaps
-      for (let iter = 0; iter < 20; iter++) {
-        let overlap = false;
-        for (const p of placed) {
-          const dx = cx - p.x, dy = cy - p.y;
-          const dist = Math.sqrt(dx*dx + dy*dy);
-          const minDist = r + p.r + 3;
-          if (dist < minDist) {
-            const push = (minDist - dist) / 2 + 0.5;
-            const nx = dx / (dist || 1), ny = dy / (dist || 1);
-            cx += nx * push;
-            cy += ny * push;
-            overlap = true;
-          }
-        }
-        if (!overlap) break;
-      }
-
-      sorted[i]._x = cx;
-      sorted[i]._y = cy;
-      sorted[i]._r = r;
-      placed.push({ x: cx, y: cy, r });
-    }
-    return sorted;
-  }
+  const COLS = window.innerWidth < 768 ? 12 : window.innerWidth < 1024 ? 18 : 24;
+  const CELL = window.innerWidth < 768 ? 40 : 56;
+  const GAP = 3;
+  const MIN_SCALE = 0.3;
+  const MAX_SCALE = 1.0;
+  const ZOOM_SCROLL_PX = 1200; // 줌에 사용할 스크롤 거리
 
   fetch('portfolio-data-compact.json')
     .then(r => r.json())
     .then(videos => {
-      const laid = layoutBubbles(videos);
+      // 셔플 (큰/작은 섞기) — 조회수 역순으로 정렬 후 인터리브
+      const sorted = [...videos].sort((a,b) => b.v - a.v);
+      const shuffled = [];
+      const top = sorted.filter(v => v.s >= 9);  // 상위 ~10%
+      const mid = sorted.filter(v => v.s >= 5 && v.s < 9);
+      const low = sorted.filter(v => v.s < 5);
 
-      // Find bounds
-      let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
-      laid.forEach(v => {
-        minX = Math.min(minX, v._x - v._r);
-        maxX = Math.max(maxX, v._x + v._r);
-        minY = Math.min(minY, v._y - v._r);
-        maxY = Math.max(maxY, v._y + v._r);
-      });
-      const w = maxX - minX + 40, h = maxY - minY + 40;
+      // Grid setup
+      wall.style.gridTemplateColumns = `repeat(${COLS}, ${CELL}px)`;
+      wall.style.gridAutoRows = `${CELL}px`;
+      wall.style.gap = GAP + 'px';
 
-      const container = document.createElement('div');
-      container.className = 'bubble-map__container';
-      container.style.width = w + 'px';
-      container.style.height = h + 'px';
-      container.style.position = 'relative';
+      // 배치: 상위는 2x2 또는 3x3, 나머지는 1x1
+      const all = [];
+      // Top 5: 3x3
+      top.slice(0, 5).forEach(v => { v._size = 3; all.push(v); });
+      // Top 6~20: 2x2
+      top.slice(5).concat(mid.slice(0, 15)).forEach(v => { v._size = 2; all.push(v); });
+      // 나머지: 1x1
+      mid.slice(15).concat(low).forEach(v => { v._size = 1; all.push(v); });
+      // Top에서 이미 넣은 것 외 나머지
+      top.slice(20).forEach(v => { if (!v._size) { v._size = 1; all.push(v); }});
 
-      laid.forEach((v, idx) => {
-        const el = document.createElement('a');
-        el.className = 'bubble';
-        el.href = `https://www.youtube.com/watch?v=${v.i}`;
-        el.target = '_blank';
-        const d = v._r * 2;
+      // 섞기 (큰 것들이 고르게 분포하도록)
+      const big = all.filter(v => v._size >= 2);
+      const small = all.filter(v => v._size === 1);
+      const final = [];
+      let bi = 0, si = 0;
+      while (bi < big.length || si < small.length) {
+        // 큰 거 1개당 작은 거 ~8개 비율
+        if (bi < big.length) { final.push(big[bi++]); }
+        for (let k = 0; k < 8 && si < small.length; k++) { final.push(small[si++]); }
+      }
+
+      // DOM 생성
+      final.forEach(v => {
+        const a = document.createElement('a');
+        a.href = `https://www.youtube.com/watch?v=${v.i}`;
+        a.target = '_blank';
         const color = CHANNEL_COLORS[v.c] || '#ED6C00';
-        el.style.cssText = `
-          width:${d}px;height:${d}px;
-          left:${v._x - minX + 20 - v._r}px;
-          top:${v._y - minY + 20 - v._r}px;
-          z-index:${v.s};
+
+        if (v._size === 3) a.className = 'size-3';
+        else if (v._size === 2) a.className = 'size-2';
+
+        a.style.setProperty('--ch-color', color);
+        a.style.borderBottom = `3px solid ${color}`;
+
+        // 이미지 (lazy)
+        const img = document.createElement('img');
+        img.dataset.src = `https://i.ytimg.com/vi/${v.i}/mqdefault.jpg`;
+        img.alt = '';
+        img.loading = 'lazy';
+        a.appendChild(img);
+
+        // 오버레이
+        const ov = document.createElement('div');
+        ov.className = 'overlay';
+        ov.innerHTML = `
+          <div class="overlay__channel">${v.c}</div>
+          <div class="overlay__title">${v.t}</div>
+          <div class="overlay__views">조회수 <strong>${v.v.toLocaleString()}</strong></div>
         `;
-        const inner = document.createElement('div');
-        inner.className = 'bubble__inner';
-        inner.style.background = color;
-        inner.style.fontSize = Math.max(8, v._r * 0.55) + 'px';
-        if (v.s >= 7) {
-          inner.textContent = (v.v >= 10000) ? Math.floor(v.v/10000) + '만' : Math.floor(v.v/1000) + 'K';
-        }
-        el.appendChild(inner);
+        a.appendChild(ov);
 
-        // Hover
-        el.addEventListener('mouseenter', (e) => {
-          ttThumb.src = `https://i.ytimg.com/vi/${v.i}/mqdefault.jpg`;
-          ttChannel.textContent = v.c;
-          ttTitle.textContent = v.t;
-          ttViews.innerHTML = `조회수 <strong>${v.v.toLocaleString()}</strong>`;
-          tooltip.classList.add('is-visible');
-          positionTooltip(e);
-        });
-        el.addEventListener('mousemove', positionTooltip);
-        el.addEventListener('mouseleave', () => {
-          tooltip.classList.remove('is-visible');
-        });
-
-        container.appendChild(el);
+        wall.appendChild(a);
       });
 
-      mapEl.appendChild(container);
+      // 벽 크기 계산
+      const wallW = COLS * (CELL + GAP);
+      const wallH = wall.scrollHeight;
 
-      // Scale to fit viewport
-      const mapRect = mapEl.getBoundingClientRect();
-      const scale = Math.min(mapRect.width / w, mapRect.height / h, 1) * 0.92;
-      container.style.transform = `translate(-50%,-50%) scale(${scale})`;
+      // 줌 스크롤 공간 설정
+      const totalHeight = ZOOM_SCROLL_PX + wallH + 200;
+      spacer.style.height = totalHeight + 'px';
 
-      // Legend
+      // Lazy load 이미지
+      const images = wall.querySelectorAll('img[data-src]');
+      const imgObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            const img = e.target;
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+            img.onload = () => { img.style.opacity = '1'; };
+            imgObserver.unobserve(img);
+          }
+        });
+      }, { rootMargin: '200px' });
+      images.forEach(img => imgObserver.observe(img));
+
+      // 스크롤 줌 핸들러
+      let currentScale = MIN_SCALE;
+      wall.style.transform = `scale(${MIN_SCALE})`;
+
+      function onScroll() {
+        const rect = spacer.getBoundingClientRect();
+        const scrolled = -rect.top; // 얼마나 스크롤했는지
+        const progress = Math.max(0, Math.min(1, scrolled / ZOOM_SCROLL_PX));
+
+        // 줌 스케일
+        const scale = MIN_SCALE + (MAX_SCALE - MIN_SCALE) * easeOutCubic(progress);
+        wall.style.transform = `scale(${scale})`;
+        currentScale = scale;
+
+        // 줌 완료 후 일반 스크롤
+        if (progress >= 1) {
+          const overScroll = scrolled - ZOOM_SCROLL_PX;
+          wall.style.transform = `scale(1) translateY(-${overScroll}px)`;
+        }
+
+        // 가이드 숨기기
+        if (progress > 0.1) {
+          guide.style.opacity = '0';
+        } else {
+          guide.style.opacity = '';
+        }
+
+        // 카운터 그림자
+        if (scrolled > 10) {
+          counterBar.classList.add('has-shadow');
+        } else {
+          counterBar.classList.remove('has-shadow');
+        }
+      }
+
+      function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll(); // 초기 상태
+
+      // 범례
       const channels = [...new Set(videos.map(v => v.c))];
       channels.forEach(ch => {
         const item = document.createElement('div');
-        item.className = 'bubble-legend__item';
-        const dot = document.createElement('span');
-        dot.className = 'bubble-legend__dot';
-        dot.style.background = CHANNEL_COLORS[ch] || '#ED6C00';
-        const label = document.createElement('span');
-        label.textContent = ch;
-        item.appendChild(dot);
-        item.appendChild(label);
+        item.className = 'wall-legend__item';
+        item.innerHTML = `<span class="wall-legend__dot" style="background:${CHANNEL_COLORS[ch]||'#ED6C00'}"></span><span>${ch}</span>`;
         legendEl.appendChild(item);
       });
     });
-
-  function positionTooltip(e) {
-    const tw = 320, th = 240;
-    let x = e.clientX + 16, y = e.clientY + 16;
-    if (x + tw > window.innerWidth) x = e.clientX - tw - 16;
-    if (y + th > window.innerHeight) y = e.clientY - th - 16;
-    tooltip.style.left = x + 'px';
-    tooltip.style.top = y + 'px';
-  }
 })();
 </script>
 
