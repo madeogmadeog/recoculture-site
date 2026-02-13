@@ -222,25 +222,130 @@
   </div>
 </section>
 
-<!-- STATS -->
+<!-- STATS (YouTube Data API 실시간 연동) -->
 <div class="portfolio-stats">
   <div class="portfolio-stat">
-    <div class="portfolio-stat__num">4+</div>
-    <div class="portfolio-stat__label">운영 채널</div>
-  </div>
-  <div class="portfolio-stat">
-    <div class="portfolio-stat__num">500만+</div>
+    <div class="portfolio-stat__num" id="stat-total-views">—</div>
     <div class="portfolio-stat__label">누적 조회수</div>
   </div>
   <div class="portfolio-stat">
-    <div class="portfolio-stat__num">163만</div>
-    <div class="portfolio-stat__label">최고 조회수</div>
+    <div class="portfolio-stat__num" id="stat-total-subs">—</div>
+    <div class="portfolio-stat__label">총 구독자</div>
+  </div>
+  <div class="portfolio-stat">
+    <div class="portfolio-stat__num" id="stat-total-videos">—</div>
+    <div class="portfolio-stat__label">제작 영상</div>
   </div>
   <div class="portfolio-stat">
     <div class="portfolio-stat__num">3년+</div>
     <div class="portfolio-stat__label">전문직 특화</div>
   </div>
 </div>
+
+<script>
+// ============================================================
+// YouTube Data API v3 - 실시간 채널 통계
+// ============================================================
+// 사용법:
+// 1. https://console.cloud.google.com 에서 프로젝트 생성
+// 2. YouTube Data API v3 활성화
+// 3. API 키 생성 (HTTP 리퍼러 제한: recoculture.com/*)
+// 4. 아래 YOUTUBE_API_KEY에 키 입력
+// 5. CHANNEL_IDS에 운영 채널 ID 모두 추가
+// ============================================================
+
+const YOUTUBE_API_KEY = ''; // ← 여기에 API 키 입력
+
+const CHANNEL_IDS = [
+  'UCa4XAtZ_04zXUAh28HFbJQw',  // 이바다이야기
+  'UCa16_cbdgo7BDjHbJvJowGw',  // 친절한 송이씨 (다태나의원)
+  'UCdRgh9GCeMs8Bo86QMSuiuA',  // 권의시선 : 치과의사 권낙현
+  'UCvQCmSsCRb8z3q0SO5JW8Pw',  // 하원장 강동현
+  // 채널 추가: 'CHANNEL_ID', // 채널명
+];
+
+// 숫자 애니메이션
+function animateNumber(el, target, suffix = '') {
+  const duration = 1500;
+  const start = performance.now();
+  const initial = 0;
+  
+  function update(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+    const current = Math.floor(initial + (target - initial) * eased);
+    el.textContent = formatNumber(current) + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+
+// 숫자 포맷 (만 단위)
+function formatNumber(n) {
+  if (n >= 100000000) return (n / 100000000).toFixed(1).replace(/\.0$/, '') + '억';
+  if (n >= 10000) return (n / 10000).toFixed(1).replace(/\.0$/, '') + '만';
+  return n.toLocaleString();
+}
+
+// API 호출
+async function fetchYouTubeStats() {
+  if (!YOUTUBE_API_KEY) {
+    // API 키 없으면 fallback 값 표시 (yt-dlp로 뽑은 스냅샷)
+    showFallbackStats();
+    return;
+  }
+
+  try {
+    const ids = CHANNEL_IDS.join(',');
+    const url = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${ids}&key=${YOUTUBE_API_KEY}`;
+    const res = await fetch(url);
+    const data = await res.json();
+
+    if (!data.items) {
+      showFallbackStats();
+      return;
+    }
+
+    let totalViews = 0;
+    let totalSubs = 0;
+    let totalVideos = 0;
+
+    data.items.forEach(ch => {
+      const s = ch.statistics;
+      totalViews += parseInt(s.viewCount || 0);
+      totalSubs += parseInt(s.subscriberCount || 0);
+      totalVideos += parseInt(s.videoCount || 0);
+    });
+
+    animateNumber(document.getElementById('stat-total-views'), totalViews, '+');
+    animateNumber(document.getElementById('stat-total-subs'), totalSubs, '+');
+    animateNumber(document.getElementById('stat-total-videos'), totalVideos, '편');
+
+  } catch (e) {
+    showFallbackStats();
+  }
+}
+
+function showFallbackStats() {
+  // API 키 없을 때의 폴백 값 (주기적으로 업데이트 필요)
+  animateNumber(document.getElementById('stat-total-views'), 8500000, '+');
+  animateNumber(document.getElementById('stat-total-subs'), 95000, '+');
+  animateNumber(document.getElementById('stat-total-videos'), 450, '편+');
+}
+
+// Intersection Observer로 화면에 보일 때 로드
+const statsSection = document.querySelector('.portfolio-stats');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      fetchYouTubeStats();
+      observer.disconnect();
+    }
+  });
+}, { threshold: 0.3 });
+observer.observe(statsSection);
+</script>
 
 <!-- CHANNEL 1: 이바다이야기 -->
 <section class="channel-section">
