@@ -7,6 +7,186 @@
 <meta name="description" content="레코컬쳐의 실제 성과 사례. 전문직 유튜브 채널 운영을 통해 달성한 비즈니스 성장 결과를 확인하세요.">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<style>
+/* Portfolio page specific styles */
+.channel-section {
+  padding: 100px 48px;
+  position: relative;
+}
+.channel-section:nth-child(even) {
+  background: var(--bg-secondary);
+}
+.channel-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+.channel-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--orange-bg2);
+  flex-shrink: 0;
+}
+.channel-name {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+.channel-handle {
+  font-family: var(--font-en);
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+}
+.channel-handle a {
+  color: var(--orange);
+  transition: opacity 0.2s;
+}
+.channel-handle a:hover {
+  opacity: 0.7;
+}
+.videos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+}
+.video-card {
+  background: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
+  transition: all 0.4s var(--ease-out);
+  cursor: pointer;
+}
+.video-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--border-hover);
+  box-shadow: var(--card-shadow-hover);
+}
+.video-card__thumb {
+  position: relative;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  background: var(--gray-100);
+}
+.video-card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s var(--ease-out);
+}
+.video-card:hover .video-card__thumb img {
+  transform: scale(1.05);
+}
+.video-card__play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.15);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.video-card:hover .video-card__play {
+  opacity: 1;
+}
+.video-card__play-btn {
+  width: 56px;
+  height: 56px;
+  background: var(--orange);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 22px;
+  box-shadow: 0 4px 20px rgba(237,108,0,0.4);
+}
+.video-card__duration {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0,0,0,0.8);
+  color: var(--white);
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.video-card__body {
+  padding: 20px;
+}
+.video-card__title {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.video-card__views {
+  font-family: var(--font-en);
+  font-size: 13px;
+  color: var(--text-tertiary);
+  font-weight: 500;
+}
+.video-card__views span {
+  color: var(--orange);
+  font-weight: 700;
+}
+
+/* Summary stats */
+.portfolio-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  padding: 0 48px;
+  margin-top: -40px;
+  position: relative;
+  z-index: 1;
+}
+.portfolio-stat {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: var(--card-shadow);
+}
+.portfolio-stat__num {
+  font-family: var(--font-en);
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--orange);
+}
+.portfolio-stat__label {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+@media (max-width: 1024px) {
+  .channel-section { padding: 80px 32px; }
+  .portfolio-stats { padding: 0 32px; grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .channel-section { padding: 60px 24px; }
+  .videos-grid { grid-template-columns: 1fr; }
+  .portfolio-stats { padding: 0 24px; grid-template-columns: 1fr 1fr; margin-top: -24px; }
+  .channel-name { font-size: 22px; }
+  .channel-avatar { width: 56px; height: 56px; }
+}
+</style>
 </head>
 <body>
 
@@ -33,175 +213,304 @@
 </div>
 
 <!-- PAGE HERO -->
-<section class="page-hero">
+<section class="page-hero" style="padding-bottom: 100px;">
   <div class="page-hero__bg"></div>
   <div class="page-hero__content">
     <p class="page-hero__label">Portfolio</p>
-    <h1 class="page-hero__title">실제 성과로<br><em>증명</em>합니다</h1>
-    <p class="page-hero__desc">숫자가 보여주는 결과. 전문직 유튜브 채널 운영을 통해 달성한 실질적인 비즈니스 성장 사례들입니다.</p>
+    <h1 class="page-hero__title">우리가 만든<br><em>채널의 성과</em></h1>
+    <p class="page-hero__desc">레코컬쳐가 운영하는 채널들의 실제 인기 영상입니다. 조회수가 아닌 비즈니스 성장을 만드는 콘텐츠.</p>
   </div>
 </section>
 
-<!-- IMPACT -->
-<section class="section impact">
-  <div class="impact__nums">
-    <div class="impact__card">
-      <div class="impact__num">400%</div>
-      <div class="impact__unit">신환 증가율</div>
+<!-- STATS -->
+<div class="portfolio-stats">
+  <div class="portfolio-stat">
+    <div class="portfolio-stat__num">4+</div>
+    <div class="portfolio-stat__label">운영 채널</div>
+  </div>
+  <div class="portfolio-stat">
+    <div class="portfolio-stat__num">500만+</div>
+    <div class="portfolio-stat__label">누적 조회수</div>
+  </div>
+  <div class="portfolio-stat">
+    <div class="portfolio-stat__num">163만</div>
+    <div class="portfolio-stat__label">최고 조회수</div>
+  </div>
+  <div class="portfolio-stat">
+    <div class="portfolio-stat__num">3년+</div>
+    <div class="portfolio-stat__label">전문직 특화</div>
+  </div>
+</div>
+
+<!-- CHANNEL 1: 이바다이야기 -->
+<section class="channel-section">
+  <div class="channel-header">
+    <img class="channel-avatar" src="https://yt3.googleusercontent.com/gbUgihv9jvIyxzUQRTKuaodI8D3HLgA8eyWpRz8z1FepG2A9KRm7ONdSZ_fFhTNx3YH1vP4O=s176-c-k-c0x00ffffff-no-rj" alt="이바다이야기">
+    <div>
+      <div class="channel-name">이바다이야기</div>
+      <div class="channel-handle"><a href="https://www.youtube.com/@이바다이야기" target="_blank">@이바다이야기 →</a></div>
     </div>
-    <div class="impact__card">
-      <div class="impact__num">95%</div>
-      <div class="impact__unit">유튜브 내원율</div>
-    </div>
-    <div class="impact__card">
-      <div class="impact__num">5x</div>
-      <div class="impact__unit">객단가 상승</div>
-    </div>
-    <div class="impact__card">
-      <div class="impact__num">200평</div>
-      <div class="impact__unit">확장 이전 성과</div>
-    </div>
+  </div>
+  <div class="videos-grid">
+    <a href="https://www.youtube.com/watch?v=VoEbn0wj1ZA" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/VoEbn0wj1ZA/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">15:33</div>
+      </div>
+      <div class="video-card__body">
+        <div class="video-card__title">"거의 다 무시하고 안 해줍니다." 치과에서 해달라고 해도 안해주는 '이거' 스케일링보다 중요합니다</div>
+        <div class="video-card__views">조회수 <span>1,635,900</span></div>
+      </div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=G_uhP-p1G_w" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/G_uhP-p1G_w/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">15:10</div>
+      </div>
+      <div class="video-card__body">
+        <div class="video-card__title">"사랑니 3초컷", 사랑니 3만개 발치한 의사가 말하는 사랑니 꼭 뽑아야 하는 이유</div>
+        <div class="video-card__views">조회수 <span>664,914</span></div>
+      </div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=r5bB6IPOs44" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/r5bB6IPOs44/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">11:19</div>
+      </div>
+      <div class="video-card__body">
+        <div class="video-card__title">양치할 때 '여기'를 닦아야 합니다. l 치과올 일 없어지는 기적의 양치법</div>
+        <div class="video-card__views">조회수 <span>484,149</span></div>
+      </div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=khmyElTuabE" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/khmyElTuabE/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">24:37</div>
+      </div>
+      <div class="video-card__body">
+        <div class="video-card__title">"다이소가면 무조건 사오세요" 치과의사가 매일 쓰는 다이소 꿀템 추천</div>
+        <div class="video-card__views">조회수 <span>400,242</span></div>
+      </div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=i4VLRz_Rs8A" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/i4VLRz_Rs8A/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">17:51</div>
+      </div>
+      <div class="video-card__body">
+        <div class="video-card__title">"홈페이지 보면 바로 보여요…" 절대 가면 안되는 치과 유형 5가지</div>
+        <div class="video-card__views">조회수 <span>383,648</span></div>
+      </div>
+    </a>
   </div>
 </section>
 
-<!-- PORTFOLIO GRID -->
-<section class="section portfolio">
-  <div class="section__label">Case Studies</div>
-  <h2 class="section__title">채널 성장 사례</h2>
-  <p class="section__desc" style="margin-bottom: 60px;">각 프로젝트에서 달성한 비즈니스 성과를 소개합니다.</p>
-  
-  <div class="portfolio__grid">
-    <div class="folio-card">
-      <div class="folio-card__thumb">
-        <span class="folio-card__thumb-icon">🏥</span>
-        <div class="folio-card__thumb-overlay"><span>View Case</span></div>
-      </div>
-      <div class="folio-card__body">
-        <div class="folio-card__category">Dermatology</div>
-        <h3 class="folio-card__title">100평대 확장 이전<br>부원장 3인 구인</h3>
-        <p class="folio-card__result">신환 예약 대기 시스템 도입, 공간 부족으로 확장 이전 결정. 유튜브 콘텐츠를 통한 브랜드 신뢰 구축으로 지역 내 1위 피부과로 성장.</p>
-        <div class="folio-card__metrics">
-          <div class="folio-metric">
-            <div class="folio-metric__num">200평</div>
-            <div class="folio-metric__label">확장 이전</div>
-          </div>
-          <div class="folio-metric">
-            <div class="folio-metric__num">+3</div>
-            <div class="folio-metric__label">부원장 채용</div>
-          </div>
-        </div>
-      </div>
+<!-- CHANNEL 2: 친절한 송이씨 -->
+<section class="channel-section">
+  <div class="channel-header">
+    <img class="channel-avatar" src="https://yt3.googleusercontent.com/t51xZ5pSib1u29Sul-Qy46Qmqi75VrFy4buA8vxKo614FTCNjK_Uv4OQFAJ89ztdwVObaS8-=s176-c-k-c0x00ffffff-no-rj" alt="친절한 송이씨">
+    <div>
+      <div class="channel-name">친절한 송이씨</div>
+      <div class="channel-handle"><a href="https://www.youtube.com/@송이씨" target="_blank">@송이씨 →</a></div>
     </div>
-    
-    <div class="folio-card">
-      <div class="folio-card__thumb">
-        <span class="folio-card__thumb-icon">🦷</span>
-        <div class="folio-card__thumb-overlay"><span>View Case</span></div>
+  </div>
+  <div class="videos-grid">
+    <a href="https://www.youtube.com/watch?v=-oopntYoHXY" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/-oopntYoHXY/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">19:22</div>
       </div>
-      <div class="folio-card__body">
-        <div class="folio-card__category">Dental</div>
-        <h3 class="folio-card__title">신환 400% 증가<br>1년간 지속 성장</h3>
-        <p class="folio-card__result">유튜브 내원 환자 95%. 타겟 콘텐츠 전략으로 임플란트·교정 환자 집중 유입, 1년 이상 안정적 성장 유지.</p>
-        <div class="folio-card__metrics">
-          <div class="folio-metric">
-            <div class="folio-metric__num">400%</div>
-            <div class="folio-metric__label">신환 증가</div>
-          </div>
-          <div class="folio-metric">
-            <div class="folio-metric__num">95%</div>
-            <div class="folio-metric__label">유튜브 내원</div>
-          </div>
-        </div>
+      <div class="video-card__body">
+        <div class="video-card__title">경력 10년차 의사가 남편에게 매년 하는 시술</div>
+        <div class="video-card__views">조회수 <span>128,849</span></div>
       </div>
-    </div>
-    
-    <div class="folio-card">
-      <div class="folio-card__thumb">
-        <span class="folio-card__thumb-icon">💊</span>
-        <div class="folio-card__thumb-overlay"><span>View Case</span></div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=n8ivh9bEba8" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/n8ivh9bEba8/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">18:00</div>
       </div>
-      <div class="folio-card__body">
-        <div class="folio-card__category">Medical</div>
-        <h3 class="folio-card__title">객단가 5배 상승<br>고가 시술 전환</h3>
-        <p class="folio-card__result">타겟 콘텐츠를 통한 고가 시술 환자 유입 극대화. 전문성 중심 영상으로 환자 신뢰도 대폭 향상.</p>
-        <div class="folio-card__metrics">
-          <div class="folio-metric">
-            <div class="folio-metric__num">5x</div>
-            <div class="folio-metric__label">객단가 상승</div>
-          </div>
-          <div class="folio-metric">
-            <div class="folio-metric__num">지속</div>
-            <div class="folio-metric__label">안정 성장</div>
-          </div>
-        </div>
+      <div class="video-card__body">
+        <div class="video-card__title">안 듣는다는 사람을 본 적이 없는 l 10살 어려 보이게 만드는 거의 만병통치약</div>
+        <div class="video-card__views">조회수 <span>106,408</span></div>
       </div>
-    </div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=CEwOucUdqjE" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/CEwOucUdqjE/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">9:28</div>
+      </div>
+      <div class="video-card__body">
+        <div class="video-card__title">피부과 시술의 어두운 면 l "나도 모르는 사이에 시술 받고 있었다고..?"</div>
+        <div class="video-card__views">조회수 <span>105,530</span></div>
+      </div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=lJAe2HCQ7_g" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/lJAe2HCQ7_g/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">18:27</div>
+      </div>
+      <div class="video-card__body">
+        <div class="video-card__title">내 얼굴을 가장 예쁘게 만드는 법을 알고 싶으면 보세요</div>
+        <div class="video-card__views">조회수 <span>60,650</span></div>
+      </div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=2pVAmj_VR64" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/2pVAmj_VR64/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">15:26</div>
+      </div>
+      <div class="video-card__body">
+        <div class="video-card__title">피부가 안 좋은데 화장을 해야 하는 사람들을 위한 영상...</div>
+        <div class="video-card__views">조회수 <span>41,509</span></div>
+      </div>
+    </a>
+  </div>
+</section>
 
-    <div class="folio-card">
-      <div class="folio-card__thumb">
-        <span class="folio-card__thumb-icon">🏥</span>
-        <div class="folio-card__thumb-overlay"><span>View Case</span></div>
-      </div>
-      <div class="folio-card__body">
-        <div class="folio-card__category">Plastic Surgery</div>
-        <h3 class="folio-card__title">상담 예약 300% 증가<br>브랜드 인지도 확보</h3>
-        <p class="folio-card__result">성형외과 특화 콘텐츠 전략으로 타겟 환자 유입. 원장님 개인 브랜딩과 병원 브랜딩 동시 달성.</p>
-        <div class="folio-card__metrics">
-          <div class="folio-metric">
-            <div class="folio-metric__num">300%</div>
-            <div class="folio-metric__label">상담 증가</div>
-          </div>
-          <div class="folio-metric">
-            <div class="folio-metric__num">6개월</div>
-            <div class="folio-metric__label">달성 기간</div>
-          </div>
-        </div>
-      </div>
+<!-- CHANNEL 3: 권의시선 : 치과의사 권낙현 -->
+<section class="channel-section">
+  <div class="channel-header">
+    <img class="channel-avatar" src="https://yt3.googleusercontent.com/52zgOhFSlCLEAWegHtDbnbJc-3IZtyWWnR98LpSTdmSRfIeVCld8m8egOoxyMxaenNAfnJcnAg=s176-c-k-c0x00ffffff-no-rj" alt="권의시선">
+    <div>
+      <div class="channel-name">권의시선 : 치과의사 권낙현</div>
+      <div class="channel-handle"><a href="https://www.youtube.com/@seoulkwondental" target="_blank">@seoulkwondental →</a></div>
     </div>
+  </div>
+  <div class="videos-grid">
+    <a href="https://www.youtube.com/watch?v=7br2PgKxB3A" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/7br2PgKxB3A/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">17:18</div>
+      </div>
+      <div class="video-card__body">
+        <div class="video-card__title">"요즘 최신 치료는 이겁니다" l 충치치료 받기 전 보고가세요</div>
+        <div class="video-card__views">조회수 <span>181,169</span></div>
+      </div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=rT9gVrzKkvA" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/rT9gVrzKkvA/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">18:42</div>
+      </div>
+      <div class="video-card__body">
+        <div class="video-card__title">내려간 잇몸 치아 빼지 않고 치료할 수 있습니다 l 잇몸퇴축 최신 치료법</div>
+        <div class="video-card__views">조회수 <span>181,153</span></div>
+      </div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=dywNNezAiR4" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/dywNNezAiR4/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">23:24</div>
+      </div>
+      <div class="video-card__body">
+        <div class="video-card__title">"뼈이식은 필수입니다" 임플란트 전 명심하세요! l 임플란트 뼈이식의 진실</div>
+        <div class="video-card__views">조회수 <span>19,256</span></div>
+      </div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=aU3qvB8b980" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/aU3qvB8b980/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">20:59</div>
+      </div>
+      <div class="video-card__body">
+        <div class="video-card__title">치과의사가 알려주는 치과 고르는 꿀팁 "이것만 확인하면 알 수 있어요"</div>
+        <div class="video-card__views">조회수 <span>13,076</span></div>
+      </div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=q0XBIMxeVD8" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/q0XBIMxeVD8/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">15:34</div>
+      </div>
+      <div class="video-card__body">
+        <div class="video-card__title">벌어진 앞니 치료법 l "저는 이게 최고라고 생각합니다" l 바이오클리어?!</div>
+        <div class="video-card__views">조회수 <span>6,529</span></div>
+      </div>
+    </a>
+  </div>
+</section>
 
-    <div class="folio-card">
-      <div class="folio-card__thumb">
-        <span class="folio-card__thumb-icon">🌿</span>
-        <div class="folio-card__thumb-overlay"><span>View Case</span></div>
-      </div>
-      <div class="folio-card__body">
-        <div class="folio-card__category">Korean Medicine</div>
-        <h3 class="folio-card__title">지역 1위 한의원<br>예약 대기 2주</h3>
-        <p class="folio-card__result">한의학 전문 콘텐츠로 신뢰 구축. 교육형 영상 시리즈가 지역 환자 유입의 핵심 채널로 자리잡음.</p>
-        <div class="folio-card__metrics">
-          <div class="folio-metric">
-            <div class="folio-metric__num">1위</div>
-            <div class="folio-metric__label">지역 내</div>
-          </div>
-          <div class="folio-metric">
-            <div class="folio-metric__num">2주</div>
-            <div class="folio-metric__label">예약 대기</div>
-          </div>
-        </div>
-      </div>
+<!-- CHANNEL 4: 하원장 강동현 -->
+<section class="channel-section">
+  <div class="channel-header">
+    <img class="channel-avatar" src="https://yt3.googleusercontent.com/H53oBxBzG9HziDhEEPbBJff7PtnYGdPXMm3FxeRaQ0vXW1wsFS03EugJ89jDa1kDyLpE00E2=s176-c-k-c0x00ffffff-no-rj" alt="하원장 강동현">
+    <div>
+      <div class="channel-name">하원장 강동현</div>
+      <div class="channel-handle"><a href="https://www.youtube.com/@haclinic" target="_blank">@haclinic →</a></div>
     </div>
-
-    <div class="folio-card">
-      <div class="folio-card__thumb">
-        <span class="folio-card__thumb-icon">⚖️</span>
-        <div class="folio-card__thumb-overlay"><span>View Case</span></div>
+  </div>
+  <div class="videos-grid">
+    <a href="https://www.youtube.com/watch?v=TPQHlefRy3E" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/TPQHlefRy3E/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">17:41</div>
       </div>
-      <div class="folio-card__body">
-        <div class="folio-card__category">Legal</div>
-        <h3 class="folio-card__title">법률 상담 문의<br>월 200% 증가</h3>
-        <p class="folio-card__result">법률 지식 콘텐츠를 통한 전문성 노출. 잠재 고객의 신뢰를 확보하여 상담 전환율 극대화.</p>
-        <div class="folio-card__metrics">
-          <div class="folio-metric">
-            <div class="folio-metric__num">200%</div>
-            <div class="folio-metric__label">문의 증가</div>
-          </div>
-          <div class="folio-metric">
-            <div class="folio-metric__num">월간</div>
-            <div class="folio-metric__label">지속 유입</div>
-          </div>
-        </div>
+      <div class="video-card__body">
+        <div class="video-card__title">줄기세포 솔직히 말씀드립니다 l 줄기세포 치료 원리와 한계</div>
+        <div class="video-card__views">조회수 <span>67,841</span></div>
       </div>
-    </div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=cllgtZWwnzQ" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/cllgtZWwnzQ/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">36:32</div>
+      </div>
+      <div class="video-card__body">
+        <div class="video-card__title">"안면거상 대신 필러하세요" [장인을 만나다 ep.1]</div>
+        <div class="video-card__views">조회수 <span>49,865</span></div>
+      </div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=v87ZeivbONk" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/v87ZeivbONk/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">16:35</div>
+      </div>
+      <div class="video-card__body">
+        <div class="video-card__title">"또래보다 무조건 10년 어려집니다" l 매년 부모님께 해드리고 있는 동안시술 3가지</div>
+        <div class="video-card__views">조회수 <span>32,886</span></div>
+      </div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=hO3zxCoXc4o" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/hO3zxCoXc4o/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">13:50</div>
+      </div>
+      <div class="video-card__body">
+        <div class="video-card__title">뷰티 디바이스 사기 전, 제발 이거 먼저 시청하세요!</div>
+        <div class="video-card__views">조회수 <span>21,000</span></div>
+      </div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=503pZQ4_eGo" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/503pZQ4_eGo/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">14:59</div>
+      </div>
+      <div class="video-card__body">
+        <div class="video-card__title">다이소 단 돈 5천원이면 피부고민 사라집니다</div>
+        <div class="video-card__views">조회수 <span>18,893</span></div>
+      </div>
+    </a>
   </div>
 </section>
 
