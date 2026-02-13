@@ -147,7 +147,7 @@
 
 /* ===== LIVE COUNTER ===== */
 .live-counter {
-  padding: 80px 48px;
+  padding: 80px 48px 60px;
   text-align: center;
   background: var(--bg-primary);
   position: relative;
@@ -168,54 +168,12 @@
   font-size: 15px;
   font-weight: 600;
   color: var(--text-secondary);
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   position: relative;
 }
-.live-counter__label span {
+.live-counter__label .orange {
   color: var(--orange);
   font-weight: 700;
-}
-.live-counter__number {
-  font-family: var(--font-en);
-  font-size: clamp(48px, 8vw, 88px);
-  font-weight: 900;
-  color: var(--text-primary);
-  line-height: 1;
-  margin-bottom: 16px;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 0;
-}
-.live-counter__digit {
-  display: inline-block;
-  position: relative;
-  overflow: hidden;
-  height: 1em;
-  width: 0.58em;
-}
-.live-counter__digit-inner {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-}
-.live-counter__digit-inner span {
-  display: block;
-  height: 1em;
-  line-height: 1;
-  text-align: center;
-}
-.live-counter__comma {
-  width: 0.28em;
-  display: inline-flex;
-  align-items: flex-end;
-  justify-content: center;
-  color: var(--gray-300);
-  font-size: 0.5em;
-  padding-bottom: 0.15em;
 }
 .live-counter__pulse {
   display: inline-block;
@@ -231,37 +189,26 @@
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.5; transform: scale(0.8); }
 }
-.live-counter__sub {
-  font-size: 13px;
-  color: var(--text-tertiary);
-  position: relative;
-}
-.live-counter__sub strong {
-  color: var(--orange);
-  font-weight: 700;
-}
-
-/* Sub stats row */
-.live-counter__stats {
-  display: flex;
-  justify-content: center;
-  gap: 48px;
-  margin-top: 36px;
-  position: relative;
-}
-.live-counter__stat {
-  text-align: center;
-}
-.live-counter__stat-num {
+.live-counter__number {
   font-family: var(--font-en);
-  font-size: 28px;
-  font-weight: 800;
-  color: var(--orange);
+  font-size: clamp(52px, 9vw, 100px);
+  font-weight: 900;
+  color: var(--text-primary);
+  line-height: 1;
+  margin-bottom: 20px;
+  position: relative;
+  letter-spacing: -1px;
+  font-variant-numeric: tabular-nums;
 }
-.live-counter__stat-label {
-  font-size: 13px;
+.live-counter__number .comma {
+  color: var(--gray-300);
+  font-weight: 400;
+}
+.live-counter__unit {
+  font-size: 14px;
   color: var(--text-tertiary);
-  margin-top: 2px;
+  position: relative;
+  font-weight: 500;
 }
 
 @media (max-width: 1024px) {
@@ -315,230 +262,111 @@
 
 <!-- LIVE VIEW COUNTER -->
 <section class="live-counter" id="live-counter">
-  <p class="live-counter__label"><span class="live-counter__pulse"></span>레코컬쳐에서 만든 영상의 <span>누적 조회수</span></p>
-  <div class="live-counter__number" id="counter-display"></div>
-  <p class="live-counter__sub">10개 채널 · <strong id="counter-subs">—</strong> 구독자 · <strong id="counter-videos">—</strong>편 제작</p>
-  <div class="live-counter__stats">
-    <div class="live-counter__stat">
-      <div class="live-counter__stat-num">10</div>
-      <div class="live-counter__stat-label">운영 채널</div>
-    </div>
-    <div class="live-counter__stat">
-      <div class="live-counter__stat-num">3년+</div>
-      <div class="live-counter__stat-label">전문직 특화</div>
-    </div>
-    <div class="live-counter__stat">
-      <div class="live-counter__stat-num">24/7</div>
-      <div class="live-counter__stat-label">실시간 집계</div>
-    </div>
-  </div>
+  <p class="live-counter__label"><span class="live-counter__pulse"></span>레코컬쳐에서 만든 영상의 <span class="orange">누적 조회수</span></p>
+  <div class="live-counter__number" id="counter-display">0</div>
+  <p class="live-counter__unit">views and counting</p>
 </section>
 
 <script>
 // ============================================================
-// LIVE TICKER COUNTER — YouTube Data API v3
-// 1시간마다 실제 조회수 fetch → 사이 구간은 보간으로 카운트업
+// LIVE TICKER — 단순 텍스트 카운터
+// 1시간마다 YouTube API fetch, 사이 구간은 보간 카운트업
 // ============================================================
-const CONFIG = {
-  API_KEY: 'AIzaSyDegAUyaLZzxZOmqPZ7Cknr6BLQVo_Z1Zk',
-  CHANNEL_IDS: [
-    'UCa4XAtZ_04zXUAh28HFbJQw',  // 이바다이야기
-    'UCa16_cbdgo7BDjHbJvJowGw',  // 친절한 송이씨
-    'UCdRgh9GCeMs8Bo86QMSuiuA',  // 권의시선 : 치과의사 권낙현
-    'UCvQCmSsCRb8z3q0SO5JW8Pw',  // 하원장 강동현
-    'UCQs5sRayqKqrdxTaV38OVRA',  // 태오네모세모
-    'UCj_RY4FlDqfafum6Gy5nUiA',  // 진로사이다 (Dr. Rosa Talk)
-    'UCDy8IPYmRu6WbDUyAs1ffyg',  // 바른의사 백승우
-    'UC9yDBiSGrXpooefuaXO6BaA',  // Prepatina 차랑꾼
-    'UC2kME1ttakYQVNxBQJJo6Sw',  // 우선이선우
-    'UCwDwL7htetGbWwypB1sYK5A',  // 이태호 수의사
-  ],
-  FETCH_INTERVAL: 60 * 60 * 1000,  // 1시간
-  TICK_INTERVAL: 80,                // 80ms마다 UI 업데이트
-  FALLBACK_VIEWS: 56923406,         // API 실패 시 폴백
-  FALLBACK_SUBS: 309480,
-  FALLBACK_VIDEOS: 1124,
-  FALLBACK_VPS: 0.45,               // 초당 예상 조회수 증가
-};
+(function() {
+  const API_KEY = 'AIzaSyDegAUyaLZzxZOmqPZ7Cknr6BLQVo_Z1Zk';
+  const CHANNELS = [
+    'UCa4XAtZ_04zXUAh28HFbJQw', 'UCa16_cbdgo7BDjHbJvJowGw',
+    'UCdRgh9GCeMs8Bo86QMSuiuA', 'UCvQCmSsCRb8z3q0SO5JW8Pw',
+    'UCQs5sRayqKqrdxTaV38OVRA', 'UCj_RY4FlDqfafum6Gy5nUiA',
+    'UCDy8IPYmRu6WbDUyAs1ffyg', 'UC9yDBiSGrXpooefuaXO6BaA',
+    'UC2kME1ttakYQVNxBQJJo6Sw', 'UCwDwL7htetGbWwypB1sYK5A',
+  ];
+  const FALLBACK = 56923406;
+  const el = document.getElementById('counter-display');
 
-class LiveCounter {
-  constructor() {
-    this.currentViews = 0;
-    this.displayViews = 0;
-    this.targetViews = 0;
-    this.viewsPerSecond = CONFIG.FALLBACK_VPS;
-    this.lastFetchTime = 0;
-    this.lastFetchViews = 0;
-    this.prevFetchViews = 0;
-    this.prevFetchTime = 0;
-    this.initialized = false;
-    this.counterEl = document.getElementById('counter-display');
-    this.subsEl = document.getElementById('counter-subs');
-    this.videosEl = document.getElementById('counter-videos');
-  }
+  let current = 0;
+  let vps = 0.5; // views per second 초기 추정
+  let lastDisplay = -1;
+  let started = false;
 
-  async init() {
-    await this.fetchStats();
-    this.startTicker();
-    // 1시간마다 재집계
-    setInterval(() => this.fetchStats(), CONFIG.FETCH_INTERVAL);
-  }
+  // 숫자를 콤마 포맷
+  function fmt(n) { return Math.floor(n).toLocaleString('en-US'); }
 
-  async fetchStats() {
+  // API에서 총 조회수 가져오기
+  async function fetchTotal() {
     try {
-      const ids = CONFIG.CHANNEL_IDS.join(',');
-      const url = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${ids}&key=${CONFIG.API_KEY}`;
+      const url = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNELS.join(',')}&key=${API_KEY}`;
       const res = await fetch(url);
       const data = await res.json();
+      if (!data.items) throw new Error();
+      let total = 0;
+      data.items.forEach(ch => { total += parseInt(ch.statistics.viewCount || 0); });
 
-      if (!data.items || data.items.length === 0) throw new Error('No data');
-
-      let totalViews = 0, totalSubs = 0, totalVideos = 0;
-      data.items.forEach(ch => {
-        const s = ch.statistics;
-        totalViews += parseInt(s.viewCount || 0);
-        totalSubs += parseInt(s.subscriberCount || 0);
-        totalVideos += parseInt(s.videoCount || 0);
-      });
-
-      // views per second 계산 (2번째 fetch부터)
-      const now = Date.now();
-      if (this.lastFetchTime > 0 && totalViews > this.lastFetchViews) {
-        const elapsed = (now - this.lastFetchTime) / 1000;
-        if (elapsed > 60) {
-          this.viewsPerSecond = (totalViews - this.lastFetchViews) / elapsed;
-        }
+      // vps 계산 (이전 캐시와 비교)
+      const cached = JSON.parse(localStorage.getItem('rc_counter') || 'null');
+      if (cached && total > cached.v) {
+        const dt = (Date.now() - cached.t) / 1000;
+        if (dt > 300) vps = Math.max(0.1, (total - cached.v) / dt);
       }
 
-      this.prevFetchViews = this.lastFetchViews;
-      this.prevFetchTime = this.lastFetchTime;
-      this.lastFetchViews = totalViews;
-      this.lastFetchTime = now;
-
-      if (!this.initialized) {
-        this.currentViews = totalViews;
-        this.displayViews = totalViews;
-        this.initialized = true;
-      }
-      this.targetViews = totalViews;
-
-      // 구독자·영상 수 표시
-      this.subsEl.textContent = this.formatCompact(totalSubs);
-      this.videosEl.textContent = totalVideos.toLocaleString();
-
-      // localStorage에 캐시
-      localStorage.setItem('rc_views', JSON.stringify({
-        views: totalViews, subs: totalSubs, videos: totalVideos,
-        vps: this.viewsPerSecond, time: now
-      }));
-
+      localStorage.setItem('rc_counter', JSON.stringify({ v: total, t: Date.now(), vps }));
+      return total;
     } catch (e) {
-      // 캐시 또는 폴백 사용
-      const cached = JSON.parse(localStorage.getItem('rc_views') || 'null');
+      // 캐시에서 복원
+      const cached = JSON.parse(localStorage.getItem('rc_counter') || 'null');
       if (cached) {
-        const elapsed = (Date.now() - cached.time) / 1000;
-        const estimated = Math.floor(cached.views + elapsed * (cached.vps || CONFIG.FALLBACK_VPS));
-        this.currentViews = estimated;
-        this.displayViews = estimated;
-        this.targetViews = estimated;
-        this.viewsPerSecond = cached.vps || CONFIG.FALLBACK_VPS;
-        this.subsEl.textContent = this.formatCompact(cached.subs);
-        this.videosEl.textContent = cached.videos.toLocaleString();
-      } else {
-        this.currentViews = CONFIG.FALLBACK_VIEWS;
-        this.displayViews = CONFIG.FALLBACK_VIEWS;
-        this.targetViews = CONFIG.FALLBACK_VIEWS;
-        this.subsEl.textContent = this.formatCompact(CONFIG.FALLBACK_SUBS);
-        this.videosEl.textContent = CONFIG.FALLBACK_VIDEOS.toLocaleString();
+        vps = cached.vps || 0.5;
+        return cached.v + Math.floor((Date.now() - cached.t) / 1000 * vps);
       }
-      this.initialized = true;
+      return FALLBACK;
     }
   }
 
-  startTicker() {
-    let lastTick = performance.now();
+  // 초기 로드: 빠르게 카운트업 애니메이션
+  function animateIn(target) {
+    const duration = 2000;
+    const start = performance.now();
+    function step(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      current = target * ease;
+      el.textContent = fmt(current);
+      if (p < 1) requestAnimationFrame(step);
+      else { current = target; startTicking(); }
+    }
+    requestAnimationFrame(step);
+  }
 
-    const tick = (now) => {
-      const dt = (now - lastTick) / 1000;
-      lastTick = now;
+  // 실시간 틱
+  function startTicking() {
+    if (started) return;
+    started = true;
+    let last = performance.now();
 
-      // 부드럽게 증가
-      this.currentViews += this.viewsPerSecond * dt;
-
-      // 정수로 반올림한 값이 바뀌었을 때만 DOM 업데이트
-      const rounded = Math.floor(this.currentViews);
-      if (rounded !== this.displayViews) {
-        this.displayViews = rounded;
-        this.renderDigits(rounded);
+    function tick(now) {
+      const dt = (now - last) / 1000;
+      last = now;
+      current += vps * dt;
+      const rounded = Math.floor(current);
+      if (rounded !== lastDisplay) {
+        lastDisplay = rounded;
+        el.textContent = fmt(rounded);
       }
-
       requestAnimationFrame(tick);
-    };
-
-    // 초기 렌더
-    this.renderDigits(Math.floor(this.currentViews));
+    }
     requestAnimationFrame(tick);
   }
 
-  renderDigits(num) {
-    const str = num.toLocaleString('en-US');
-    const el = this.counterEl;
-
-    // 첫 렌더 또는 자릿수 변경 시 DOM 재구축
-    if (!this._digitEls || this._lastLen !== str.length) {
-      el.innerHTML = '';
-      this._digitEls = [];
-      this._lastDigits = [];
-
-      for (let i = 0; i < str.length; i++) {
-        const ch = str[i];
-        if (ch === ',') {
-          const comma = document.createElement('span');
-          comma.className = 'live-counter__comma';
-          comma.textContent = ',';
-          el.appendChild(comma);
-          this._digitEls.push(null);
-          this._lastDigits.push(',');
-        } else {
-          const wrapper = document.createElement('span');
-          wrapper.className = 'live-counter__digit';
-          const inner = document.createElement('span');
-          inner.className = 'live-counter__digit-inner';
-          for (let d = 0; d <= 9; d++) {
-            const s = document.createElement('span');
-            s.textContent = d;
-            inner.appendChild(s);
-          }
-          wrapper.appendChild(inner);
-          el.appendChild(wrapper);
-          // 10개 숫자(0-9), 각 1em 높이 → digit N은 -N * 100% / 10 = -N * 10%
-          inner.style.transform = `translateY(-${parseInt(ch) * 100}%)`;
-          this._digitEls.push(inner);
-          this._lastDigits.push(ch);
-        }
-      }
-      this._lastLen = str.length;
-      return;
-    }
-
-    for (let i = 0; i < str.length; i++) {
-      const ch = str[i];
-      if (ch !== ',' && this._lastDigits[i] !== ch && this._digitEls[i]) {
-        this._digitEls[i].style.transform = `translateY(-${parseInt(ch) * 100}%)`;
-        this._lastDigits[i] = ch;
-      }
-    }
-  }
-
-  formatCompact(n) {
-    if (n >= 10000) return (n / 10000).toFixed(1).replace(/\.0$/, '') + '만';
-    return n.toLocaleString();
-  }
-}
-
-// 페이지 로드 시 시작
-const counter = new LiveCounter();
-counter.init();
+  // 시작
+  fetchTotal().then(total => {
+    animateIn(total);
+    // 1시간마다 재집계
+    setInterval(async () => {
+      const fresh = await fetchTotal();
+      if (fresh > current) current = fresh;
+    }, 3600000);
+  });
+})();
 </script>
 
 <!-- CHANNEL 1: 이바다이야기 -->
