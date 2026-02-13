@@ -127,26 +127,30 @@
   border-radius: 10px;
   background: #1a1a1a;
   aspect-ratio: 16/9;
-  transition: transform 0.25s cubic-bezier(0.23,1,0.32,1), box-shadow 0.25s ease;
+  transition: transform 0.3s cubic-bezier(0.23,1,0.32,1), box-shadow 0.3s ease;
 }
 .thumb-wall a:hover {
-  transform: scale(1.05);
+  transform: scale(1.04);
   z-index: 50;
-  box-shadow: 0 12px 40px rgba(237,108,0,0.3);
+  box-shadow: 0 12px 40px rgba(237,108,0,0.25);
 }
 .thumb-wall a img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: opacity 0.5s;
+  transition: opacity 0.5s, filter 0.3s;
+  filter: brightness(0.55);
 }
 .thumb-wall a img.loading { opacity: 0; }
+.thumb-wall a:hover img {
+  filter: brightness(1);
+}
 /* 호버 오버레이 */
 .thumb-wall a .overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(transparent 30%, rgba(0,0,0,0.85) 100%);
+  background: linear-gradient(transparent 20%, rgba(0,0,0,0.9) 100%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -182,6 +186,14 @@
   color: rgba(255,255,255,0.6);
 }
 .overlay__views strong { color: var(--orange); }
+.overlay__link {
+  font-family: var(--font-en);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--orange);
+  margin-top: 6px;
+  letter-spacing: 0.5px;
+}
 
 /* 2x, 3x 크기 */
 .thumb-wall a.size-2 { grid-column: span 2; grid-row: span 2; }
@@ -238,17 +250,20 @@
   <a href="/services.html#contact">무료 상담</a>
 </div>
 
+<!-- SPACER for nav -->
+<div style="height: 72px;"></div>
+
 <!-- STICKY COUNTER -->
 <div class="portfolio-counter" id="counter-bar">
   <p class="pc__label"><span class="pc__pulse"></span>레코컬쳐에서 만든 영상의 <span class="orange">누적 조회수</span></p>
   <div class="pc__number" id="counter-display">0</div>
-  <p class="pc__sub">543 videos · 10 channels · views and counting</p>
+  <p class="pc__sub">10 channels · views and counting</p>
 </div>
 
 <!-- THUMBNAIL WALL -->
 <section class="wall-section">
   <div class="wall-section__header">
-    <p class="wall-section__sub">543 videos across 10 channels</p>
+    <p class="wall-section__sub">456 videos across 9 channels</p>
     <h2 class="wall-section__title">이 모든 영상을 <span>우리가 만들었습니다</span></h2>
   </div>
   <div class="thumb-wall" id="thumb-wall"></div>
@@ -418,6 +433,7 @@ const CHANNELS = [
           <div class="overlay__channel">${v.c}</div>
           <div class="overlay__title">${v.t}</div>
           <div class="overlay__views">조회수 <strong>${v.v.toLocaleString()}</strong></div>
+          <div class="overlay__link">Watch on YouTube →</div>
         `;
         a.appendChild(ov);
 
