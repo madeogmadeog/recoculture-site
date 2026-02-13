@@ -199,6 +199,66 @@
 .thumb-wall a.size-2 { grid-column: span 2; grid-row: span 2; }
 .thumb-wall a.size-3 { grid-column: span 2; grid-row: span 2; }
 
+/* 접힌 상태: 최대 높이 제한 + 페이드 */
+.thumb-wall.is-collapsed {
+  max-height: 680px;
+  overflow: hidden;
+  position: relative;
+}
+.thumb-wall.is-collapsed::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(transparent, #0a0a0a);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* 더보기 CTA */
+.wall-expand {
+  text-align: center;
+  padding: 0 48px 60px;
+  background: #0a0a0a;
+  position: relative;
+  z-index: 20;
+  margin-top: -40px;
+}
+.wall-expand__text {
+  font-size: 15px;
+  color: #888;
+  margin-bottom: 20px;
+}
+.wall-expand__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-kr);
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--orange);
+  border: none;
+  padding: 14px 36px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.wall-expand__btn:hover {
+  background: var(--orange-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(237,108,0,0.3);
+}
+.wall-expand__count {
+  font-family: var(--font-en);
+  font-size: 13px;
+  color: #666;
+  margin-top: 12px;
+}
+.wall-expand.is-hidden { display: none; }
+
 /* 조회수 배지 (큰 셀) */
 .thumb-badge {
   position: absolute;
@@ -266,7 +326,12 @@
     <p class="wall-section__sub">456 videos across 9 channels</p>
     <h2 class="wall-section__title">이 모든 영상을 <span>우리가 만들었습니다</span></h2>
   </div>
-  <div class="thumb-wall" id="thumb-wall"></div>
+  <div class="thumb-wall is-collapsed" id="thumb-wall"></div>
+  <div class="wall-expand" id="wall-expand">
+    <p class="wall-expand__text">더 많은 포트폴리오를 확인하시겠어요?</p>
+    <button class="wall-expand__btn" id="expand-btn">전체 포트폴리오 보기 <span>↓</span></button>
+    <p class="wall-expand__count" id="expand-count"></p>
+  </div>
 </section>
 
 <!-- CTA -->
@@ -440,23 +505,38 @@ const CHANNELS = [
         wall.appendChild(a);
       });
 
+      // 더보기 버튼
+      const expandEl = document.getElementById('wall-expand');
+      const expandBtn = document.getElementById('expand-btn');
+      const expandCount = document.getElementById('expand-count');
+      expandCount.textContent = `총 ${final.length}개 영상`;
+
+      expandBtn.addEventListener('click', () => {
+        wall.classList.remove('is-collapsed');
+        expandEl.classList.add('is-hidden');
+        // 새로 보이는 카드에 애니메이션 적용
+        wall.querySelectorAll('a').forEach(card => {
+          observer2.observe(card);
+        });
+      });
+
       // 스크롤 진입 애니메이션
       const cards = wall.querySelectorAll('a');
-      const observer = new IntersectionObserver((entries) => {
+      const observer2 = new IntersectionObserver((entries) => {
         entries.forEach(e => {
           if (e.isIntersecting) {
             e.target.style.opacity = '1';
             e.target.style.transform = 'translateY(0)';
-            observer.unobserve(e.target);
+            observer2.unobserve(e.target);
           }
         });
       }, { threshold: 0.1, rootMargin: '50px' });
 
       cards.forEach((card, i) => {
         card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = `opacity 0.5s ${i % 10 * 0.03}s, transform 0.5s ${i % 10 * 0.03}s cubic-bezier(0.23,1,0.32,1)`;
-        observer.observe(card);
+        card.style.transform = 'translateY(24px)';
+        card.style.transition = `opacity 0.4s ${i % 8 * 0.04}s, transform 0.4s ${i % 8 * 0.04}s cubic-bezier(0.23,1,0.32,1)`;
+        observer2.observe(card);
       });
     });
 })();
