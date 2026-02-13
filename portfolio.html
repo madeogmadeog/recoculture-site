@@ -177,44 +177,45 @@
 }
 .live-counter__number {
   font-family: var(--font-en);
-  font-size: clamp(48px, 8vw, 96px);
+  font-size: clamp(48px, 8vw, 88px);
   font-weight: 900;
   color: var(--text-primary);
-  letter-spacing: 2px;
   line-height: 1;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   gap: 0;
-  min-height: 1.2em;
 }
 .live-counter__digit {
   display: inline-block;
   position: relative;
   overflow: hidden;
-  height: 1.15em;
-  width: 0.62em;
+  height: 1em;
+  width: 0.58em;
 }
 .live-counter__digit-inner {
-  display: flex;
-  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 .live-counter__digit-inner span {
-  height: 1.15em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
+  height: 1em;
+  line-height: 1;
+  text-align: center;
 }
 .live-counter__comma {
-  width: 0.3em;
+  width: 0.28em;
   display: inline-flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   color: var(--gray-300);
-  font-size: 0.6em;
+  font-size: 0.5em;
+  padding-bottom: 0.15em;
 }
 .live-counter__pulse {
   display: inline-block;
@@ -503,7 +504,6 @@ class LiveCounter {
           wrapper.className = 'live-counter__digit';
           const inner = document.createElement('span');
           inner.className = 'live-counter__digit-inner';
-          // 0~9 스택
           for (let d = 0; d <= 9; d++) {
             const s = document.createElement('span');
             s.textContent = d;
@@ -511,7 +511,8 @@ class LiveCounter {
           }
           wrapper.appendChild(inner);
           el.appendChild(wrapper);
-          inner.style.transform = `translateY(-${parseInt(ch) * (100 / 11)}%)`;
+          // 10개 숫자(0-9), 각 1em 높이 → digit N은 -N * 100% / 10 = -N * 10%
+          inner.style.transform = `translateY(-${parseInt(ch) * 100}%)`;
           this._digitEls.push(inner);
           this._lastDigits.push(ch);
         }
@@ -520,11 +521,10 @@ class LiveCounter {
       return;
     }
 
-    // 기존 DOM에서 변경된 자릿수만 업데이트
     for (let i = 0; i < str.length; i++) {
       const ch = str[i];
       if (ch !== ',' && this._lastDigits[i] !== ch && this._digitEls[i]) {
-        this._digitEls[i].style.transform = `translateY(-${parseInt(ch) * (100 / 11)}%)`;
+        this._digitEls[i].style.transform = `translateY(-${parseInt(ch) * 100}%)`;
         this._lastDigits[i] = ch;
       }
     }
