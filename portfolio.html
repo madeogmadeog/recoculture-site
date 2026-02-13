@@ -197,12 +197,37 @@
   line-height: 1;
   margin-bottom: 20px;
   position: relative;
-  letter-spacing: -1px;
-  font-variant-numeric: tabular-nums;
+  display: inline-flex;
+  justify-content: center;
+  align-items: flex-end;
 }
-.live-counter__number .comma {
+.live-counter__digit {
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+  line-height: 1;
+}
+.live-counter__digit-inner {
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
+}
+.live-counter__digit-inner span {
+  display: block;
+  height: 1em;
+  line-height: 1;
+  text-align: center;
+  width: 0.6em;
+}
+.live-counter__sep {
+  display: inline-block;
+  width: 0.2em;
+  text-align: center;
   color: var(--gray-300);
-  font-weight: 400;
+  font-weight: 300;
+  font-size: 0.6em;
+  line-height: 1;
+  align-self: center;
+  padding-bottom: 0.1em;
 }
 .live-counter__unit {
   font-size: 14px;
@@ -289,10 +314,77 @@
   let lastDisplay = -1;
   let started = false;
 
-  // 숫자를 콤마 포맷
+  let digitEls = [];  // 각 자릿수의 inner 요소
+  let lastDigits = []; // 마지막으로 표시한 숫자들
+  let built = false;
+
+  // DOM 구축: 자릿수 개수만큼 슬롯 생성
+  function buildSlots(numStr) {
+    el.innerHTML = '';
+    digitEls = [];
+    lastDigits = [];
+    for (let i = 0; i < numStr.length; i++) {
+      const ch = numStr[i];
+      if (ch === ',') {
+        const sep = document.createElement('span');
+        sep.className = 'live-counter__sep';
+        sep.textContent = ',';
+        el.appendChild(sep);
+        digitEls.push(null);
+        lastDigits.push(',');
+      } else {
+        const wrapper = document.createElement('span');
+        wrapper.className = 'live-counter__digit';
+        const inner = document.createElement('span');
+        inner.className = 'live-counter__digit-inner';
+        for (let d = 0; d <= 9; d++) {
+          const s = document.createElement('span');
+          s.textContent = d;
+          inner.appendChild(s);
+        }
+        wrapper.appendChild(inner);
+        el.appendChild(wrapper);
+        digitEls.push(inner);
+        lastDigits.push(ch);
+      }
+    }
+    built = true;
+  }
+
+  // 슬롯 업데이트: 바뀐 자릿수만 애니메이션
+  function setDigits(numStr) {
+    if (!built || numStr.length !== lastDigits.length) {
+      buildSlots(numStr);
+    }
+    for (let i = 0; i < numStr.length; i++) {
+      const ch = numStr[i];
+      if (ch !== ',' && ch !== lastDigits[i] && digitEls[i]) {
+        digitEls[i].style.transform = 'translateY(-' + parseInt(ch) + 'em)';
+        lastDigits[i] = ch;
+      }
+    }
+  }
+
+  // 초기 빌드 (즉시 올바른 위치로, 애니메이션 없이)
+  function initDigits(numStr) {
+    buildSlots(numStr);
+    // 트랜지션 비활성화 후 위치 설정
+    for (let i = 0; i < numStr.length; i++) {
+      const ch = numStr[i];
+      if (ch !== ',' && digitEls[i]) {
+        digitEls[i].style.transition = 'none';
+        digitEls[i].style.transform = 'translateY(-' + parseInt(ch) + 'em)';
+      }
+    }
+    // 다음 프레임에서 트랜지션 복원
+    requestAnimationFrame(() => {
+      digitEls.forEach(d => { if (d) d.style.transition = ''; });
+    });
+  }
+
   function fmt(n) { return Math.floor(n).toLocaleString('en-US'); }
 
-  // API에서 총 조회수 가져오기
+  // API fetch
   async function fetchTotal() {
     try {
       const url = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNELS.join(',')}&key=${API_KEY}`;
@@ -302,17 +394,14 @@
       let total = 0;
       data.items.forEach(ch => { total += parseInt(ch.statistics.viewCount || 0); });
 
-      // vps 계산 (이전 캐시와 비교)
       const cached = JSON.parse(localStorage.getItem('rc_counter') || 'null');
       if (cached && total > cached.v) {
         const dt = (Date.now() - cached.t) / 1000;
         if (dt > 300) vps = Math.max(0.1, (total - cached.v) / dt);
       }
-
       localStorage.setItem('rc_counter', JSON.stringify({ v: total, t: Date.now(), vps }));
       return total;
     } catch (e) {
-      // 캐시에서 복원
       const cached = JSON.parse(localStorage.getItem('rc_counter') || 'null');
       if (cached) {
         vps = cached.vps || 0.5;
@@ -322,27 +411,11 @@
     }
   }
 
-  // 초기 로드: 빠르게 카운트업 애니메이션
-  function animateIn(target) {
-    const duration = 2000;
-    const start = performance.now();
-    function step(now) {
-      const p = Math.min((now - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - p, 3);
-      current = target * ease;
-      el.textContent = fmt(current);
-      if (p < 1) requestAnimationFrame(step);
-      else { current = target; startTicking(); }
-    }
-    requestAnimationFrame(step);
-  }
-
   // 실시간 틱
   function startTicking() {
     if (started) return;
     started = true;
     let last = performance.now();
-
     function tick(now) {
       const dt = (now - last) / 1000;
       last = now;
@@ -350,7 +423,7 @@
       const rounded = Math.floor(current);
       if (rounded !== lastDisplay) {
         lastDisplay = rounded;
-        el.textContent = fmt(rounded);
+        setDigits(fmt(rounded));
       }
       requestAnimationFrame(tick);
     }
@@ -359,7 +432,11 @@
 
   // 시작
   fetchTotal().then(total => {
-    animateIn(total);
+    current = total;
+    initDigits(fmt(total));
+    lastDisplay = total;
+    // 약간의 딜레이 후 틱 시작
+    setTimeout(() => startTicking(), 500);
     // 1시간마다 재집계
     setInterval(async () => {
       const fresh = await fetchTotal();
