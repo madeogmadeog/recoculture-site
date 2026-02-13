@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>포트폴리오 | RECOCULTURE</title>
 <meta name="description" content="레코컬쳐의 실제 성과 사례. 전문직 유튜브 채널 운영을 통해 달성한 비즈니스 성장 결과를 확인하세요.">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
 /* Portfolio page specific styles */
@@ -190,9 +190,9 @@
   50% { opacity: 0.5; transform: scale(0.8); }
 }
 .live-counter__number {
-  font-family: var(--font-en);
-  font-size: clamp(52px, 9vw, 100px);
-  font-weight: 900;
+  font-family: 'Inter', var(--font-en), sans-serif;
+  font-size: clamp(48px, 8vw, 92px);
+  font-weight: 800;
   color: var(--text-primary);
   line-height: 1;
   margin-bottom: 20px;
@@ -200,14 +200,19 @@
   display: inline-flex;
   justify-content: center;
   align-items: flex-end;
+  padding: 0 4px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
 }
 .live-counter__digit {
   display: inline-block;
   height: 1em;
+  width: 0.64em;
   overflow: hidden;
   line-height: 1;
 }
 .live-counter__digit-inner {
+  display: block;
   transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   will-change: transform;
 }
@@ -216,18 +221,17 @@
   height: 1em;
   line-height: 1;
   text-align: center;
-  width: 0.6em;
 }
 .live-counter__sep {
-  display: inline-block;
-  width: 0.2em;
-  text-align: center;
-  color: var(--gray-300);
-  font-weight: 300;
-  font-size: 0.6em;
-  line-height: 1;
-  align-self: center;
-  padding-bottom: 0.1em;
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 0.22em;
+  height: 1em;
+  color: var(--orange);
+  font-weight: 400;
+  font-size: 0.55em;
+  padding-bottom: 0.08em;
 }
 .live-counter__unit {
   font-size: 14px;
@@ -650,7 +654,64 @@
   </div>
 </section>
 
-<!-- CHANNEL 4: 하원장 강동현 -->
+<!-- CHANNEL 4: Prepatina 차랑꾼 -->
+<section class="channel-section">
+  <div class="channel-header">
+    <img class="channel-avatar" src="https://yt3.googleusercontent.com/RR7kTzBrzy2oxpRMjUY8XZ_PbSv89At6m0aM38GXlhkj5ok65dfKLDnTtQUfp77MJZ97Y_Oq3jc=s176-c-k-c0x00ffffff-no-rj" alt="Prepatina 차랑꾼">
+    <div>
+      <div class="channel-name">Prepatina 차랑꾼</div>
+      <div class="channel-handle"><a href="https://www.youtube.com/@prepatina" target="_blank">@prepatina →</a></div>
+    </div>
+  </div>
+  <div class="videos-grid">
+    <a href="https://www.youtube.com/watch?v=r0QMjBWJIs0" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/r0QMjBWJIs0/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">32:51</div>
+      </div>
+      <div class="video-card__body">
+        <div class="video-card__title">90년대 진짜 "벤쓰" S600 입양기</div>
+        <div class="video-card__views">조회수 <span>57,125</span></div>
+      </div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=MUlRvHv3JEs" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/MUlRvHv3JEs/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">11:58</div>
+      </div>
+      <div class="video-card__body">
+        <div class="video-card__title">"돈 있어도 못구하는" 전설의 BMW feat.클카쇼</div>
+        <div class="video-card__views">조회수 <span>36,613</span></div>
+      </div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=Nc8FE6rUtG8" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/Nc8FE6rUtG8/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">24:36</div>
+      </div>
+      <div class="video-card__body">
+        <div class="video-card__title">AMG가 독립회사 일때 마지막 모델! 1998 W210 E55</div>
+        <div class="video-card__views">조회수 <span>28,906</span></div>
+      </div>
+    </a>
+    <a href="https://www.youtube.com/watch?v=babRP79M2Rc" target="_blank" class="video-card">
+      <div class="video-card__thumb">
+        <img src="https://i.ytimg.com/vi/babRP79M2Rc/maxresdefault.jpg" alt="thumbnail">
+        <div class="video-card__play"><div class="video-card__play-btn">▶</div></div>
+        <div class="video-card__duration">26:39</div>
+      </div>
+      <div class="video-card__body">
+        <div class="video-card__title">오디오+로워링 등 작업 한것들 공유</div>
+        <div class="video-card__views">조회수 <span>13,602</span></div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- CHANNEL 5: 하원장 강동현 -->
 <section class="channel-section">
   <div class="channel-header">
     <img class="channel-avatar" src="https://yt3.googleusercontent.com/H53oBxBzG9HziDhEEPbBJff7PtnYGdPXMm3FxeRaQ0vXW1wsFS03EugJ89jDa1kDyLpE00E2=s176-c-k-c0x00ffffff-no-rj" alt="하원장 강동현">

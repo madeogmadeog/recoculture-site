@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+body { background: #fafafa; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
+.counter {
+  font-family: 'Inter', sans-serif;
+  font-size: 80px;
+  font-weight: 800;
+  color: #1a1a1a;
+  display: inline-flex;
+  align-items: flex-end;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  padding: 0 4px;
+}
+.digit {
+  display: inline-block;
+  height: 1em;
+  width: 0.64em;
+  overflow: hidden;
+  line-height: 1;
+}
+.digit-inner {
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.digit-inner span {
+  display: block;
+  height: 1em;
+  line-height: 1;
+  text-align: center;
+}
+.sep {
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 0.22em;
+  height: 1em;
+  color: #ED6C00;
+  font-weight: 400;
+  font-size: 0.55em;
+  padding-bottom: 0.08em;
+}
+#status { margin-top: 24px; font-size: 13px; color: #999; font-family: 'Inter', monospace; }
+</style>
+</head><body>
+<div class="counter" id="c"></div>
+<div id="status"></div>
+<script>
+const el = document.getElementById('c');
+const status = document.getElementById('status');
+let digitInners = [];
+let lastChars = [];
+
+function build(numStr) {
+  el.innerHTML = '';
+  digitInners = [];
+  lastChars = [];
+  for (const ch of numStr) {
+    if (ch === ',') {
+      const s = document.createElement('span');
+      s.className = 'sep';
+      s.textContent = ',';
+      el.appendChild(s);
+      digitInners.push(null);
+      lastChars.push(',');
+    } else {
+      const w = document.createElement('span');
+      w.className = 'digit';
+      const inner = document.createElement('span');
+      inner.className = 'digit-inner';
+      for (let d = 0; d <= 9; d++) {
+        const s = document.createElement('span');
+        s.textContent = d;
+        inner.appendChild(s);
+      }
+      w.appendChild(inner);
+      el.appendChild(w);
+      inner.style.transition = 'none';
+      inner.style.transform = `translateY(-${parseInt(ch)}em)`;
+      digitInners.push(inner);
+      lastChars.push(ch);
+    }
+  }
+  requestAnimationFrame(() => {
+    digitInners.forEach(i => { if (i) i.style.transition = ''; });
+  });
+}
+
+function update(numStr) {
+  if (numStr.length !== lastChars.length) { build(numStr); return; }
+  for (let i = 0; i < numStr.length; i++) {
+    const ch = numStr[i];
+    if (ch !== ',' && ch !== lastChars[i] && digitInners[i]) {
+      digitInners[i].style.transform = `translateY(-${parseInt(ch)}em)`;
+      lastChars[i] = ch;
+    }
+  }
+}
+
+let num = 56923406;
+build(num.toLocaleString('en-US'));
+status.textContent = `${num.toLocaleString('en-US')} — 0.5초마다 +1`;
+
+setInterval(() => {
+  num++;
+  update(num.toLocaleString('en-US'));
+  status.textContent = `${num.toLocaleString('en-US')} — 0.5초마다 +1`;
+}, 500);
+</script>
+</body></html>
