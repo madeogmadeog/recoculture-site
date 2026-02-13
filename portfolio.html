@@ -89,167 +89,128 @@
   margin-top: 4px;
 }
 
-/* ===== ZOOM CONTAINER ===== */
-.zoom-wrap {
-  position: relative;
+/* ===== THUMBNAIL WALL SECTION (dark) ===== */
+.wall-section {
+  background: #0a0a0a;
+  padding: 60px 0 80px;
   overflow: hidden;
 }
-.zoom-spacer {
-  /* JS로 높이 계산 — 줌아웃 스크롤 공간 확보 */
-  position: relative;
+.wall-section__header {
+  text-align: center;
+  padding: 0 48px 40px;
 }
-.zoom-viewport {
-  position: sticky;
-  top: 160px; /* counter 높이 아래 */
-  overflow: hidden;
-  height: calc(100vh - 160px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.wall-section__sub {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
 }
+.wall-section__title {
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+.wall-section__title span { color: var(--orange); }
 
-/* ===== THUMBNAIL WALL ===== */
+/* WALL GRID */
 .thumb-wall {
   display: grid;
-  gap: 3px;
-  transform-origin: center center;
-  will-change: transform;
+  gap: 6px;
+  padding: 0 24px;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 .thumb-wall a {
   position: relative;
   display: block;
   overflow: hidden;
-  border-radius: 6px;
-  background: var(--gray-100);
-  aspect-ratio: 1/1;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 10px;
+  background: #1a1a1a;
+  aspect-ratio: 16/9;
+  transition: transform 0.25s cubic-bezier(0.23,1,0.32,1), box-shadow 0.25s ease;
 }
 .thumb-wall a:hover {
-  transform: scale(1.06);
+  transform: scale(1.05);
   z-index: 50;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+  box-shadow: 0 12px 40px rgba(237,108,0,0.3);
 }
 .thumb-wall a img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: opacity 0.4s;
+  transition: opacity 0.5s;
 }
-.thumb-wall a img[data-src] {
-  opacity: 0;
-}
-/* 채널 하단 바 */
-.thumb-wall a::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-}
+.thumb-wall a img.loading { opacity: 0; }
 /* 호버 오버레이 */
 .thumb-wall a .overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.75);
+  background: linear-gradient(transparent 30%, rgba(0,0,0,0.85) 100%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 10px;
+  padding: 14px;
   opacity: 0;
-  transition: opacity 0.2s;
-  border-radius: 6px;
+  transition: opacity 0.25s;
+  border-radius: 10px;
 }
-.thumb-wall a:hover .overlay {
-  opacity: 1;
-}
+.thumb-wall a:hover .overlay { opacity: 1; }
 .overlay__channel {
   font-family: var(--font-en);
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   color: var(--orange);
-  margin-bottom: 3px;
+  margin-bottom: 4px;
 }
 .overlay__title {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   color: #fff;
-  line-height: 1.3;
+  line-height: 1.35;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 .overlay__views {
   font-family: var(--font-en);
-  font-size: 10px;
-  color: rgba(255,255,255,0.7);
+  font-size: 11px;
+  color: rgba(255,255,255,0.6);
 }
-.overlay__views strong {
-  color: var(--orange);
-}
-/* 2x, 3x 크기 영상 */
+.overlay__views strong { color: var(--orange); }
+
+/* 2x, 3x 크기 */
 .thumb-wall a.size-2 { grid-column: span 2; grid-row: span 2; }
-.thumb-wall a.size-3 { grid-column: span 3; grid-row: span 3; }
+.thumb-wall a.size-3 { grid-column: span 2; grid-row: span 2; }
 
-/* 범례 */
-.wall-legend {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  padding: 32px 48px 48px;
-  flex-wrap: wrap;
-  background: var(--bg-primary);
-}
-.wall-legend__item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  color: var(--text-tertiary);
-}
-.wall-legend__dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-/* ===== ZOOM GUIDE ===== */
-.zoom-guide {
+/* 조회수 배지 (큰 셀) */
+.thumb-badge {
   position: absolute;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 13px;
-  color: var(--text-tertiary);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  z-index: 10;
-  animation: fadeGuide 3s ease-in-out infinite;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-family: var(--font-en);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
   pointer-events: none;
 }
-.zoom-guide__arrow {
-  animation: bounceDown 1.5s ease-in-out infinite;
-}
-@keyframes bounceDown {
-  0%,100%{transform:translateY(0);}
-  50%{transform:translateY(6px);}
-}
-@keyframes fadeGuide {
-  0%,100%{opacity:0.6;}
-  50%{opacity:1;}
-}
+.thumb-badge strong { color: var(--orange); }
 
 @media (max-width: 768px) {
   .portfolio-counter { padding: 16px 24px; top: 72px; }
-  .zoom-viewport { top: 130px; height: calc(100vh - 130px); }
-  .wall-legend { padding: 24px; gap: 12px; }
+  .wall-section { padding: 40px 0 60px; }
+  .wall-section__header { padding: 0 24px 28px; }
+  .thumb-wall { gap: 4px; padding: 0 12px; }
+  .thumb-wall a .overlay { padding: 10px; }
+  .overlay__title { font-size: 11px; }
 }
 </style>
 </head>
@@ -284,21 +245,14 @@
   <p class="pc__sub">543 videos · 10 channels · views and counting</p>
 </div>
 
-<!-- ZOOM WALL -->
-<div class="zoom-wrap">
-  <div class="zoom-spacer" id="zoom-spacer">
-    <div class="zoom-viewport" id="zoom-viewport">
-      <div class="thumb-wall" id="thumb-wall"></div>
-      <div class="zoom-guide" id="zoom-guide">
-        <span>스크롤하여 탐색</span>
-        <span class="zoom-guide__arrow">↓</span>
-      </div>
-    </div>
+<!-- THUMBNAIL WALL -->
+<section class="wall-section">
+  <div class="wall-section__header">
+    <p class="wall-section__sub">543 videos across 10 channels</p>
+    <h2 class="wall-section__title">이 모든 영상을 <span>우리가 만들었습니다</span></h2>
   </div>
-</div>
-
-<!-- LEGEND -->
-<div class="wall-legend" id="wall-legend"></div>
+  <div class="thumb-wall" id="thumb-wall"></div>
+</section>
 
 <!-- CTA -->
 <section class="cta-section">
@@ -405,80 +359,59 @@ const CHANNELS = [
   fetchTotal().then(t=>{current=t;buildSlots(fmt(t));lastDisplay=t;setTimeout(()=>startTick(),300);setInterval(async()=>{const f=await fetchTotal();if(f>current)current=f;},3600000);});
 })();
 
-// ===== THUMBNAIL WALL + ZOOM =====
+// ===== THUMBNAIL WALL =====
 (function(){
   const wall = document.getElementById('thumb-wall');
-  const spacer = document.getElementById('zoom-spacer');
-  const viewport = document.getElementById('zoom-viewport');
-  const guide = document.getElementById('zoom-guide');
-  const legendEl = document.getElementById('wall-legend');
-  const counterBar = document.getElementById('counter-bar');
+  const COLS = window.innerWidth < 640 ? 2 : window.innerWidth < 1024 ? 3 : window.innerWidth < 1400 ? 4 : 5;
 
-  const COLS = window.innerWidth < 768 ? 12 : window.innerWidth < 1024 ? 18 : 24;
-  const CELL = window.innerWidth < 768 ? 40 : 56;
-  const GAP = 3;
-  const MIN_SCALE = 0.3;
-  const MAX_SCALE = 1.0;
-  const ZOOM_SCROLL_PX = 1200; // 줌에 사용할 스크롤 거리
+  wall.style.gridTemplateColumns = `repeat(${COLS}, 1fr)`;
 
   fetch('portfolio-data-compact.json')
     .then(r => r.json())
     .then(videos => {
-      // 셔플 (큰/작은 섞기) — 조회수 역순으로 정렬 후 인터리브
       const sorted = [...videos].sort((a,b) => b.v - a.v);
-      const shuffled = [];
-      const top = sorted.filter(v => v.s >= 9);  // 상위 ~10%
-      const mid = sorted.filter(v => v.s >= 5 && v.s < 9);
-      const low = sorted.filter(v => v.s < 5);
 
-      // Grid setup
-      wall.style.gridTemplateColumns = `repeat(${COLS}, ${CELL}px)`;
-      wall.style.gridAutoRows = `${CELL}px`;
-      wall.style.gap = GAP + 'px';
+      // 상위 10개: 2x2, 나머지: 1x1
+      sorted.forEach((v, idx) => { v._big = idx < 10; });
 
-      // 배치: 상위는 2x2 또는 3x3, 나머지는 1x1
-      const all = [];
-      // Top 5: 3x3
-      top.slice(0, 5).forEach(v => { v._size = 3; all.push(v); });
-      // Top 6~20: 2x2
-      top.slice(5).concat(mid.slice(0, 15)).forEach(v => { v._size = 2; all.push(v); });
-      // 나머지: 1x1
-      mid.slice(15).concat(low).forEach(v => { v._size = 1; all.push(v); });
-      // Top에서 이미 넣은 것 외 나머지
-      top.slice(20).forEach(v => { if (!v._size) { v._size = 1; all.push(v); }});
-
-      // 섞기 (큰 것들이 고르게 분포하도록)
-      const big = all.filter(v => v._size >= 2);
-      const small = all.filter(v => v._size === 1);
+      // 큰 것과 작은 것 인터리브
+      const big = sorted.filter(v => v._big);
+      const small = sorted.filter(v => !v._big);
       const final = [];
       let bi = 0, si = 0;
       while (bi < big.length || si < small.length) {
-        // 큰 거 1개당 작은 거 ~8개 비율
-        if (bi < big.length) { final.push(big[bi++]); }
-        for (let k = 0; k < 8 && si < small.length; k++) { final.push(small[si++]); }
+        if (bi < big.length) final.push(big[bi++]);
+        for (let k = 0; k < (COLS * 2) && si < small.length; k++) final.push(small[si++]);
       }
 
-      // DOM 생성
-      final.forEach(v => {
+      final.forEach((v, idx) => {
         const a = document.createElement('a');
         a.href = `https://www.youtube.com/watch?v=${v.i}`;
         a.target = '_blank';
-        const color = CHANNEL_COLORS[v.c] || '#ED6C00';
+        if (v._big) a.className = 'size-2';
 
-        if (v._size === 3) a.className = 'size-3';
-        else if (v._size === 2) a.className = 'size-2';
-
-        a.style.setProperty('--ch-color', color);
-        a.style.borderBottom = `3px solid ${color}`;
-
-        // 이미지 (lazy)
+        // 썸네일
         const img = document.createElement('img');
-        img.dataset.src = `https://i.ytimg.com/vi/${v.i}/mqdefault.jpg`;
+        img.className = 'loading';
         img.alt = '';
         img.loading = 'lazy';
+        // 큰 셀은 고해상도, 작은 셀은 저해상도
+        const thumbQ = v._big ? 'maxresdefault' : 'mqdefault';
+        img.src = `https://i.ytimg.com/vi/${v.i}/${thumbQ}.jpg`;
+        img.onload = () => { img.classList.remove('loading'); };
+        img.onerror = () => { img.src = `https://i.ytimg.com/vi/${v.i}/hqdefault.jpg`; };
         a.appendChild(img);
 
-        // 오버레이
+        // 조회수 배지 (큰 셀)
+        if (v._big) {
+          const badge = document.createElement('div');
+          badge.className = 'thumb-badge';
+          const vf = v.v >= 1000000 ? (v.v/10000).toFixed(0) + '만' : v.v >= 10000 ? (v.v/10000).toFixed(1) + '만' : v.v.toLocaleString();
+          badge.innerHTML = `<strong>${vf}</strong> views`;
+          a.appendChild(badge);
+        }
+
+        // 호버 오버레이
         const ov = document.createElement('div');
         ov.className = 'overlay';
         ov.innerHTML = `
@@ -491,76 +424,23 @@ const CHANNELS = [
         wall.appendChild(a);
       });
 
-      // 벽 크기 계산
-      const wallW = COLS * (CELL + GAP);
-      const wallH = wall.scrollHeight;
-
-      // 줌 스크롤 공간 설정
-      const totalHeight = ZOOM_SCROLL_PX + wallH + 200;
-      spacer.style.height = totalHeight + 'px';
-
-      // Lazy load 이미지
-      const images = wall.querySelectorAll('img[data-src]');
-      const imgObserver = new IntersectionObserver((entries) => {
+      // 스크롤 진입 애니메이션
+      const cards = wall.querySelectorAll('a');
+      const observer = new IntersectionObserver((entries) => {
         entries.forEach(e => {
           if (e.isIntersecting) {
-            const img = e.target;
-            img.src = img.dataset.src;
-            img.removeAttribute('data-src');
-            img.onload = () => { img.style.opacity = '1'; };
-            imgObserver.unobserve(img);
+            e.target.style.opacity = '1';
+            e.target.style.transform = 'translateY(0)';
+            observer.unobserve(e.target);
           }
         });
-      }, { rootMargin: '200px' });
-      images.forEach(img => imgObserver.observe(img));
+      }, { threshold: 0.1, rootMargin: '50px' });
 
-      // 스크롤 줌 핸들러
-      let currentScale = MIN_SCALE;
-      wall.style.transform = `scale(${MIN_SCALE})`;
-
-      function onScroll() {
-        const rect = spacer.getBoundingClientRect();
-        const scrolled = -rect.top; // 얼마나 스크롤했는지
-        const progress = Math.max(0, Math.min(1, scrolled / ZOOM_SCROLL_PX));
-
-        // 줌 스케일
-        const scale = MIN_SCALE + (MAX_SCALE - MIN_SCALE) * easeOutCubic(progress);
-        wall.style.transform = `scale(${scale})`;
-        currentScale = scale;
-
-        // 줌 완료 후 일반 스크롤
-        if (progress >= 1) {
-          const overScroll = scrolled - ZOOM_SCROLL_PX;
-          wall.style.transform = `scale(1) translateY(-${overScroll}px)`;
-        }
-
-        // 가이드 숨기기
-        if (progress > 0.1) {
-          guide.style.opacity = '0';
-        } else {
-          guide.style.opacity = '';
-        }
-
-        // 카운터 그림자
-        if (scrolled > 10) {
-          counterBar.classList.add('has-shadow');
-        } else {
-          counterBar.classList.remove('has-shadow');
-        }
-      }
-
-      function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
-
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll(); // 초기 상태
-
-      // 범례
-      const channels = [...new Set(videos.map(v => v.c))];
-      channels.forEach(ch => {
-        const item = document.createElement('div');
-        item.className = 'wall-legend__item';
-        item.innerHTML = `<span class="wall-legend__dot" style="background:${CHANNEL_COLORS[ch]||'#ED6C00'}"></span><span>${ch}</span>`;
-        legendEl.appendChild(item);
+      cards.forEach((card, i) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = `opacity 0.5s ${i % 10 * 0.03}s, transform 0.5s ${i % 10 * 0.03}s cubic-bezier(0.23,1,0.32,1)`;
+        observer.observe(card);
       });
     });
 })();
