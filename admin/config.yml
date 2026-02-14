@@ -1,0 +1,28 @@
+# Decap CMS 설정 (비개발자 관리자용)
+# 백엔드: GitHub - recoculture.com 저장소에 직접 커밋
+backend:
+  name: github
+  repo: madeogmadeog/recoculture-site
+  branch: main
+
+# 커밋 메시지
+commit_messages:
+  create: "블로그 작성: {{slug}}"
+  update: "블로그 수정: {{slug}}"
+  delete: "블로그 삭제: {{slug}}"
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: blog
+    label: 블로그
+    folder: content/blog
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: 제목, name: title, widget: string }
+      - { label: 날짜, name: date, widget: datetime }
+      - { label: URL 슬러그, name: slug, widget: string, hint: "예: my-post (영문권장)" }
+      - { label: 요약, name: excerpt, widget: text }
+      - { label: 본문, name: body, widget: markdown }

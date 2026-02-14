@@ -1,0 +1,10 @@
+{
+  "name": "recoculture-site",
+  "private": true,
+  "scripts": {
+    "build:blog": "node scripts/build-blog.js"
+  },
+  "dependencies": {
+    "marked": "^11.0.0"
+  }
+}
