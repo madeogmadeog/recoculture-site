@@ -229,20 +229,27 @@
       </div>
     </div>
     
-    <form class="contact__form" onsubmit="event.preventDefault(); alert('상담 신청이 완료되었습니다. 빠른 시일 내에 연락드리겠습니다.');">
+    <form class="contact__form" action="https://formsubmit.co/og@recoculture.com" method="POST">
+      <!-- FormSubmit 설정 -->
+      <input type="hidden" name="_subject" value="[레코컬쳐] 새 상담 신청">
+      <input type="hidden" name="_next" value="https://recoculture.com/services.html#contact">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="_honey" style="display:none">
+
       <div class="form-row">
         <div class="form-field">
           <label>이름</label>
-          <input type="text" placeholder="이름을 입력해주세요" required>
+          <input type="text" name="이름" placeholder="이름을 입력해주세요" required>
         </div>
         <div class="form-field">
           <label>연락처</label>
-          <input type="tel" placeholder="010-0000-0000" required>
+          <input type="tel" name="연락처" placeholder="010-0000-0000" required>
         </div>
       </div>
       <div class="form-field">
         <label>업종</label>
-        <select required>
+        <select name="업종" required>
           <option value="" disabled selected>업종을 선택해주세요</option>
           <option>의료 (병·의원)</option>
           <option>치과</option>
@@ -255,7 +262,7 @@
       </div>
       <div class="form-field">
         <label>관심 서비스</label>
-        <select>
+        <select name="관심서비스">
           <option value="" disabled selected>관심 서비스를 선택해주세요</option>
           <option>Starter — 채널 셋업</option>
           <option>Growth — 채널 성장 관리</option>
@@ -265,11 +272,11 @@
       </div>
       <div class="form-field">
         <label>현재 유튜브 채널 (선택)</label>
-        <input type="url" placeholder="https://youtube.com/@channel">
+        <input type="url" name="유튜브채널" placeholder="https://youtube.com/@channel">
       </div>
       <div class="form-field">
         <label>문의 내용</label>
-        <textarea placeholder="현재 상황과 목표를 간략히 알려주세요."></textarea>
+        <textarea name="문의내용" placeholder="현재 상황과 목표를 간략히 알려주세요."></textarea>
       </div>
       <button type="submit" class="form-submit">무료 상담 신청하기</button>
     </form>
