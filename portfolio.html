@@ -80,6 +80,26 @@
   padding-bottom: 0.08em;
 }
 
+/* ===== LIVE DATE ===== */
+.pc__live-date {
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.35);
+  margin-top: 8px;
+  letter-spacing: 0.5px;
+}
+.pc__live-date .live-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: #22c55e;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+  animation: pulse 2s ease-in-out infinite;
+}
+
 /* ===== SLOT TRACK (수평 무한스크롤) ===== */
 .wall-section {
   background: radial-gradient(ellipse 120% 80% at 50% 0%, #141414 0%, #0a0a0a 50%, #080808 100%);
@@ -359,6 +379,7 @@
 <div class="portfolio-counter" id="counter-bar">
   <p class="pc__label"><span class="pc__pulse"></span>레코컬쳐에서 만든 영상의 <span class="orange">누적 조회수</span></p>
   <div class="pc__number" id="counter-display">0</div>
+  <p class="pc__live-date" id="live-date"></p>
 </div>
 
 <!-- PORTFOLIO SLOT -->
@@ -423,6 +444,23 @@
 </footer>
 
 <script>
+// ===== LIVE DATE =====
+(function(){
+  const el = document.getElementById('live-date');
+  function update(){
+    const now = new Date();
+    const y = now.getFullYear();
+    const m = String(now.getMonth()+1).padStart(2,'0');
+    const d = String(now.getDate()).padStart(2,'0');
+    const h = String(now.getHours()).padStart(2,'0');
+    const min = String(now.getMinutes()).padStart(2,'0');
+    const s = String(now.getSeconds()).padStart(2,'0');
+    el.innerHTML = `<span class="live-dot"></span>${y}.${m}.${d} ${h}:${min}:${s} 기준 · 실시간 집계 중`;
+  }
+  update();
+  setInterval(update, 1000);
+})();
+
 // ===== CONFIG =====
 const CHANNEL_COLORS = {
   '이바다이야기':'#ED6C00','친절한 송이씨':'#E8488A','권의시선':'#3B82F6',
