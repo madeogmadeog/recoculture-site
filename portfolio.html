@@ -5,344 +5,114 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>포트폴리오 | RECOCULTURE</title>
 <meta name="description" content="레코컬쳐가 만든 456개 영상, 5700만+ 누적 조회수. 전문직 유튜브 브랜딩의 실제 성과.">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://recoculture.com/portfolio.html">
+<meta property="og:title" content="포트폴리오 | RECOCULTURE">
+<meta property="og:description" content="456개 영상, 5700만+ 누적 조회수. 전문직 유튜브 브랜딩의 실제 성과.">
+<meta property="og:image" content="https://recoculture.com/assets/og-image.png">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
 /* ===== COUNTER (sticky) ===== */
 .portfolio-counter {
-  position: sticky;
-  top: 72px;
-  z-index: 100;
-  background: rgba(10,10,10,0.92);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  padding: 20px 48px;
-  text-align: center;
+  position: sticky; top: 72px; z-index: 100;
+  background: rgba(10,10,11,0.92);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 48px; text-align: center;
 }
-.pc__label {
-  font-size: 13px;
-  font-weight: 600;
-  color: #888;
-  margin-bottom: 8px;
-}
-.pc__label .orange { color: var(--orange); }
+.pc__label { font-size:13px; font-weight:600; color:var(--text-muted); margin-bottom:8px; }
+.pc__label .orange { color:var(--orange); }
 .pc__pulse {
-  display: inline-block;
-  width: 7px; height: 7px;
-  background: #22c55e;
-  border-radius: 50%;
-  margin-right: 6px;
-  animation: pulse 2s ease-in-out infinite;
-  vertical-align: middle;
+  display:inline-block; width:7px; height:7px; background:#22c55e;
+  border-radius:50%; margin-right:6px; animation:pulse 2s ease-in-out infinite; vertical-align:middle;
 }
-@keyframes pulse {
-  0%,100%{opacity:1;transform:scale(1);}
-  50%{opacity:0.4;transform:scale(0.7);}
-}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.4;transform:scale(0.7);} }
 .pc__number {
-  font-family: 'Inter', var(--font-en);
-  font-size: clamp(32px, 5vw, 56px);
-  font-weight: 800;
-  color: #fff;
-  line-height: 1;
-  display: inline-flex;
-  align-items: flex-end;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
+  font-family:'JetBrains Mono','Inter',var(--font-display);
+  font-size:clamp(32px,5vw,56px); font-weight:800; color:#fff;
+  line-height:1; display:inline-flex; align-items:flex-end;
+  font-variant-numeric:tabular-nums; letter-spacing:-0.02em;
 }
-.pc__digit {
-  display: inline-block;
-  height: 1em;
-  width: 0.62em;
-  overflow: hidden;
-  line-height: 1;
-}
-.pc__digit-inner {
-  display: block;
-  transition: transform 0.5s cubic-bezier(0.23,1,0.32,1);
-  will-change: transform;
-}
-.pc__digit-inner span {
-  display: block;
-  height: 1em;
-  line-height: 1;
-  text-align: center;
-}
-.pc__sep {
-  display: inline-flex;
-  align-items: flex-end;
-  justify-content: center;
-  width: 0.2em;
-  height: 1em;
-  color: var(--orange);
-  font-weight: 400;
-  font-size: 0.5em;
-  padding-bottom: 0.08em;
-}
+.pc__digit { display:inline-block; height:1em; width:0.62em; overflow:hidden; line-height:1; }
+.pc__digit-inner { display:block; transition:transform 0.5s cubic-bezier(0.23,1,0.32,1); will-change:transform; }
+.pc__digit-inner span { display:block; height:1em; line-height:1; text-align:center; }
+.pc__sep { display:inline-flex; align-items:flex-end; justify-content:center; width:0.2em; height:1em; color:var(--orange); font-weight:400; font-size:0.5em; padding-bottom:0.08em; }
+.pc__live-date { font-family:var(--font-display); font-size:12px; font-weight:500; color:rgba(255,255,255,0.35); margin-top:8px; letter-spacing:0.5px; }
+.pc__live-date .live-dot { display:inline-block; width:6px; height:6px; background:#22c55e; border-radius:50%; margin-right:6px; vertical-align:middle; animation:pulse 2s ease-in-out infinite; }
 
-/* ===== LIVE DATE ===== */
-.pc__live-date {
-  font-family: var(--font-en);
-  font-size: 12px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.35);
-  margin-top: 8px;
-  letter-spacing: 0.5px;
-}
-.pc__live-date .live-dot {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  background: #22c55e;
-  border-radius: 50%;
-  margin-right: 6px;
-  vertical-align: middle;
-  animation: pulse 2s ease-in-out infinite;
-}
-
-/* ===== SLOT TRACK (수평 무한스크롤) ===== */
+/* ===== SLOT TRACK ===== */
 .wall-section {
-  background: radial-gradient(ellipse 120% 80% at 50% 0%, #141414 0%, #0a0a0a 50%, #080808 100%);
-  padding: 60px 0 0;
-  overflow: hidden;
-  position: relative;
+  background:radial-gradient(ellipse 120% 80% at 50% 0%,#111113 0%,#0a0a0b 50%,#080809 100%);
+  padding:60px 0 0; overflow:hidden; position:relative;
 }
 .wall-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
+  content:''; position:absolute; inset:0;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;
 }
-.wall-section__header {
-  text-align: center;
-  padding: 0 48px 48px;
-  position: relative;
-  z-index: 1;
-}
-.wall-section__label {
-  font-family: var(--font-en);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.25em;
-  color: rgba(255,255,255,0.4);
-  text-transform: uppercase;
-  margin-bottom: 12px;
-}
-.wall-section__title {
-  font-family: var(--font-en);
-  font-size: clamp(22px, 2.8vw, 32px);
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: 0.12em;
-  line-height: 1.3;
-}
-.wall-section__title .rc-o { color: var(--orange); }
+.wall-section__header { text-align:center; padding:0 48px 48px; position:relative; z-index:1; }
+.wall-section__label { font-family:var(--font-display); font-size:11px; font-weight:700; letter-spacing:0.25em; color:rgba(255,255,255,0.4); text-transform:uppercase; margin-bottom:12px; }
+.wall-section__title { font-family:var(--font-display); font-size:clamp(22px,2.8vw,32px); font-weight:700; color:#fff; letter-spacing:0.12em; line-height:1.3; }
+.wall-section__title .rc-o { color:var(--orange); }
 
-/* 슬롯 트랙: 가운데가 주인공, 좌우 블러 페이드 */
 .slot-track {
-  position: relative;
-  width: 100%;
-  height: 220px;
-  overflow: hidden;
-  cursor: ew-resize;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position:relative; width:100%; height:220px; overflow:hidden;
+  cursor:ew-resize; display:flex; align-items:center; justify-content:center;
 }
-.slot-track::before,
-.slot-track::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 20%;
-  max-width: 200px;
-  z-index: 5;
-  pointer-events: none;
+.slot-track::before, .slot-track::after {
+  content:''; position:absolute; top:0; bottom:0; width:20%; max-width:200px; z-index:5; pointer-events:none;
 }
-.slot-track::before {
-  left: 0;
-  background: linear-gradient(to right, #0a0a0a 0%, transparent 100%);
-}
-.slot-track::after {
-  right: 0;
-  background: linear-gradient(to left, #0a0a0a 0%, transparent 100%);
-}
-
-.slot-track__strip {
-  display: flex;
-  gap: 16px;
-  padding: 0 50vw;
-  will-change: transform;
-  transition: filter 0.25s ease-out;
-}
-
-/* 각 슬라이드: 유튜브 썸네일 크기 그대로 (320x180) */
+.slot-track::before { left:0; background:linear-gradient(to right,#0a0a0b 0%,transparent 100%); }
+.slot-track::after { right:0; background:linear-gradient(to left,#0a0a0b 0%,transparent 100%); }
+.slot-track__strip { display:flex; gap:16px; padding:0 50vw; will-change:transform; transition:filter 0.25s ease-out; }
 .slot-item {
-  flex-shrink: 0;
-  width: 320px;
-  height: 180px;
-  border-radius: 12px;
-  overflow: hidden;
-  position: relative;
-  background: #1a1a1a;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
-  transition: transform 0.3s cubic-bezier(0.34, 1.2, 0.64, 1),
-              box-shadow 0.3s ease;
+  flex-shrink:0; width:320px; height:180px; border-radius:12px; overflow:hidden;
+  position:relative; background:#1a1a1a; box-shadow:0 4px 24px rgba(0,0,0,0.4);
+  transition:transform 0.3s cubic-bezier(0.34,1.2,0.64,1), box-shadow 0.3s ease;
 }
-.slot-item:hover {
-  transform: scale(1.05);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 2px rgba(237,108,0,0.3);
-  z-index: 10;
-}
-.slot-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
+.slot-item:hover { transform:scale(1.05); box-shadow:0 12px 40px rgba(0,0,0,0.5),0 0 0 2px rgba(237,108,0,0.3); z-index:10; }
+.slot-item img { width:100%; height:100%; object-fit:cover; display:block; }
 .slot-item__info {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 14px 16px;
-  background: linear-gradient(transparent, rgba(0,0,0,0.9) 50%);
-  opacity: 0;
-  transition: opacity 0.25s;
+  position:absolute; bottom:0; left:0; right:0; padding:14px 16px;
+  background:linear-gradient(transparent,rgba(0,0,0,0.9) 50%); opacity:0; transition:opacity 0.25s;
 }
-.slot-item:hover .slot-item__info {
-  opacity: 1;
-}
-.slot-item__channel {
-  font-family: var(--font-en);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: var(--orange);
-  margin-bottom: 4px;
-}
-.slot-item__title {
-  font-size: 13px;
-  font-weight: 600;
-  color: #fff;
-  line-height: 1.35;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.slot-item__views {
-  font-family: var(--font-en);
-  font-size: 11px;
-  color: rgba(255,255,255,0.6);
-  margin-top: 4px;
-}
-.slot-item__views strong { color: var(--orange); }
+.slot-item:hover .slot-item__info { opacity:1; }
+.slot-item__channel { font-family:var(--font-display); font-size:10px; font-weight:700; letter-spacing:1px; color:var(--orange); margin-bottom:4px; }
+.slot-item__title { font-size:13px; font-weight:600; color:#fff; line-height:1.35; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.slot-item__views { font-family:var(--font-display); font-size:11px; color:rgba(255,255,255,0.6); margin-top:4px; }
+.slot-item__views strong { color:var(--orange); }
+.slot-track__center-zone { position:absolute; left:20%; right:20%; top:0; bottom:0; z-index:2; pointer-events:none; }
+.slot-track.slot-track--center-hover { cursor:none; }
+.slot-track.slot-track--center-hover * { cursor:none !important; }
 
-/* 가운데 호버 존: "보고싶다" 영역 (클릭은 썸네일로 통과) */
-.slot-track__center-zone {
-  position: absolute;
-  left: 20%;
-  right: 20%;
-  top: 0;
-  bottom: 0;
-  z-index: 2;
-  pointer-events: none;
+/* ===== REP CLIENTS ===== */
+.rep-clients { padding:64px 48px 80px; position:relative; z-index:1; }
+.rep-clients__title { font-family:var(--font-display); font-size:11px; font-weight:700; letter-spacing:0.2em; color:rgba(255,255,255,0.4); text-transform:uppercase; text-align:center; margin-bottom:32px; }
+.rep-clients__grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:960px; margin:0 auto; }
+.rep-client {
+  padding:24px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08);
+  border-radius:12px; transition:background 0.3s, border-color 0.3s;
 }
-.slot-track.slot-track--center-hover {
-  cursor: none;
-}
-.slot-track.slot-track--center-hover * {
-  cursor: none !important;
-}
+.rep-client:hover { background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.12); }
+.rep-client__name { font-size:15px; font-weight:700; color:#fff; margin-bottom:4px; }
+.rep-client__meta { font-size:12px; color:var(--text-muted); }
+.rep-client__meta span { color:var(--orange); font-weight:600; }
 
-/* 대표 클라이언트 */
-.rep-clients {
-  padding: 64px 48px 80px;
-  position: relative;
-  z-index: 1;
+@media(max-width:768px) {
+  .portfolio-counter { padding:16px 24px; top:72px; }
+  .wall-section { padding:40px 0 0; }
+  .wall-section__header { padding:0 24px 28px; }
+  .slot-track { height:200px; }
+  .slot-item { width:240px; height:135px; }
+  .rep-clients { padding:48px 24px 64px; }
+  .rep-clients__grid { grid-template-columns:repeat(2,1fr); gap:16px; }
 }
-.rep-clients__title {
-  font-family: var(--font-en);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: rgba(255,255,255,0.4);
-  text-transform: uppercase;
-  text-align: center;
-  margin-bottom: 32px;
-}
-.rep-clients__grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-  max-width: 960px;
-  margin: 0 auto;
-}
-.rep-clients__item {
-  aspect-ratio: 16/9;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  color: rgba(255,255,255,0.3);
-  transition: background 0.3s, border-color 0.3s;
-}
-.rep-clients__item:hover {
-  background: rgba(255,255,255,0.06);
-  border-color: rgba(255,255,255,0.12);
-}
-@media (max-width: 768px) {
-  .rep-clients { padding: 48px 24px 64px; }
-  .rep-clients__grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
-}
-.wall-expand__text {
-  font-size: 15px;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 24px;
-  letter-spacing: 0.3px;
-}
-.wall-expand__btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-kr);
-  font-size: 15px;
-  font-weight: 700;
-  color: #fff;
-  background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
-  border: none;
-  padding: 16px 40px;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
-  box-shadow: 0 4px 20px rgba(237,108,0,0.25);
-}
-.wall-expand__btn:hover {
-  background: linear-gradient(135deg, var(--orange-light) 0%, var(--orange) 100%);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 36px rgba(237,108,0,0.35);
-}
-.wall-expand__count {
-  font-family: var(--font-en);
-  font-size: 13px;
-  color: #666;
-  margin-top: 12px;
-}
-.wall-expand.is-hidden { display: none; }
-
-@media (max-width: 768px) {
-  .portfolio-counter { padding: 16px 24px; top: 72px; }
-  .wall-section { padding: 40px 0 0; }
-  .wall-section__header { padding: 0 24px 28px; }
-  .slot-track { height: 200px; }
-  .slot-item { width: 240px; height: 135px; }
-  .wall-expand { padding: 32px 24px 56px; }
+@media(max-width:500px) {
+  .rep-clients__grid { grid-template-columns:1fr; }
 }
 </style>
 </head>
@@ -350,30 +120,28 @@
 
 <!-- NAV -->
 <nav class="nav">
-  <a href="/" class="nav__logo">REC<span class="rc-o">O</span>CULTURE</a>
+  <a href="./" class="nav__logo"><span class="logo-text">REC<span class="logo-text__dot"></span>CULTURE</span></a>
   <ul class="nav__links">
-    <li><a href="/" class="nav__link">Home</a></li>
-    <li><a href="/portfolio.html" class="nav__link nav__link--active">Portfolio</a></li>
-    <li><a href="/services.html" class="nav__link">Services</a></li>
-    <li><a href="/careers.html" class="nav__link">Careers</a></li>
-    <li><a href="/blog.html" class="nav__link">Blog</a></li>
-    <li><a href="/services.html#contact" class="nav__cta">무료 상담</a></li>
+    <li><a href="./" class="nav__link">ABOUT US</a></li>
+    <li><a href="portfolio.html" class="nav__link nav__link--active">Portfolio</a></li>
+    <li><a href="services.html" class="nav__link">Services</a></li>
+    <li><a href="careers.html" class="nav__link">Careers</a></li>
+    <li><a href="blog.html" class="nav__link">Blog</a></li>
+    <li><a href="services.html#contact" class="nav__cta">무료 채널 진단</a></li>
   </ul>
-  <div class="nav__hamburger" onclick="document.querySelector('.nav__mobile-menu').classList.toggle('is-open')">
-    <span></span><span></span><span></span>
-  </div>
+  <div class="nav__hamburger" onclick="document.querySelector('.nav__mobile-menu').classList.toggle('is-open')"><span></span><span></span><span></span></div>
 </nav>
 <div class="nav__mobile-menu">
-  <a href="/">Home</a>
-  <a href="/portfolio.html" class="nav__link--active">Portfolio</a>
-  <a href="/services.html">Services</a>
-  <a href="/careers.html">Careers</a>
-  <a href="/blog.html">Blog</a>
-  <a href="/services.html#contact">무료 상담</a>
+  <a href="./">ABOUT US</a>
+  <a href="portfolio.html" class="nav__link--active">Portfolio</a>
+  <a href="services.html">Services</a>
+  <a href="careers.html">Careers</a>
+  <a href="blog.html">Blog</a>
+  <a href="services.html#contact">무료 채널 진단</a>
 </div>
 
 <!-- SPACER -->
-<div style="height: 72px; background: #0a0a0a;"></div>
+<div style="height:72px; background:var(--bg);"></div>
 
 <!-- STICKY COUNTER -->
 <div class="portfolio-counter" id="counter-bar">
@@ -386,7 +154,7 @@
 <section class="wall-section">
   <div class="wall-section__header">
     <p class="wall-section__label">Portfolio</p>
-    <h2 class="wall-section__title">REC<span class="rc-o">O</span>CULTURE PROJECT PORTFOLIO</h2>
+    <h2 class="wall-section__title">REC<span class="rc-o">O</span>CULTURE PR<span class="rc-o">O</span>JECT P<span class="rc-o">O</span>RTFOLIO</h2>
   </div>
   <div class="slot-track" id="slot-track">
     <div class="slot-track__center-zone" id="center-zone"></div>
@@ -396,51 +164,53 @@
   <div class="rep-clients">
     <p class="rep-clients__title">Representative Clients</p>
     <div class="rep-clients__grid">
-      <div class="rep-clients__item">대표 클라이언트 1</div>
-      <div class="rep-clients__item">대표 클라이언트 2</div>
-      <div class="rep-clients__item">대표 클라이언트 3</div>
-      <div class="rep-clients__item">대표 클라이언트 4</div>
+      <div class="rep-client">
+        <div class="rep-client__name">친절한 송이씨</div>
+        <div class="rep-client__meta">피부과 · 구독자 <span>2.61만</span></div>
+      </div>
+      <div class="rep-client">
+        <div class="rep-client__name">하원장 강동현</div>
+        <div class="rep-client__meta">피부과 · 구독자 <span>8.72만</span></div>
+      </div>
+      <div class="rep-client">
+        <div class="rep-client__name">이바다이야기</div>
+        <div class="rep-client__meta">치과 · 구독자 <span>2만</span></div>
+      </div>
+      <div class="rep-client">
+        <div class="rep-client__name">우선이선우</div>
+        <div class="rep-client__meta">치과 · 구독자 <span>1.89만</span></div>
+      </div>
+      <div class="rep-client">
+        <div class="rep-client__name">웃는치과의사 오원장</div>
+        <div class="rep-client__meta">치과 · 구독자 <span>4.63만</span></div>
+      </div>
+      <div class="rep-client">
+        <div class="rep-client__name">재활운동 물리치료사, 박PT</div>
+        <div class="rep-client__meta">물리치료 · 구독자 <span>12.3만</span></div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
 <section class="cta-section">
-  <h2 class="cta-section__title">다음 성공 사례의<br><span style="color: var(--orange)">주인공이 되세요</span></h2>
-  <p class="cta-section__desc">무료 상담으로 채널 성장 전략을 확인하세요.</p>
-  <a href="/services.html#contact" class="btn btn--primary" style="font-size: 17px; padding: 18px 48px;">무료 상담 신청하기 <span class="btn__arrow">→</span></a>
+  <div class="reveal">
+    <h2 class="cta-section__title">다음 성공 사례의<br><span class="text-orange">주인공이 되세요</span></h2>
+    <p class="cta-section__desc">무료 상담으로 채널 성장 전략을 확인하세요.</p>
+    <a href="services.html#contact" class="btn btn--primary" style="font-size:17px; padding:18px 48px;">무료 유튜브 칼럼 받아보기 <span class="btn__arrow">→</span></a>
+  </div>
 </section>
 
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer__top">
-    <div>
-      <div class="footer__logo">REC<span class="rc-o">O</span>CULTURE</div>
-      <p class="footer__tagline">전문직 유튜브 미디어 브랜딩</p>
-    </div>
+    <div><a href="./" class="footer__logo"><span class="logo-text">REC<span class="logo-text__dot"></span>CULTURE</span></a><p class="footer__tagline">전문직 유튜브 미디어 브랜딩</p></div>
     <div class="footer__links">
-      <div class="footer__col">
-        <div class="footer__col-title">Menu</div>
-        <a href="/">Home</a>
-        <a href="/portfolio.html">Portfolio</a>
-        <a href="/services.html">Services</a>
-        <a href="/careers.html">Careers</a>
-      </div>
-      <div class="footer__col">
-        <div class="footer__col-title">Contact</div>
-        <a href="mailto:og@recoculture.com">og@recoculture.com</a>
-        <a href="tel:01027495144">010-2749-5144</a>
-        <a href="http://pf.kakao.com/_PxfyFn/chat">KakaoTalk →</a>
-      </div>
+      <div class="footer__col"><div class="footer__col-title">Menu</div><a href="./">ABOUT US</a><a href="portfolio.html">Portfolio</a><a href="services.html">Services</a><a href="careers.html">Careers</a><a href="blog.html">Blog</a></div>
+      <div class="footer__col"><div class="footer__col-title">Contact</div><a href="mailto:og@recoculture.com">og@recoculture.com</a><a href="http://pf.kakao.com/_PxfyFn/chat">KakaoTalk →</a></div>
     </div>
   </div>
-  <div class="footer__bottom">
-    <p class="footer__copy">© 2025 RECOCULTURE CO., LTD. All rights reserved. 주식회사 레코컬쳐</p>
-    <div class="footer__legal">
-      <a href="#">이용약관</a>
-      <a href="#">개인정보처리방침</a>
-    </div>
-  </div>
+  <div class="footer__bottom"><p>© 2025 주식회사 레코컬쳐(RECOCULTURE). All rights reserved.</p><p>주식회사 레코컬쳐 | 대표: 진성욱</p></div>
 </footer>
 
 <script>
@@ -468,6 +238,7 @@ const CHANNEL_COLORS = {
   '진로사이다':'#F59E0B','바른의사 백승우':'#10B981','우선이선우':'#EC4899',
   '이태호 수의사':'#6366F1',
 };
+// TODO: API 키를 빌드 시 JSON으로 캐싱하는 구조로 전환 검토
 const API_KEY = 'AIzaSyDegAUyaLZzxZOmqPZ7Cknr6BLQVo_Z1Zk';
 const CHANNELS = [
   'UCa4XAtZ_04zXUAh28HFbJQw','UCa16_cbdgo7BDjHbJvJowGw','UCdRgh9GCeMs8Bo86QMSuiuA',
@@ -481,172 +252,32 @@ const CHANNELS = [
   const el=document.getElementById('counter-display');
   let current=0,vps=0.5,lastDisplay=-1,started=false;
   let digitEls=[],lastChars=[],built=false;
-  function buildSlots(s){
-    el.innerHTML='';digitEls=[];lastChars=[];
-    for(const ch of s){
-      if(ch===','){
-        const sep=document.createElement('span');sep.className='pc__sep';sep.textContent=',';
-        el.appendChild(sep);digitEls.push(null);lastChars.push(',');
-      }else{
-        const w=document.createElement('span');w.className='pc__digit';
-        const inner=document.createElement('span');inner.className='pc__digit-inner';
-        for(let d=0;d<=9;d++){const s2=document.createElement('span');s2.textContent=d;inner.appendChild(s2);}
-        w.appendChild(inner);el.appendChild(w);
-        inner.style.transition='none';inner.style.transform=`translateY(-${parseInt(ch)}em)`;
-        digitEls.push(inner);lastChars.push(ch);
-      }
-    }
-    built=true;
-    requestAnimationFrame(()=>{digitEls.forEach(i=>{if(i)i.style.transition='';});});
-  }
-  function setDigits(s){
-    if(!built||s.length!==lastChars.length){buildSlots(s);return;}
-    for(let i=0;i<s.length;i++){const ch=s[i];if(ch!==','&&ch!==lastChars[i]&&digitEls[i]){digitEls[i].style.transform=`translateY(-${parseInt(ch)}em)`;lastChars[i]=ch;}}
-  }
+  function buildSlots(s){el.innerHTML='';digitEls=[];lastChars=[];for(const ch of s){if(ch===','){const sep=document.createElement('span');sep.className='pc__sep';sep.textContent=',';el.appendChild(sep);digitEls.push(null);lastChars.push(',');}else{const w=document.createElement('span');w.className='pc__digit';const inner=document.createElement('span');inner.className='pc__digit-inner';for(let d=0;d<=9;d++){const s2=document.createElement('span');s2.textContent=d;inner.appendChild(s2);}w.appendChild(inner);el.appendChild(w);inner.style.transition='none';inner.style.transform=`translateY(-${parseInt(ch)}em)`;digitEls.push(inner);lastChars.push(ch);}}built=true;requestAnimationFrame(()=>{digitEls.forEach(i=>{if(i)i.style.transition='';});});}
+  function setDigits(s){if(!built||s.length!==lastChars.length){buildSlots(s);return;}for(let i=0;i<s.length;i++){const ch=s[i];if(ch!==','&&ch!==lastChars[i]&&digitEls[i]){digitEls[i].style.transform=`translateY(-${parseInt(ch)}em)`;lastChars[i]=ch;}}}
   function fmt(n){return Math.floor(n).toLocaleString('en-US');}
-  async function fetchTotal(){
-    try{
-      const r=await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNELS.join(',')}&key=${API_KEY}`);
-      const d=await r.json();if(!d.items)throw 0;
-      let t=0;d.items.forEach(c=>{t+=parseInt(c.statistics.viewCount||0);});
-      const c2=JSON.parse(localStorage.getItem('rc_counter')||'null');
-      if(c2&&t>c2.v){const dt=(Date.now()-c2.t)/1000;if(dt>300)vps=Math.max(0.1,(t-c2.v)/dt);}
-      localStorage.setItem('rc_counter',JSON.stringify({v:t,t:Date.now(),vps}));return t;
-    }catch(e){
-      const c2=JSON.parse(localStorage.getItem('rc_counter')||'null');
-      if(c2){vps=c2.vps||0.5;return c2.v+Math.floor((Date.now()-c2.t)/1000*vps);}
-      return 56923406;
-    }
-  }
-  function startTick(){
-    if(started)return;started=true;let last=performance.now();
-    function tick(now){const dt=(now-last)/1000;last=now;current+=vps*dt;const r=Math.floor(current);if(r!==lastDisplay){lastDisplay=r;setDigits(fmt(r));}requestAnimationFrame(tick);}
-    requestAnimationFrame(tick);
-  }
+  async function fetchTotal(){try{const r=await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNELS.join(',')}&key=${API_KEY}`);const d=await r.json();if(!d.items)throw 0;let t=0;d.items.forEach(c=>{t+=parseInt(c.statistics.viewCount||0);});const c2=JSON.parse(localStorage.getItem('rc_counter')||'null');if(c2&&t>c2.v){const dt=(Date.now()-c2.t)/1000;if(dt>300)vps=Math.max(0.1,(t-c2.v)/dt);}localStorage.setItem('rc_counter',JSON.stringify({v:t,t:Date.now(),vps}));return t;}catch(e){const c2=JSON.parse(localStorage.getItem('rc_counter')||'null');if(c2){vps=c2.vps||0.5;return c2.v+Math.floor((Date.now()-c2.t)/1000*vps);}return 56923406;}}
+  function startTick(){if(started)return;started=true;let last=performance.now();function tick(now){const dt=(now-last)/1000;last=now;current+=vps*dt;const r=Math.floor(current);if(r!==lastDisplay){lastDisplay=r;setDigits(fmt(r));}requestAnimationFrame(tick);}requestAnimationFrame(tick);}
   fetchTotal().then(t=>{current=t;buildSlots(fmt(t));lastDisplay=t;setTimeout(()=>startTick(),300);setInterval(async()=>{const f=await fetchTotal();if(f>current)current=f;},3600000);});
 })();
 
-// ===== SLOT TRACK (수평 무한스크롤 + 마우스 제어) =====
+// ===== SLOT TRACK =====
 (function(){
-  const track = document.getElementById('slot-track');
-  const strip = document.getElementById('slot-strip');
-  const centerZone = document.getElementById('center-zone');
-  const BASE_SPEED = 0.35;      // 기본 슬롯머신 속도 (px/frame)
-  const FAST_SPEED = 32;        // 좌우 구역 목표 속도 (10배)
-  const DECEL = 0.92;           // 감속 곡선 (가운데 호버 시)
-  const ACCEL = 0.8;            // 가속 10배 (점점 빨라짐)
-  const BLUR_SPEED = 8;         // 이 속도 이상에서만 블러 (천천히 = 블러 없음)
-
-  let offset = 0;
-  let velocity = 0;
-  let prevVelocity = 0;
-  let stripWidth = 0;
-  let segmentWidth = 0;
-  let isCenterHover = false;
-  let targetVelocity = BASE_SPEED;
-  let rafId = null;
-
-  function createItem(v) {
-    const a = document.createElement('a');
-    a.className = 'slot-item';
-    a.href = `https://www.youtube.com/watch?v=${v.i}`;
-    a.target = '_blank';
-
-    const img = document.createElement('img');
-    img.alt = '';
-    img.loading = 'lazy';
-    img.src = `https://i.ytimg.com/vi/${v.i}/mqdefault.jpg`;
-    img.onerror = () => { img.src = `https://i.ytimg.com/vi/${v.i}/hqdefault.jpg`; };
-    a.appendChild(img);
-
-    const viewsFmt = v.v >= 10000
-      ? (v.v / 10000).toFixed(1).replace(/\.0$/, '') + '만'
-      : v.v.toLocaleString();
-    const info = document.createElement('div');
-    info.className = 'slot-item__info';
-    info.innerHTML = `
-      <div class="slot-item__channel">${v.c}</div>
-      <div class="slot-item__title">${v.t}</div>
-      <div class="slot-item__views">조회수 <strong>${viewsFmt}</strong></div>
-    `;
-    a.appendChild(info);
-    return a;
-  }
-
-  function measureStrip() {
-    stripWidth = strip.scrollWidth;
-    const items = strip.querySelectorAll('.slot-item');
-    if (items.length > 0) segmentWidth = stripWidth / 2;
-  }
-
-  function updateTransform() {
-    if (segmentWidth <= 0) return;
-    offset = ((offset % segmentWidth) + segmentWidth) % segmentWidth;
-    strip.style.transform = `translateX(${-offset}px)`;
-
-    const absV = Math.abs(velocity);
-    prevVelocity = velocity;
-    const blur = absV >= BLUR_SPEED ? Math.min(6, (absV - BLUR_SPEED) * 0.3) : 0;
-    strip.style.filter = blur > 0 ? `blur(${blur}px)` : 'blur(0)';
-  }
-
-  function tick() {
-    if (isCenterHover) {
-      velocity *= DECEL;
-      if (Math.abs(velocity) < 0.02) velocity = 0;
-    } else {
-      velocity += (targetVelocity - velocity) * ACCEL;
-    }
-    offset += velocity;
-    updateTransform();
-    rafId = requestAnimationFrame(tick);
-  }
-
-  function onMouseMove(e) {
-    const rect = track.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const w = rect.width;
-    const centerX = w * 0.5;
-    const distFromCenter = Math.abs(x - centerX);
-    const maxDist = w * 0.5;
-    const t = Math.min(1, distFromCenter / maxDist);
-    const speed = BASE_SPEED + (FAST_SPEED - BASE_SPEED) * t;
-    targetVelocity = (x > centerX ? 1 : -1) * speed;
-
-    isCenterHover = t < 0.2;
-    track.classList.toggle('slot-track--center-hover', isCenterHover);
-  }
-  track.addEventListener('mousemove', onMouseMove);
-  track.addEventListener('mouseleave', () => {
-    targetVelocity = BASE_SPEED;
-    isCenterHover = false;
-    track.classList.remove('slot-track--center-hover');
-  });
-
-  fetch('portfolio-data-compact.json')
-    .then(r => r.json())
-    .then(videos => {
-      const shuffled = [...videos];
-      for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-      }
-
-      shuffled.forEach(v => strip.appendChild(createItem(v)));
-      shuffled.forEach(v => strip.appendChild(createItem(v)));
-
-      requestAnimationFrame(() => {
-        measureStrip();
-        velocity = BASE_SPEED;
-        targetVelocity = BASE_SPEED;
-        tick();
-      });
-
-      window.addEventListener('resize', () => { measureStrip(); updateTransform(); });
-    })
-    .catch(() => {});
+  const track=document.getElementById('slot-track'),strip=document.getElementById('slot-strip');
+  const BASE_SPEED=0.35,FAST_SPEED=32,DECEL=0.92,ACCEL=0.8,BLUR_SPEED=8;
+  let offset=0,velocity=0,prevVelocity=0,stripWidth=0,segmentWidth=0,isCenterHover=false,targetVelocity=BASE_SPEED,rafId=null;
+  function createItem(v){const a=document.createElement('a');a.className='slot-item';a.href=`https://www.youtube.com/watch?v=${v.i}`;a.target='_blank';const img=document.createElement('img');img.alt='';img.loading='lazy';img.src=`https://i.ytimg.com/vi/${v.i}/mqdefault.jpg`;img.onerror=()=>{img.src=`https://i.ytimg.com/vi/${v.i}/hqdefault.jpg`;};a.appendChild(img);const viewsFmt=v.v>=10000?(v.v/10000).toFixed(1).replace(/\.0$/,'')+'만':v.v.toLocaleString();const info=document.createElement('div');info.className='slot-item__info';info.innerHTML=`<div class="slot-item__channel">${v.c}</div><div class="slot-item__title">${v.t}</div><div class="slot-item__views">조회수 <strong>${viewsFmt}</strong></div>`;a.appendChild(info);return a;}
+  function measureStrip(){stripWidth=strip.scrollWidth;const items=strip.querySelectorAll('.slot-item');if(items.length>0)segmentWidth=stripWidth/2;}
+  function updateTransform(){if(segmentWidth<=0)return;offset=((offset%segmentWidth)+segmentWidth)%segmentWidth;strip.style.transform=`translateX(${-offset}px)`;const absV=Math.abs(velocity);prevVelocity=velocity;const blur=absV>=BLUR_SPEED?Math.min(6,(absV-BLUR_SPEED)*0.3):0;strip.style.filter=blur>0?`blur(${blur}px)`:'blur(0)';}
+  function tick(){if(isCenterHover){velocity*=DECEL;if(Math.abs(velocity)<0.02)velocity=0;}else{velocity+=(targetVelocity-velocity)*ACCEL;}offset+=velocity;updateTransform();rafId=requestAnimationFrame(tick);}
+  function onMouseMove(e){const rect=track.getBoundingClientRect();const x=e.clientX-rect.left;const w=rect.width;const centerX=w*0.5;const distFromCenter=Math.abs(x-centerX);const maxDist=w*0.5;const t=Math.min(1,distFromCenter/maxDist);const speed=BASE_SPEED+(FAST_SPEED-BASE_SPEED)*t;targetVelocity=(x>centerX?1:-1)*speed;isCenterHover=t<0.2;track.classList.toggle('slot-track--center-hover',isCenterHover);}
+  track.addEventListener('mousemove',onMouseMove);
+  track.addEventListener('mouseleave',()=>{targetVelocity=BASE_SPEED;isCenterHover=false;track.classList.remove('slot-track--center-hover');});
+  fetch('portfolio-data-compact.json').then(r=>r.json()).then(videos=>{const shuffled=[...videos];for(let i=shuffled.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];}shuffled.forEach(v=>strip.appendChild(createItem(v)));shuffled.forEach(v=>strip.appendChild(createItem(v)));requestAnimationFrame(()=>{measureStrip();velocity=BASE_SPEED;targetVelocity=BASE_SPEED;tick();});window.addEventListener('resize',()=>{measureStrip();updateTransform();});}).catch(()=>{});
 })();
-</script>
 
+// Scroll Reveal
+const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('is-visible');});},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
 </body>
 </html>
