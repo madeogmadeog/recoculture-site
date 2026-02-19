@@ -134,7 +134,7 @@
     <p class="section__desc">레코컬쳐가 매니지먼트하는 대표 채널입니다.</p>
     <div class="channel-cards-scene mt-48">
       <div class="channel-cards">
-        <div class="channel-card-v" data-channel-id="UCa4XAtZ_04zXUAh28HFbJQw">
+        <div class="channel-card-v" data-channel-id="UCvQCmSsCRb8z3q0SO5JW8Pw">
           <div class="channel-card-v__profile">
             <img class="channel-card-v__avatar" data-avatar="" src="" alt="" width="120" height="120">
             <div class="channel-card-v__name">하원장 강동현</div>
@@ -156,7 +156,7 @@
             <div class="channel-card-v__slot" data-slot="views" aria-hidden="true">0</div>
           </div>
         </div>
-        <div class="channel-card-v" data-channel-id="UCdRgh9GCeMs8Bo86QMSuiuA">
+        <div class="channel-card-v" data-channel-id="UCa4XAtZ_04zXUAh28HFbJQw">
           <div class="channel-card-v__profile">
             <img class="channel-card-v__avatar" data-avatar="" src="" alt="" width="120" height="120">
             <div class="channel-card-v__name">이바다 이야기</div>
@@ -167,11 +167,11 @@
             <div class="channel-card-v__slot" data-slot="views" aria-hidden="true">0</div>
           </div>
         </div>
-        <div class="channel-card-v" data-channel-id="UCvQCmSsCRb8z3q0SO5JW8Pw">
+        <div class="channel-card-v" data-channel-id="UCdRgh9GCeMs8Bo86QMSuiuA">
           <div class="channel-card-v__profile">
             <img class="channel-card-v__avatar" data-avatar="" src="" alt="" width="120" height="120">
             <div class="channel-card-v__name">권의 시선</div>
-            <div class="channel-card-v__meta">치과의사 권낙현</div>
+            <div class="channel-card-v__meta">치과의사</div>
           </div>
           <div class="channel-card-v__perf">
             <div class="channel-card-v__label">누적 조회수</div>
@@ -413,10 +413,17 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
       .then(r => r.json())
       .then(data => {
         if (!data.items || data.items.length === 0) return;
-        var viewCounts = data.items.map(c => parseInt(c.statistics.viewCount || 0));
-        data.items.forEach(function(item, i) {
+        var itemMap = {};
+        data.items.forEach(function(item) { itemMap[item.id] = item; });
+        var viewCounts = ids.map(function(id) {
+          var item = itemMap[id];
+          return item ? parseInt(item.statistics.viewCount || 0) : 0;
+        });
+        ids.forEach(function(id, i) {
+          var item = itemMap[id];
+          if (!item || !cards[i]) return;
           var thumb = item.snippet && item.snippet.thumbnails && (item.snippet.thumbnails.medium || item.snippet.thumbnails.default);
-          if (thumb && cards[i]) {
+          if (thumb) {
             var img = cards[i].querySelector('.channel-card-v__avatar');
             if (img) img.src = thumb.url;
           }
