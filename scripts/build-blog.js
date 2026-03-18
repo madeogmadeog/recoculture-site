@@ -50,7 +50,13 @@ function build() {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${meta.title || '블로그'} | RECOCULTURE</title>
 <meta name="description" content="${(meta.excerpt || '').replace(/"/g, '&quot;')}">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<meta property="og:type" content="article">
+<meta property="og:title" content="${(meta.title || '블로그').replace(/"/g, '&quot;')} | RECOCULTURE">
+<meta property="og:description" content="${(meta.excerpt || '').replace(/"/g, '&quot;')}">
+<meta property="og:image" content="https://recoculture.com/assets/og-image.png">
+<meta property="og:locale" content="ko_KR">
+<link rel="icon" href="/assets/favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
@@ -109,7 +115,7 @@ function build() {
     </div>
   </div>
   <div class="footer__bottom">
-    <p class="footer__copy">© 2025 RECOCULTURE CO., LTD.</p>
+    <p class="footer__copy">© 2025-2026 RECOCULTURE CO., LTD.</p>
   </div>
 </footer>
 </body>
