@@ -305,11 +305,7 @@
         <div class="contact-item"><div class="contact-icon">💬</div><div><div class="contact-item__label">KakaoTalk</div><div class="contact-item__value"><a href="http://pf.kakao.com/_PxfyFn/chat">카카오톡 채널 바로가기 →</a></div></div></div>
         <div class="contact-item"><div class="contact-icon">📍</div><div><div class="contact-item__label">Location</div><div class="contact-item__value">서울특별시</div></div></div>
       </div>
-      <form class="contact-form" action="https://formsubmit.co/og@recoculture.com" method="POST">
-        <input type="hidden" name="_subject" value="[레코컬쳐] 새 상담 신청">
-        <input type="hidden" name="_next" value="https://recoculture.com/services.html#contact">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_template" value="table">
+      <form class="contact-form" id="contact-form">
         <input type="text" name="_honey" style="display:none">
         <div class="form-row">
           <div class="form-field"><label>이름</label><input type="text" name="이름" placeholder="이름을 입력해주세요" required></div>
@@ -319,8 +315,14 @@
         <div class="form-field"><label>관심 서비스</label><select name="관심서비스"><option value="" disabled selected>관심 서비스를 선택해주세요</option><option>Starter — 채널 셋업</option><option>Growth — 채널 성장 관리</option><option>Enterprise — 토탈 브랜딩</option><option>아직 모르겠음 (상담 후 결정)</option></select></div>
         <div class="form-field"><label>현재 유튜브 채널 (선택)</label><input type="url" name="유튜브채널" placeholder="https://youtube.com/@channel"></div>
         <div class="form-field"><label>문의 내용</label><textarea name="문의내용" placeholder="현재 상황과 목표를 간략히 알려주세요."></textarea></div>
-        <button type="submit" class="form-submit">무료 유튜브 칼럼 받아보기 →</button>
+        <button type="submit" class="form-submit" id="form-submit-btn">무료 유튜브 칼럼 받아보기 →</button>
       </form>
+
+      <!-- 토스트 알림 -->
+      <div class="toast" id="toast">
+        <div class="toast__icon" id="toast-icon"></div>
+        <div class="toast__text" id="toast-text"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -337,11 +339,72 @@
   <div class="footer__bottom"><p>© 2025-2026 주식회사 레코컬쳐(RECOCULTURE). All rights reserved.</p><p>주식회사 레코컬쳐 | 대표: 진성욱</p></div>
 </footer>
 
+<style>
+.toast{position:fixed;bottom:-100px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;padding:16px 28px;border-radius:12px;background:#18181B;border:1px solid rgba(255,255,255,0.08);box-shadow:0 8px 32px rgba(0,0,0,0.4);z-index:9999;transition:bottom .4s cubic-bezier(0.16,1,0.3,1);min-width:280px;max-width:90vw}
+.toast.is-visible{bottom:32px}
+.toast__icon{font-size:24px;flex-shrink:0}
+.toast__text{font-size:15px;color:#EDEDED;line-height:1.5}
+.toast--success{border-color:rgba(34,197,94,0.3)}
+.toast--error{border-color:rgba(239,68,68,0.3)}
+.form-submit:disabled{opacity:0.5;cursor:not-allowed}
+</style>
+
 <script>
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); });
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+(function() {
+  const form = document.getElementById('contact-form');
+  const btn = document.getElementById('form-submit-btn');
+  const toast = document.getElementById('toast');
+  const toastIcon = document.getElementById('toast-icon');
+  const toastText = document.getElementById('toast-text');
+  let hideTimer;
+
+  function showToast(type, message) {
+    clearTimeout(hideTimer);
+    toast.className = 'toast toast--' + type;
+    toastIcon.textContent = type === 'success' ? '✓' : '✕';
+    toastText.textContent = message;
+    requestAnimationFrame(() => toast.classList.add('is-visible'));
+    hideTimer = setTimeout(() => toast.classList.remove('is-visible'), 4000);
+  }
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = '전송 중...';
+
+    const data = new FormData(form);
+    data.append('_subject', '[레코컬쳐] 새 상담 신청');
+    data.append('_captcha', 'false');
+    data.append('_template', 'table');
+
+    fetch('https://formsubmit.co/ajax/og@recoculture.com', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(json) {
+      if (json.success) {
+        showToast('success', '신청이 완료되었습니다! 빠른 시일 내에 연락드리겠습니다.');
+        form.reset();
+      } else {
+        showToast('error', '전송에 실패했습니다. 다시 시도해주세요.');
+      }
+    })
+    .catch(function() {
+      showToast('error', '네트워크 오류가 발생했습니다. 다시 시도해주세요.');
+    })
+    .finally(function() {
+      btn.disabled = false;
+      btn.textContent = '무료 유튜브 칼럼 받아보기 →';
+    });
+  });
+})();
 </script>
 </body>
 </html>
