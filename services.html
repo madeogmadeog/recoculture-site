@@ -32,7 +32,7 @@
     <li><a href="services.html" class="nav__link nav__link--active">Services</a></li>
     <li><a href="careers.html" class="nav__link">Careers</a></li>
     <li><a href="blog.html" class="nav__link">Blog</a></li>
-    <li><a href="#contact" class="nav__cta">무료 유튜브 칼럼 받아보기</a></li>
+    <li><a href="#contact" class="nav__cta">연락하기</a></li>
   </ul>
   <div class="nav__hamburger" onclick="document.querySelector('.nav__mobile-menu').classList.toggle('is-open')">
     <span></span><span></span><span></span>
@@ -44,7 +44,7 @@
   <a href="services.html" class="nav__link--active">Services</a>
   <a href="careers.html">Careers</a>
   <a href="blog.html">Blog</a>
-  <a href="#contact">무료 유튜브 칼럼 받아보기</a>
+  <a href="#contact">연락하기</a>
 </div>
 
 <!-- HERO -->
@@ -56,7 +56,7 @@
     <h1 class="hero__title">조회수는 높은데<br><em>환자가 안 오시죠?</em></h1>
     <p class="hero__sub">유튜브 조회수가 비즈니스 성과를 보장하지 않습니다.<br><strong>누가 봤는가</strong>가 <strong>얼마나 봤는가</strong>보다 중요합니다.</p>
     <div class="hero__ctas">
-      <a href="#contact" class="btn btn--primary">무료 유튜브 칼럼 받아보기 <span class="btn__arrow">→</span></a>
+      <a href="#contact" class="btn btn--primary">연락하기 <span class="btn__arrow">→</span></a>
       <a href="#funnel" class="btn btn--ghost">브랜딩 시스템 보기</a>
     </div>
     <div class="hero__stat-bar">
@@ -315,7 +315,7 @@
         <div class="form-field"><label>관심 서비스</label><select name="관심서비스"><option value="" disabled selected>관심 서비스를 선택해주세요</option><option>Starter — 채널 셋업</option><option>Growth — 채널 성장 관리</option><option>Enterprise — 토탈 브랜딩</option><option>아직 모르겠음 (상담 후 결정)</option></select></div>
         <div class="form-field"><label>현재 유튜브 채널 (선택)</label><input type="url" name="유튜브채널" placeholder="https://youtube.com/@channel"></div>
         <div class="form-field"><label>문의 내용</label><textarea name="문의내용" placeholder="현재 상황과 목표를 간략히 알려주세요."></textarea></div>
-        <button type="submit" class="form-submit" id="form-submit-btn">무료 유튜브 칼럼 받아보기 →</button>
+        <button type="submit" class="form-submit" id="form-submit-btn">연락하기 →</button>
       </form>
 
       <!-- 토스트 알림 -->
@@ -401,7 +401,7 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     })
     .finally(function() {
       btn.disabled = false;
-      btn.textContent = '무료 유튜브 칼럼 받아보기 →';
+      btn.textContent = '연락하기 →';
     });
   });
 })();
