@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🦟 MOSQUITO HUNTER 🦟</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-0: #0a1410;
+    --bg-1: #122318;
+    --bg-2: #1d3624;
+    --ink: #d6f5cf;
+    --dim: #6b8e6f;
+    --acc: #ffd84d;
+    --red: #ff5a5f;
+    --blood: #b91c1c;
+    --gold: #f7c948;
+    --panel: #0e1c14;
+    --panel-edge: #2a4a32;
+  }
+
+  html, body {
+    height: 100%;
+    background: var(--bg-0);
+    color: var(--ink);
+    font-family: 'Press Start 2P', 'Courier New', monospace;
+    image-rendering: pixelated;
+    -webkit-font-smoothing: none;
+    font-smooth: never;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  /* ===== HUD ===== */
+  #hud {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    padding: 8px;
+    background: var(--panel);
+    border-bottom: 4px solid var(--panel-edge);
+    font-size: 10px;
+  }
+  .stat {
+    background: var(--bg-1);
+    border: 2px solid var(--panel-edge);
+    padding: 8px;
+    text-align: center;
+  }
+  .stat .label { color: var(--dim); font-size: 8px; margin-bottom: 6px; }
+  .stat .value { color: var(--acc); font-size: 12px; }
+  .stat.blood .value { color: var(--blood); }
+  .stat.dps .value { color: var(--ink); }
+
+  /* ===== MAIN ===== */
+  #main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* ===== ARENA (canvas) ===== */
+  #arena-wrap {
+    flex: 1;
+    position: relative;
+    background:
+      repeating-linear-gradient(0deg, #0c1a12 0 4px, #0a1410 4px 8px),
+      var(--bg-0);
+    overflow: hidden;
+    cursor: crosshair;
+  }
+  canvas#arena {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+  }
+  #wave-banner {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--panel);
+    border: 2px solid var(--panel-edge);
+    padding: 6px 12px;
+    font-size: 10px;
+    color: var(--acc);
+    pointer-events: none;
+    z-index: 5;
+  }
+  #message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    color: var(--red);
+    text-shadow: 2px 2px 0 #000;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .3s;
+    z-index: 6;
+    text-align: center;
+    line-height: 1.6;
+  }
+  #message.show { opacity: 1; }
+
+  /* ===== SHOP ===== */
+  #shop {
+    width: 320px;
+    background: var(--panel);
+    border-left: 4px solid var(--panel-edge);
+    overflow-y: auto;
+    padding: 10px;
+    font-size: 9px;
+  }
+  #shop h2 {
+    font-size: 11px;
+    color: var(--acc);
+    text-align: center;
+    margin-bottom: 8px;
+    padding: 6px;
+    background: var(--bg-1);
+    border: 2px solid var(--panel-edge);
+  }
+  .shop-tab-bar {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+  .shop-tab {
+    flex: 1;
+    padding: 6px;
+    background: var(--bg-1);
+    border: 2px solid var(--panel-edge);
+    color: var(--dim);
+    cursor: pointer;
+    font-size: 8px;
+    font-family: inherit;
+    text-align: center;
+  }
+  .shop-tab.active {
+    background: var(--bg-2);
+    color: var(--acc);
+  }
+
+  .item {
+    background: var(--bg-1);
+    border: 2px solid var(--panel-edge);
+    padding: 8px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    transition: transform .05s;
+    position: relative;
+  }
+  .item:hover:not(.locked):not(.poor) { background: var(--bg-2); }
+  .item:active:not(.locked):not(.poor) { transform: translate(1px, 1px); }
+  .item .name {
+    font-size: 10px;
+    color: var(--ink);
+    margin-bottom: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .item .desc {
+    font-size: 7px;
+    color: var(--dim);
+    line-height: 1.5;
+    margin-bottom: 6px;
+  }
+  .item .meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 8px;
+  }
+  .item .price { color: var(--gold); }
+  .item .owned { color: var(--ink); }
+  .item.poor .price { color: var(--red); }
+  .item.poor { opacity: .6; cursor: not-allowed; }
+  .item.locked { opacity: .35; cursor: not-allowed; }
+  .item.locked::after {
+    content: "🔒";
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 12px;
+  }
+
+  /* ===== BOTTOM BAR ===== */
+  #bottom {
+    display: flex;
+    gap: 4px;
+    padding: 6px;
+    background: var(--panel);
+    border-top: 4px solid var(--panel-edge);
+    font-size: 8px;
+  }
+  #bottom button {
+    flex: 1;
+    padding: 8px;
+    background: var(--bg-1);
+    border: 2px solid var(--panel-edge);
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 8px;
+    cursor: pointer;
+  }
+  #bottom button:hover { background: var(--bg-2); }
+  #bottom button.danger { color: var(--red); }
+
+  /* ===== FLOAT TEXT ===== */
+  .float-text {
+    position: absolute;
+    pointer-events: none;
+    font-size: 10px;
+    color: var(--gold);
+    text-shadow: 1px 1px 0 #000;
+    animation: floatUp .8s ease-out forwards;
+    z-index: 4;
+  }
+  @keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-30px); }
+  }
+
+  /* ===== TITLE SCREEN ===== */
+  #title-screen {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    gap: 20px;
+    text-align: center;
+  }
+  #title-screen h1 {
+    font-size: 28px;
+    color: var(--red);
+    text-shadow: 3px 3px 0 #000;
+    letter-spacing: 4px;
+  }
+  #title-screen .sub {
+    font-size: 10px;
+    color: var(--dim);
+    line-height: 1.8;
+    max-width: 500px;
+  }
+  #title-screen button {
+    margin-top: 16px;
+    padding: 14px 32px;
+    background: var(--bg-2);
+    border: 3px solid var(--acc);
+    color: var(--acc);
+    font-family: inherit;
+    font-size: 14px;
+    cursor: pointer;
+    letter-spacing: 2px;
+  }
+  #title-screen button:hover { background: var(--acc); color: #000; }
+
+  .mosquito-icon {
+    font-size: 36px;
+    animation: float 2s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) rotate(-5deg); }
+    50% { transform: translate(8px, -6px) rotate(5deg); }
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 720px) {
+    #main { flex-direction: column; }
+    #shop { width: 100%; max-height: 40vh; border-left: none; border-top: 4px solid var(--panel-edge); }
+    #hud { font-size: 8px; }
+    .stat .value { font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="title-screen">
+  <div class="mosquito-icon">🦟</div>
+  <h1>MOSQUITO<br>HUNTER</h1>
+  <div class="sub">
+    윙— 윙—<br><br>
+    온 동네 모기가 너희 집으로 몰려왔다.<br>
+    클릭으로 잡아라. 돈을 모아 무기를 사라.<br>
+    더 많아진다. 더 강해져라.
+  </div>
+  <button id="start-btn">시작하기</button>
+  <button id="load-btn" style="display:none; border-color: var(--ink); color: var(--ink); padding: 8px 20px; font-size: 10px;">저장된 게임 불러오기</button>
+</div>
+
+<div id="hud">
+  <div class="stat blood">
+    <div class="label">잡은 모기</div>
+    <div class="value" id="stat-kills">0</div>
+  </div>
+  <div class="stat">
+    <div class="label">혈액 💰</div>
+    <div class="value" id="stat-money">0</div>
+  </div>
+  <div class="stat dps">
+    <div class="label">초당 처치</div>
+    <div class="value" id="stat-dps">0.0</div>
+  </div>
+  <div class="stat">
+    <div class="label">웨이브</div>
+    <div class="value" id="stat-wave">1</div>
+  </div>
+</div>
+
+<div id="main">
+  <div id="arena-wrap">
+    <canvas id="arena"></canvas>
+    <div id="wave-banner">WAVE 1 — 모기가 나타났다!</div>
+    <div id="message"></div>
+  </div>
+
+  <div id="shop">
+    <h2>🦟 모기 박멸 상점 🦟</h2>
+    <div class="shop-tab-bar">
+      <button class="shop-tab active" data-tab="click">손맛 🖐️</button>
+      <button class="shop-tab" data-tab="auto">자동무기 🔫</button>
+    </div>
+    <div id="shop-list"></div>
+  </div>
+</div>
+
+<div id="bottom">
+  <button id="btn-save">💾 저장</button>
+  <button id="btn-mute">🔊 사운드 ON</button>
+  <button id="btn-reset" class="danger">⚠️ 새 게임</button>
+</div>
+
+<script>
+// =====================================================
+// MOSQUITO HUNTER — pixel-art clicker
+// =====================================================
+
+const SAVE_KEY = 'mosquito-hunter-save-v1';
+
+// ----- Mosquito species -----
+const SPECIES = {
+  baby:    { name: '새끼 모기', hp: 1,    reward: 1,    speed: 1.4, size: 5, color: '#9bb59f', tier: 0, spawnWeight: 5 },
+  normal:  { name: '일반 모기', hp: 3,    reward: 3,    speed: 1.1, size: 7, color: '#7e8a6a', tier: 1, spawnWeight: 6 },
+  fat:     { name: '비만 모기', hp: 12,   reward: 12,   speed: 0.7, size: 10, color: '#a08060', tier: 2, spawnWeight: 3 },
+  vampire: { name: '흡혈 모기', hp: 40,   reward: 50,   speed: 1.6, size: 8,  color: '#a83838', tier: 3, spawnWeight: 2 },
+  armored: { name: '갑옷 모기', hp: 150,  reward: 180,  speed: 0.9, size: 11, color: '#6a6a6a', tier: 4, spawnWeight: 1 },
+  boss:    { name: '모기 보스', hp: 800,  reward: 1200, speed: 0.6, size: 16, color: '#5a1a1a', tier: 5, spawnWeight: 0.3 },
+  queen:   { name: '모기 여왕', hp: 5000, reward: 8000, speed: 0.5, size: 22, color: '#3a0a4a', tier: 6, spawnWeight: 0.05 },
+};
+
+// ----- Click upgrades -----
+const CLICK_UPGRADES = [
+  { id: 'palm',     name: '손바닥 강화',  desc: '클릭당 데미지 +1',   baseCost: 10,     dmgAdd: 1,   unlockKills: 0    },
+  { id: 'swat',     name: '파리채',       desc: '클릭당 데미지 +5',   baseCost: 100,    dmgAdd: 5,   unlockKills: 10   },
+  { id: 'eswat',    name: '전기 파리채',  desc: '클릭당 데미지 +25',  baseCost: 1500,   dmgAdd: 25,  unlockKills: 100  },
+  { id: 'hammer',   name: '망치',         desc: '클릭당 데미지 +120', baseCost: 20000,  dmgAdd: 120, unlockKills: 500  },
+  { id: 'plasma',   name: '플라즈마 건',  desc: '클릭당 데미지 +600', baseCost: 250000, dmgAdd: 600, unlockKills: 3000 },
+  { id: 'godfist',  name: '신의 주먹',    desc: '클릭당 데미지 +5000',baseCost: 5e6,    dmgAdd: 5000,unlockKills: 20000},
+];
+
+// ----- Auto weapons -----
+// rate = attacks per second. mode: 'single' (one mosquito) | 'all' (every mosquito)
+const AUTO_WEAPONS = [
+  { id: 'aswat',   name: '자동 파리채',   desc: '1초당 1회 자동 타격, 데미지 1',         baseCost: 50,     rate: 1.0, dmg: 1,    mode: 'single', unlockKills: 5     },
+  { id: 'coil',    name: '모기향',         desc: '모든 모기에게 초당 1 데미지',           baseCost: 400,    rate: 1.0, dmg: 1,    mode: 'all',    unlockKills: 30    },
+  { id: 'rifle',   name: '모기 소총',     desc: '1초당 3회 정밀 사격, 데미지 4',         baseCost: 2500,   rate: 3.0, dmg: 4,    mode: 'single', unlockKills: 80    },
+  { id: 'spray',   name: '살충제 분사기', desc: '초당 모든 모기에게 3 데미지',           baseCost: 12000,  rate: 1.0, dmg: 3,    mode: 'all',    unlockKills: 300   },
+  { id: 'bats',    name: '박쥐 군단',     desc: '1초당 6회 추격 사살, 데미지 15',        baseCost: 80000,  rate: 6.0, dmg: 15,   mode: 'single', unlockKills: 1000  },
+  { id: 'laser',   name: '레이저 포탑',   desc: '1초당 12회 발사, 데미지 50',            baseCost: 400000, rate: 12,  dmg: 50,   mode: 'single', unlockKills: 5000  },
+  { id: 'nuke',    name: '핵 모기퇴치기', desc: '0.5초마다 모든 모기에게 200 데미지',    baseCost: 3e6,    rate: 2.0, dmg: 200,  mode: 'all',    unlockKills: 25000 },
+  { id: 'godray',  name: '천벌의 빛',     desc: '1초당 30회 발사, 데미지 2000',          baseCost: 5e7,    rate: 30,  dmg: 2000, mode: 'single', unlockKills: 100000},
+];
+
+// =====================================================
+// GAME STATE
+// =====================================================
+const state = {
+  money: 0,
+  kills: 0,
+  totalKills: 0,
+  wave: 1,
+  startTime: Date.now(),
+  killsLastSec: [],
+  upgrades: {},   // id -> count
+  weapons: {},    // id -> count
+  spawnAccum: 0,
+  weaponAccum: {},
+  mosquitoes: [],
+  muted: false,
+};
+
+// =====================================================
+// SAVE / LOAD
+// =====================================================
+function saveGame() {
+  const blob = {
+    money: state.money,
+    kills: state.kills,
+    totalKills: state.totalKills,
+    wave: state.wave,
+    upgrades: state.upgrades,
+    weapons: state.weapons,
+    savedAt: Date.now(),
+  };
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(blob)); showMessage('저장 완료'); }
+  catch (e) { showMessage('저장 실패'); }
+}
+function loadGame() {
+  try {
+    const raw = localStorage.getItem(SAVE_KEY);
+    if (!raw) return false;
+    const blob = JSON.parse(raw);
+    state.money = blob.money || 0;
+    state.kills = blob.kills || 0;
+    state.totalKills = blob.totalKills || blob.kills || 0;
+    state.wave = blob.wave || 1;
+    state.upgrades = blob.upgrades || {};
+    state.weapons = blob.weapons || {};
+    return true;
+  } catch (e) { return false; }
+}
+function hasSave() { return !!localStorage.getItem(SAVE_KEY); }
+function clearSave() { localStorage.removeItem(SAVE_KEY); }
+
+// =====================================================
+// CANVAS + MOSQUITO RENDERING
+// =====================================================
+const canvas = document.getElementById('arena');
+const ctx = canvas.getContext('2d');
+let dpr = window.devicePixelRatio || 1;
+
+function resizeCanvas() {
+  const wrap = document.getElementById('arena-wrap');
+  canvas.width = wrap.clientWidth * dpr;
+  canvas.height = wrap.clientHeight * dpr;
+  ctx.imageSmoothingEnabled = false;
+}
+window.addEventListener('resize', resizeCanvas);
+
+function arenaW() { return canvas.width / dpr; }
+function arenaH() { return canvas.height / dpr; }
+
+// pixel rect helper
+function px(x, y, w, h, color) {
+  ctx.fillStyle = color;
+  ctx.fillRect(Math.floor(x) * dpr, Math.floor(y) * dpr, Math.ceil(w) * dpr, Math.ceil(h) * dpr);
+}
+
+// draw one mosquito (pixel art, ~12x12 base)
+function drawMosquito(m) {
+  const s = m.species.size;
+  const scale = s / 7; // 7px base body width
+  const cx = m.x;
+  const cy = m.y;
+  const c = m.species.color;
+  const wingPhase = Math.sin(m.wingT * Math.PI * 2) > 0;
+
+  // wings (flap)
+  const wingColor = 'rgba(220,230,255,0.55)';
+  if (wingPhase) {
+    px(cx - 4*scale, cy - 3*scale, 3*scale, 2*scale, wingColor);
+    px(cx + 1*scale, cy - 3*scale, 3*scale, 2*scale, wingColor);
+  } else {
+    px(cx - 5*scale, cy - 4*scale, 4*scale, 2*scale, wingColor);
+    px(cx + 1*scale, cy - 4*scale, 4*scale, 2*scale, wingColor);
+  }
+
+  // body
+  px(cx - 2*scale, cy - 1*scale, 4*scale, 3*scale, c);
+  px(cx - 1*scale, cy + 2*scale, 2*scale, 1*scale, c);
+
+  // head
+  px(cx - 1*scale, cy - 3*scale, 2*scale, 2*scale, c);
+  // eyes
+  px(cx - 1*scale, cy - 3*scale, 1, 1, '#000');
+  px(cx + 0*scale, cy - 3*scale, 1, 1, '#000');
+  // proboscis
+  px(cx, cy - 4*scale, 1, 2*scale, '#444');
+
+  // legs (just a few pixel dots)
+  px(cx - 3*scale, cy + 1*scale, 1, 1, '#000');
+  px(cx + 3*scale, cy + 1*scale, 1, 1, '#000');
+
+  // tier markers
+  if (m.species.tier >= 3) {
+    px(cx - 1*scale, cy, 2*scale, 1, '#ffcc33');
+  }
+  if (m.species.tier >= 5) {
+    // crown for bosses
+    px(cx - 2*scale, cy - 5*scale, 1, 1, '#ffd84d');
+    px(cx, cy - 5*scale, 1, 1, '#ffd84d');
+    px(cx + 2*scale, cy - 5*scale, 1, 1, '#ffd84d');
+  }
+
+  // HP bar for tougher mosquitoes
+  if (m.species.tier >= 2 && m.hp < m.species.hp) {
+    const bw = s * 2;
+    px(cx - bw/2, cy - 6*scale - 4, bw, 2, '#000');
+    const pct = m.hp / m.species.hp;
+    px(cx - bw/2, cy - 6*scale - 4, bw * pct, 2, pct > 0.5 ? '#7fff7f' : pct > 0.2 ? '#ffd84d' : '#ff5a5f');
+  }
+
+  // hit flash
+  if (m.hitT > 0) {
+    ctx.globalAlpha = m.hitT;
+    px(cx - 4*scale, cy - 5*scale, 8*scale, 8*scale, '#fff');
+    ctx.globalAlpha = 1;
+  }
+}
+
+// =====================================================
+// SPAWN / WAVE LOGIC
+// =====================================================
+function pickSpecies() {
+  // unlock higher tier species as wave increases
+  const wave = state.wave;
+  const pool = [];
+  for (const [key, sp] of Object.entries(SPECIES)) {
+    let weight = sp.spawnWeight;
+    // gating by wave
+    if (sp.tier === 0 && wave >= 4) weight *= 0.4; // babies fade out
+    if (sp.tier === 1 && wave < 1) weight = 0;
+    if (sp.tier === 2 && wave < 3) weight = 0;
+    if (sp.tier === 3 && wave < 6) weight = 0;
+    if (sp.tier === 4 && wave < 10) weight = 0;
+    if (sp.tier === 5 && wave < 15) weight = 0;
+    if (sp.tier === 6 && wave < 25) weight = 0;
+    if (weight > 0) pool.push({ key, sp, weight });
+  }
+  const total = pool.reduce((a, p) => a + p.weight, 0);
+  let r = Math.random() * total;
+  for (const p of pool) {
+    r -= p.weight;
+    if (r <= 0) return p.sp;
+  }
+  return pool[0].sp;
+}
+
+function spawnMosquito() {
+  const species = pickSpecies();
+  // spawn at edge
+  const side = Math.floor(Math.random() * 4);
+  const W = arenaW(), H = arenaH();
+  let x, y;
+  if (side === 0) { x = -20; y = Math.random() * H; }
+  else if (side === 1) { x = W + 20; y = Math.random() * H; }
+  else if (side === 2) { x = Math.random() * W; y = -20; }
+  else { x = Math.random() * W; y = H + 20; }
+
+  state.mosquitoes.push({
+    species,
+    x, y,
+    hp: species.hp,
+    tx: Math.random() * (W - 40) + 20,
+    ty: Math.random() * (H - 40) + 20,
+    retargetIn: 1 + Math.random() * 2,
+    wingT: Math.random(),
+    hitT: 0,
+    age: 0,
+  });
+}
+
+function currentSpawnRate() {
+  // mosquitoes per second
+  const base = 0.6;
+  const waveBoost = state.wave * 0.35;
+  const killBoost = Math.log10(1 + state.totalKills) * 0.4;
+  return base + waveBoost + killBoost;
+}
+
+function maxMosquitoesAlive() {
+  return Math.min(150, 8 + state.wave * 4 + Math.floor(state.totalKills / 50));
+}
+
+function checkWaveAdvance() {
+  // wave advances based on total kills
+  const required = Math.floor(10 * Math.pow(1.4, state.wave - 1));
+  if (state.kills >= required) {
+    state.kills -= required;
+    state.wave++;
+    showMessage(`WAVE ${state.wave}`, '모기가 더 몰려온다…');
+    document.getElementById('wave-banner').textContent =
+      `WAVE ${state.wave} — ${waveTagline(state.wave)}`;
+  }
+}
+
+function waveTagline(w) {
+  if (w < 3)  return '모기가 나타났다!';
+  if (w < 6)  return '점점 늘어난다…';
+  if (w < 10) return '뚱뚱한 놈들이 보인다';
+  if (w < 15) return '흡혈종 등장!';
+  if (w < 20) return '갑옷 입은 모기?!';
+  if (w < 25) return '보스가 나타났다';
+  if (w < 35) return '여왕의 분노';
+  return '모기 종말의 날';
+}
+
+// =====================================================
+// COMBAT
+// =====================================================
+function damageMosquito(m, dmg, fx) {
+  m.hp -= dmg;
+  m.hitT = 0.5;
+  if (m.hp <= 0) {
+    killMosquito(m, fx);
+  }
+}
+function killMosquito(m, fx) {
+  state.money += m.species.reward;
+  state.kills++;
+  state.totalKills++;
+  state.killsLastSec.push(Date.now());
+  if (fx) floatText(m.x, m.y, `+${formatNum(m.species.reward)}`);
+  m.dead = true;
+  blood(m.x, m.y, m.species.size);
+}
+function clickDamage() {
+  let dmg = 1;
+  for (const u of CLICK_UPGRADES) {
+    dmg += (state.upgrades[u.id] || 0) * u.dmgAdd;
+  }
+  return dmg;
+}
+
+// click handling — finds top mosquito under cursor
+const arenaWrap = document.getElementById('arena-wrap');
+arenaWrap.addEventListener('pointerdown', (e) => {
+  const rect = arenaWrap.getBoundingClientRect();
+  const cx = e.clientX - rect.left;
+  const cy = e.clientY - rect.top;
+  const dmg = clickDamage();
+  // find closest mosquito within hit radius
+  let hit = null;
+  let bestDist = Infinity;
+  for (const m of state.mosquitoes) {
+    if (m.dead) continue;
+    const dx = m.x - cx, dy = m.y - cy;
+    const d = Math.hypot(dx, dy);
+    const r = Math.max(18, m.species.size * 2.2);
+    if (d < r && d < bestDist) { hit = m; bestDist = d; }
+  }
+  if (hit) {
+    damageMosquito(hit, dmg, true);
+    floatText(cx, cy - 8, `-${formatNum(dmg)}`, '#ff8866');
+    playClick();
+  } else {
+    floatText(cx, cy, '...', '#666');
+  }
+});
+
+// =====================================================
+// AUTO WEAPONS TICK
+// =====================================================
+function applyAutoWeapons(dt) {
+  for (const w of AUTO_WEAPONS) {
+    const count = state.weapons[w.id] || 0;
+    if (!count) continue;
+    if (!state.weaponAccum[w.id]) state.weaponAccum[w.id] = 0;
+    state.weaponAccum[w.id] += dt;
+    const interval = 1 / w.rate;
+    while (state.weaponAccum[w.id] >= interval) {
+      state.weaponAccum[w.id] -= interval;
+      fireWeapon(w, count);
+    }
+  }
+}
+function fireWeapon(w, count) {
+  const totalDmg = w.dmg * count;
+  if (w.mode === 'all') {
+    for (const m of state.mosquitoes) {
+      if (!m.dead) damageMosquito(m, totalDmg, false);
+    }
+  } else {
+    // single — pick a random alive mosquito
+    const alive = state.mosquitoes.filter(m => !m.dead);
+    if (!alive.length) return;
+    const target = alive[Math.floor(Math.random() * alive.length)];
+    damageMosquito(target, totalDmg, false);
+  }
+}
+
+// =====================================================
+// MOSQUITO MOVEMENT
+// =====================================================
+function updateMosquitoes(dt) {
+  const W = arenaW(), H = arenaH();
+  for (const m of state.mosquitoes) {
+    if (m.dead) continue;
+    m.age += dt;
+    m.wingT += dt * 12;
+    m.hitT = Math.max(0, m.hitT - dt * 2);
+    m.retargetIn -= dt;
+    if (m.retargetIn <= 0) {
+      m.tx = Math.random() * (W - 40) + 20;
+      m.ty = Math.random() * (H - 40) + 20;
+      m.retargetIn = 0.8 + Math.random() * 1.6;
+    }
+    const dx = m.tx - m.x, dy = m.ty - m.y;
+    const d = Math.hypot(dx, dy);
+    if (d > 1) {
+      const sp = m.species.speed * 40;
+      m.x += (dx / d) * sp * dt;
+      m.y += (dy / d) * sp * dt;
+    }
+    // wobble
+    m.x += Math.sin(m.age * 6) * 0.3;
+    m.y += Math.cos(m.age * 7) * 0.3;
+  }
+  // remove dead
+  state.mosquitoes = state.mosquitoes.filter(m => !m.dead);
+}
+
+// =====================================================
+// BLOOD SPLAT (canvas overlay particles)
+// =====================================================
+const splats = [];
+function blood(x, y, size) {
+  for (let i = 0; i < 5 + Math.floor(size / 3); i++) {
+    splats.push({
+      x, y,
+      vx: (Math.random() - 0.5) * 80,
+      vy: (Math.random() - 0.5) * 80 - 20,
+      life: 0.5 + Math.random() * 0.4,
+      maxLife: 0.9,
+      size: 1 + Math.random() * 2,
+    });
+  }
+}
+function updateSplats(dt) {
+  for (const s of splats) {
+    s.x += s.vx * dt;
+    s.y += s.vy * dt;
+    s.vy += 120 * dt;
+    s.life -= dt;
+  }
+  for (let i = splats.length - 1; i >= 0; i--) if (splats[i].life <= 0) splats.splice(i, 1);
+}
+function drawSplats() {
+  for (const s of splats) {
+    ctx.globalAlpha = Math.max(0, s.life / s.maxLife);
+    px(s.x, s.y, s.size, s.size, '#a83838');
+  }
+  ctx.globalAlpha = 1;
+}
+
+// =====================================================
+// MAIN LOOP
+// =====================================================
+let lastTime = performance.now();
+function loop(now) {
+  const dt = Math.min(0.1, (now - lastTime) / 1000);
+  lastTime = now;
+
+  // spawn
+  state.spawnAccum += dt;
+  const interval = 1 / currentSpawnRate();
+  while (state.spawnAccum >= interval && state.mosquitoes.length < maxMosquitoesAlive()) {
+    state.spawnAccum -= interval;
+    spawnMosquito();
+  }
+
+  applyAutoWeapons(dt);
+  updateMosquitoes(dt);
+  updateSplats(dt);
+  checkWaveAdvance();
+
+  // render
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // dim grid pattern is in CSS — canvas stays transparent
+  drawSplats();
+  // depth sort
+  state.mosquitoes.sort((a, b) => a.y - b.y);
+  for (const m of state.mosquitoes) drawMosquito(m);
+
+  // hud
+  // trim killsLastSec
+  const cutoff = Date.now() - 1000;
+  while (state.killsLastSec.length && state.killsLastSec[0] < cutoff) state.killsLastSec.shift();
+
+  document.getElementById('stat-kills').textContent = formatNum(state.totalKills);
+  document.getElementById('stat-money').textContent = formatNum(Math.floor(state.money));
+  document.getElementById('stat-dps').textContent = state.killsLastSec.length.toFixed(0);
+  document.getElementById('stat-wave').textContent = state.wave;
+
+  requestAnimationFrame(loop);
+}
+
+// =====================================================
+// FLOATING TEXT
+// =====================================================
+function floatText(x, y, text, color) {
+  const el = document.createElement('div');
+  el.className = 'float-text';
+  el.textContent = text;
+  el.style.left = x + 'px';
+  el.style.top = y + 'px';
+  if (color) el.style.color = color;
+  arenaWrap.appendChild(el);
+  setTimeout(() => el.remove(), 800);
+}
+
+function showMessage(line1, line2) {
+  const el = document.getElementById('message');
+  el.innerHTML = line2 ? `${line1}<br><span style="font-size:10px;color:var(--dim)">${line2}</span>` : line1;
+  el.classList.add('show');
+  clearTimeout(showMessage._t);
+  showMessage._t = setTimeout(() => el.classList.remove('show'), 1600);
+}
+
+// =====================================================
+// SHOP
+// =====================================================
+let currentTab = 'click';
+function costOf(item, owned) {
+  return Math.floor(item.baseCost * Math.pow(1.18, owned));
+}
+function renderShop() {
+  const list = document.getElementById('shop-list');
+  const items = currentTab === 'click' ? CLICK_UPGRADES : AUTO_WEAPONS;
+  const ownedKey = currentTab === 'click' ? 'upgrades' : 'weapons';
+  list.innerHTML = '';
+  for (const item of items) {
+    const owned = state[ownedKey][item.id] || 0;
+    const locked = state.totalKills < item.unlockKills;
+    const cost = costOf(item, owned);
+    const poor = state.money < cost;
+    const div = document.createElement('div');
+    div.className = 'item' + (locked ? ' locked' : '') + (!locked && poor ? ' poor' : '');
+    const lockText = locked ? `${item.unlockKills}마리 잡으면 해금` : item.desc;
+    div.innerHTML = `
+      <div class="name"><span>${item.name}</span><span class="owned">x${owned}</span></div>
+      <div class="desc">${lockText}</div>
+      <div class="meta">
+        <span class="price">💰 ${formatNum(cost)}</span>
+        <span class="${poor && !locked ? 'price' : ''}">${locked ? '🔒 잠김' : poor ? '돈 부족' : '구매'}</span>
+      </div>
+    `;
+    if (!locked && !poor) {
+      div.addEventListener('click', () => {
+        state.money -= cost;
+        state[ownedKey][item.id] = owned + 1;
+        playBuy();
+        renderShop();
+      });
+    }
+    list.appendChild(div);
+  }
+}
+document.querySelectorAll('.shop-tab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.shop-tab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    currentTab = t.dataset.tab;
+    renderShop();
+  });
+});
+// re-render shop every 400ms so prices/affordability update
+setInterval(renderShop, 400);
+
+// =====================================================
+// UTILS
+// =====================================================
+function formatNum(n) {
+  if (n < 1000) return Math.floor(n).toString();
+  if (n < 1e6) return (n / 1e3).toFixed(2).replace(/\.?0+$/, '') + 'K';
+  if (n < 1e9) return (n / 1e6).toFixed(2).replace(/\.?0+$/, '') + 'M';
+  if (n < 1e12) return (n / 1e9).toFixed(2).replace(/\.?0+$/, '') + 'B';
+  return (n / 1e12).toFixed(2).replace(/\.?0+$/, '') + 'T';
+}
+
+// =====================================================
+// SOUND (tiny synth)
+// =====================================================
+let audioCtx = null;
+function initAudio() { if (!audioCtx) try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {} }
+function beep(freq, dur, type = 'square', vol = 0.05) {
+  if (state.muted || !audioCtx) return;
+  const o = audioCtx.createOscillator();
+  const g = audioCtx.createGain();
+  o.type = type;
+  o.frequency.value = freq;
+  g.gain.setValueAtTime(vol, audioCtx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + dur);
+  o.connect(g); g.connect(audioCtx.destination);
+  o.start(); o.stop(audioCtx.currentTime + dur);
+}
+function playClick() { beep(880, 0.06, 'square', 0.04); }
+function playBuy() { beep(660, 0.08, 'triangle', 0.06); setTimeout(() => beep(990, 0.08, 'triangle', 0.06), 60); }
+
+// =====================================================
+// BOTTOM BUTTONS
+// =====================================================
+document.getElementById('btn-save').addEventListener('click', saveGame);
+document.getElementById('btn-mute').addEventListener('click', (e) => {
+  state.muted = !state.muted;
+  e.target.textContent = state.muted ? '🔇 사운드 OFF' : '🔊 사운드 ON';
+});
+document.getElementById('btn-reset').addEventListener('click', () => {
+  if (!confirm('정말 새 게임을 시작할까요? 저장된 데이터가 삭제됩니다.')) return;
+  clearSave();
+  location.reload();
+});
+
+// auto-save every 15s
+setInterval(() => { if (state.totalKills > 0) saveGame(); }, 15000);
+
+// =====================================================
+// START SCREEN
+// =====================================================
+const titleScreen = document.getElementById('title-screen');
+const startBtn = document.getElementById('start-btn');
+const loadBtn = document.getElementById('load-btn');
+
+if (hasSave()) loadBtn.style.display = 'inline-block';
+
+function startGame(loadExisting) {
+  if (loadExisting) loadGame();
+  titleScreen.style.display = 'none';
+  initAudio();
+  resizeCanvas();
+  document.getElementById('wave-banner').textContent =
+    `WAVE ${state.wave} — ${waveTagline(state.wave)}`;
+  renderShop();
+  lastTime = performance.now();
+  requestAnimationFrame(loop);
+}
+
+startBtn.addEventListener('click', () => startGame(false));
+loadBtn.addEventListener('click', () => startGame(true));
+
+</script>
+</body>
+</html>
