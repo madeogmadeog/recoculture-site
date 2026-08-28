@@ -25,6 +25,5 @@ jobs:
           exclude_assets: |
             content/
             scripts/
-            admin/
             .github/
           

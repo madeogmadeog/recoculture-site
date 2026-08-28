@@ -20,7 +20,6 @@
 ├── blog/               # 블로그 상세 (빌드 생성)
 ├── content/blog/       # 블로그 마크다운 원본
 ├── data/               # blog-posts.json (빌드 생성)
-├── admin/              # Decap CMS 관리자
 ├── styles.css          # 공통 스타일
 ├── portfolio-data-compact.json  # 포트폴리오 영상 데이터
 └── scripts/build-blog.js       # 블로그 빌드 스크립트
@@ -41,8 +40,7 @@
 
 ### 블로그 유지보수
 
-- **글 작성**: https://recoculture.com/admin/ (비개발자용)
-- **글 수정**: admin에서 선택 후 편집
+- **글 작성**: `content/blog/YYYY-MM-DD-slug.md` (frontmatter: title, date, slug, excerpt)
 - **빌드**: `npm run build:blog` → `data/`, `blog/`, `sitemap.xml` 갱신
 - **배포**: push 시 GitHub Actions가 자동 빌드·배포
 
@@ -70,20 +68,10 @@ git push origin main
 
 ---
 
-## 📁 관련 문서
-
-- [배포가이드.md](./배포가이드.md) — DNS, GitHub Pages 초기 설정
-- [README-BLOG.md](./README-BLOG.md) — 블로그·Decap CMS 상세
-
----
-
 ## ⚠️ 주의사항
 
 1. **portfolio-data-compact.json**  
-   `portfolio-data.json`에서 변환 필요 시 별도 스크립트 사용. 키: `i`(id), `t`(title), `v`(views), `s`(duration), `c`(channel).
+   키: `i`(id), `t`(title), `v`(views), `s`(duration), `c`(channel).
 
 2. **FormSubmit**  
    이메일 변경 후 첫 1회 `og@recoculture.com` 또는 해당 주소로 인증 메일 수신 → Activate 링크 클릭 필요.
-
-3. **Decap CMS**  
-   저장소가 private이면 GitHub OAuth App 별도 등록 필요.
