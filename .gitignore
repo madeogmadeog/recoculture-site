@@ -12,3 +12,6 @@ node_modules/
 
 # Claude Code 로컬 설정
 .claude/
+
+# OMC 상태
+.omc/

@@ -1,77 +1,54 @@
 # 레코컬쳐 홈페이지
 
-전문직 유튜브 미디어 브랜딩 레코컬쳐 공식 홈페이지
+전문직 유튜브 미디어 브랜딩 레코컬쳐 공식 홈페이지 — https://recoculture.com
 
-- **사이트**: https://recoculture.com
-- **저장소**: madeogmadeog/recoculture-site
+- 저장소: madeogmadeog/recoculture-site
+- 정적 사이트 (HTML/CSS/JS), GitHub Pages 배포, CNAME `recoculture.com`
+- **실서비스 소스. 삭제·대규모 변경 전 대표 확인.**
 
----
+## 현재 상태 (2026-09)
 
-## 📋 유지보수 가이드
+리빌드 중. `deploy.yml`의 `publish_dir`가 `./maintenance`라 **임시 페이지만 라이브**다.
+새 사이트가 확인되면 `publish_dir: .`로 바꾸고 `maintenance/`를 지운다.
 
-### 파일 구조
+옛 사이트(다크 테마 5페이지)의 카피·요금·채용·채널 설정은 `docs/SITE-CONTENT.md`에 전부 보존했다.
+소스 자체는 git 히스토리(`git show ad41311:index.html`)로 복구할 수 있다.
+
+## 파일 구조
 
 ```
-├── index.html          # 메인
-├── portfolio.html      # 포트폴리오 (슬롯 스크롤)
-├── services.html       # 서비스·상담폼
-├── careers.html        # 채용
-├── blog.html           # 블로그 목록
-├── blog/               # 블로그 상세 (빌드 생성)
-├── content/blog/       # 블로그 마크다운 원본
-├── data/               # blog-posts.json (빌드 생성)
-├── styles.css          # 공통 스타일
-├── portfolio-data-compact.json  # 포트폴리오 영상 데이터
-└── scripts/build-blog.js       # 블로그 빌드 스크립트
+├── index.html        # 메인 (명함)
+├── work.html         # 작업물 전체 (채널별 필터)
+├── careers.html      # 채용
+├── styles.css        # 공통 스타일 (디자인 토큰은 :root)
+├── main.js           # work.html 데이터 로드·필터
+├── assets/logo/      # 심볼·로고타입·시그니처
+├── assets/           # favicon, og-image
+├── docs/
+│   ├── SITE-CONTENT.md      # 옛 사이트 정보 전수 보존
+│   ├── portfolio-data.json  # 영상 데이터 {i,t,v,s,c} — work.html이 읽음
+│   └── funnel.png           # 옛 퍼널 이미지
+├── content/blog/     # 옛 블로그 마크다운 원본 (보존만)
+├── maintenance/      # 개편 중 임시 페이지 (현재 라이브)
+└── .github/workflows/deploy.yml
 ```
 
-### 자주 하는 수정
+## 자주 하는 수정
 
-| 수정 대상 | 파일 | 비고 |
-|-----------|------|------|
-| 연락처·이메일 | `services.html`, `index.html`, `careers.html`, `footer` | 여러 페이지에 반복됨 |
-| 상담 폼 수신 주소 | `services.html` 폼 `action` | FormSubmit.co 이메일 |
-| 포트폴리오 영상 | `portfolio-data-compact.json` | JSON 형식 유지 |
-| 채널 추가/삭제 | `portfolio.html` 내 `CHANNELS`, `CHANNEL_COLORS` | YouTube API 채널 ID |
-| YouTube API 키 | `portfolio.html` 내 `API_KEY` | 만료 시 새 키 발급 |
-| 메인 문구·통계 | `index.html` hero, stats | 숫자·문구 수정 |
-| 서비스 가격·플랜 | `services.html` pricing 섹션 | |
-| 채용 공고 | `careers.html` positions | |
+| 대상 | 파일 |
+|---|---|
+| 연락처·이메일 | `index.html` Contact 섹션, 각 페이지 푸터 |
+| 대표 채널 6개 | `index.html` Selected Work 섹션 |
+| 작업물 추가·삭제 | `docs/portfolio-data.json` (키 `i` 영상ID, `t` 제목, `v` 조회수, `s` 정렬, `c` 채널명) |
+| 채용 공고 | `careers.html` |
+| 색·폰트 | `styles.css` `:root` |
 
-### 블로그 유지보수
-
-- **글 작성**: `content/blog/YYYY-MM-DD-slug.md` (frontmatter: title, date, slug, excerpt)
-- **빌드**: `npm run build:blog` → `data/`, `blog/`, `sitemap.xml` 갱신
-- **배포**: push 시 GitHub Actions가 자동 빌드·배포
-
-### 배포
+## 로컬 확인
 
 ```bash
-# 1. 블로그 빌드 (새 글이 있으면)
-npm run build:blog
-
-# 2. 커밋 & 푸시
-git add .
-git commit -m "업데이트 내용"
-git push origin main
+python3 -m http.server 8000   # http://localhost:8000
 ```
 
-> GitHub Actions가 push 시 자동 배포. Pages Source가 `gh-pages`면 해당 브랜치에 푸시됨.
+## 배포
 
----
-
-## 🛠️ 환경
-
-- Node.js 18+ (블로그 빌드용)
-- `npm install` → `marked` 설치
-- 정적 사이트 (HTML/CSS/JS)
-
----
-
-## ⚠️ 주의사항
-
-1. **portfolio-data-compact.json**  
-   키: `i`(id), `t`(title), `v`(views), `s`(duration), `c`(channel).
-
-2. **FormSubmit**  
-   이메일 변경 후 첫 1회 `og@recoculture.com` 또는 해당 주소로 인증 메일 수신 → Activate 링크 클릭 필요.
+`main`에 push하면 GitHub Actions가 자동 배포한다. 빌드 단계 없음.
