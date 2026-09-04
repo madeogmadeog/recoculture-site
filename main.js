@@ -166,6 +166,13 @@
   }
 
 
+  // ── 원장 추천사 (data/testimonials.json)
+  const voEl = document.getElementById('voices-grid');
+  if (voEl) fetch('/data/testimonials.json').then(r => r.json()).then(({ items }) => {
+    voEl.innerHTML = items.map(t => `<div class="voice" data-reveal><p>${fmt.esc(t.text)}</p><div class="voice__who">${fmt.esc(t.role)} · ${fmt.esc(t.since)}</div></div>`).join('');
+    reveal(voEl); if (hasGsap) requestAnimationFrame(() => ScrollTrigger.refresh());
+  }).catch(() => { voEl.closest('#voices').hidden = true; });
+
   // ── 후기 (data/reviews.json)
   const rvEl = document.getElementById('reviews');
   if (rvEl) fetch('/data/reviews.json').then(r => r.json()).then(({ items }) => {
