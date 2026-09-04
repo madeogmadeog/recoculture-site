@@ -1,0 +1,28 @@
+name: Refresh channel data
+
+on:
+  schedule:
+    - cron: '0 0 * * *'   # 매일 09:00 KST
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: node scripts/refresh-channels.js
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/channels.json data/channels-history.json
+          git diff --cached --quiet || git commit -m "chore: 채널 데이터 갱신 $(date -u +%Y-%m-%d)"
+          git push

@@ -13,9 +13,11 @@ jobs:
       - uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./maintenance   # 개편 중: 임시 페이지만 배포. 라이브 전환 시 '.'로 되돌리고 maintenance/ 삭제
+          publish_dir: .
           cname: recoculture.com
           exclude_assets: |
             docs/
             content/
+            scripts/
             .github/
+            README.md

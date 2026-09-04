@@ -170,7 +170,7 @@ CHANNEL_COLORS: 이바다이야기 #ED6C00 / 친절한 송이씨 #E8488A / 권�
 
 CHANNELS (10): UCa4XAtZ_04zXUAh28HFbJQw(이바다 이야기), UCa16_cbdgo7BDjHbJvJowGw(친절한 송이씨), UCdRgh9GCeMs8Bo86QMSuiuA(권의 시선), UCvQCmSsCRb8z3q0SO5JW8Pw(하원장 강동현), UCQs5sRayqKqrdxTaV38OVRA, UCj_RY4FlDqfafum6Gy5nUiA, UCDy8IPYmRu6WbDUyAs1ffyg, UC9yDBiSGrXpooefuaXO6BaA, UC2kME1ttakYQVNxBQJJo6Sw, UCwDwL7htetGbWwypB1sYK5A — 뒤 6개는 이름 매핑 없음 (CHANNEL_COLORS 나머지 6개와 순서 대응 추정)
 
-API_KEY: `AIzaSyA1GYd6qA5-4A_TSernWSAFPirQDyfDIFs` (index/portfolio 동일, 평문) / 코드 TODO `API 키를 빌드 시 JSON으로 캐싱하는 구조로 전환 검토`
+API_KEY: `AIzaSy…(가림 — 옛 소스 git 히스토리 참조, 재발급 권장)` (index/portfolio 동일, 평문) / 코드 TODO `API 키를 빌드 시 JSON으로 캐싱하는 구조로 전환 검토`
 
 카운터: channels?part=statistics 10개 viewCount 합산 / localStorage `rc_counter` {v,t,vps} / 기본 vps 0.5, 1시간마다 재fetch / 실패 폴백 **56923406** / 슬롯 롤링
 portfolio-data-compact.json: 456건, 스키마 `{i: videoId, t: 제목, v: 조회수, s: 정렬값, c: 채널명}` / 채널별 건수: 하원장 강동현 132, 바른의사 백승우 110, 친절한 송이씨 86, 이바다이야기 47, 우선이선우 29, 이태호 수의사 28, 태오네모세모 10, 권의시선 10, Prepatina 차랑꾼 4 / 셔플 후 2회 append 마퀴, 링크 youtube.com/watch?v={i}, 썸네일 i.ytimg.com/vi/{i}/mqdefault.jpg (onerror hqdefault) / 호버: 채널명·제목·`조회수 X.X만` / 속도 상수 BASE 0.35, FAST 32, DECEL 0.92, ACCEL 0.8, BLUR 8
@@ -225,4 +225,4 @@ Google Fonts: `https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;70
 - YouTube Data API 키는 옛 소스에 평문 노출되어 있었다. 재사용하려면 Google Cloud 콘솔에서 HTTP referrer(recoculture.com) 제한을 걸거나 재발급한다
 - 옛 블로그 파이프라인: `content/blog/*.md` → `scripts/build-blog.js`(marked) → `blog/*.html` + `data/blog-posts.json` + `sitemap.xml`. 원본 마크다운은 `content/blog/`에 남겨 두었다
 - 퍼널 이미지: `docs/funnel.png` (293×334)
-- 영상 데이터: `docs/portfolio-data.json` (456건)
+- 영상 데이터: `data/portfolio-data.json` (456건)
