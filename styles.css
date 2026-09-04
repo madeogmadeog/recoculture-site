@@ -555,3 +555,33 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .post__back { display: inline-block; margin-top: 28px; font-size: 14px; font-weight: 600; color: var(--ink-2); }
 .post__back:hover { color: var(--ink); }
 @media (max-width: 600px) { .post__cta { flex-direction: column; align-items: flex-start; } }
+
+/* ── 컬럼 본문 그림 카드 (build-columns.js :::type 블록) ── */
+.post__body .fig { margin: 2.2em 0; }
+.post__body .fig figcaption { text-align: center; }
+.post__body .fig ol, .post__body .fig ul { list-style: none; padding: 0; margin: 0; }
+.fig--steps ol, .fig--flow ol { display: grid; gap: 10px; }
+.fig--flow ol { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.fig--steps li, .fig--flow li { display: flex; gap: 14px; align-items: flex-start; background: var(--bg-2); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; margin: 0; }
+.fig--flow li { flex-direction: column; gap: 10px; position: relative; }
+.fig--flow li:not(:last-child)::after { content: '→'; position: absolute; right: -14px; top: 18px; color: var(--orange); font-weight: 800; }
+.fig__n { font-family: var(--mono, ui-monospace, monospace); font-size: 12px; font-weight: 800; color: var(--orange); letter-spacing: .04em; padding-top: 4px; flex: none; }
+.fig--steps b, .fig--flow b { display: block; font-size: 16px; letter-spacing: -0.02em; }
+.fig--steps p, .fig--flow p { margin: 4px 0 0 !important; font-size: 14.5px; line-height: 1.6; color: var(--ink-2); }
+.fig__grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 8px; }
+.fig__head { font-weight: 800; font-size: 14px; letter-spacing: .02em; padding: 10px 14px; border-radius: 10px; text-align: center; }
+.fig__head--a { background: var(--bg-2); color: var(--ink-2); }
+.fig__head--b { background: var(--orange); color: #fff; }
+.fig__cell { padding: 12px 14px; border-radius: 10px; font-size: 15px; line-height: 1.55; border: 1px solid var(--line); }
+.fig__cell--b { border-color: rgba(254,107,0,.35); background: rgba(254,107,0,.05); }
+.fig__stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+.fig__stat { background: var(--ink); color: #fff; border-radius: 14px; padding: 20px 18px; }
+.fig__stat b { display: block; font-size: 30px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; color: var(--orange); }
+.fig__stat span { display: block; margin-top: 8px; font-size: 13.5px; color: rgba(255,255,255,.75); line-height: 1.5; }
+.fig--check ul { display: grid; gap: 8px; }
+.fig--check li { position: relative; padding: 12px 14px 12px 42px; background: var(--bg-2); border-radius: 10px; font-size: 15.5px; margin: 0; }
+.fig--check li::before { content: ''; position: absolute; left: 14px; top: 14px; width: 16px; height: 16px; border-radius: 5px; border: 2px solid var(--orange); background: linear-gradient(135deg, var(--orange) 50%, transparent 50%); }
+.fig--quote blockquote { margin: 0; padding: 26px 28px; border: 0; border-radius: 16px; background: var(--ink); color: #fff; font-size: 1.15em; line-height: 1.6; letter-spacing: -0.02em; }
+.fig--quote blockquote p { margin: 0; }
+.fig--quote cite { display: block; margin-top: 12px; font-style: normal; font-size: 13px; color: rgba(255,255,255,.6); }
+@media (max-width: 640px) { .fig--flow ol { grid-template-columns: 1fr; } .fig--flow li:not(:last-child)::after { content: '↓'; right: auto; left: 18px; top: auto; bottom: -22px; } .fig--flow ol { gap: 26px; } .fig__stat b { font-size: 26px; } }
