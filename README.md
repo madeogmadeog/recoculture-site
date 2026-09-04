@@ -49,6 +49,18 @@
 | 채용 공고 | `careers.html` |
 | 색·폰트 | `styles.css` `:root` |
 
+## 컬럼 자동 발행
+
+- 원고: `content/columns/YYYY-MM-DD-slug.md` (frontmatter: title, date, slug, excerpt, tags, source_title, source_url, status)
+- 빌드: `node scripts/build-columns.js` → `columns/*.html`, `columns.html`, `data/columns.json`, `sitemap.xml`
+- 자동 생성: `scripts/write-column.sh` — 뉴스 수집(`scripts/fetch-news.js`) → `claude -p`가 `docs/column/VOICE.md`(대표 문체·주장·가드레일)와 `PROMPT.md`로 컬럼 작성 → 빌드 → 커밋·푸시
+  - 초안만: `scripts/write-column.sh --draft` (status: draft로 저장·커밋, 푸시 없음). 초안은 빌드에서 제외되므로 확인하려면 `node scripts/build-columns.js --drafts` 후 로컬에서 열고, 발행하려면 frontmatter `status: published`로 바꾼 뒤 `node scripts/build-columns.js && git add -A && git commit && git push`
+  - 주제 지정: `scripts/write-column.sh --topic "고정댓글 활용법"`
+- 스케줄: `scripts/launchd/com.recoculture.column.plist` (월·목 09:30). 설치: `cp scripts/launchd/com.recoculture.column.plist ~/Library/LaunchAgents/ && launchctl load ~/Library/LaunchAgents/com.recoculture.column.plist`. 해제: `launchctl unload ...`
+- 로그: `.omc/logs/column-*.log`
+- 대표 문체를 바꾸려면 `docs/column/VOICE.md`를 고친다. 이 파일이 곧 "나의 시각"이다. 뉴스가 없을 때 고르는 주제 목록은 `docs/column/TOPICS.md`.
+- 저장소가 공개(public)이므로 VOICE.md·TOPICS.md·컬럼 원고에 클라이언트 실명·계약 조건을 쓰지 않는다.
+
 ## 로컬 확인
 
 ```bash
