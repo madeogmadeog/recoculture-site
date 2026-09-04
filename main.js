@@ -166,6 +166,14 @@
   }
 
 
+  // ── 최근 컬럼 (data/columns.json)
+  const colEl = document.getElementById('column-grid');
+  if (colEl) fetch('/data/columns.json').then(r => r.json()).then(list => {
+    if (!list.length) return;
+    colEl.innerHTML = list.slice(0, 3).map(p => `<a class="col" href="/columns/${p.slug}.html" data-reveal><div class="col__meta"><span>${p.date.replace(/-/g, '.')}</span><span>${p.mins}분</span></div><h3 class="col__title">${fmt.esc(p.title)}</h3><p class="col__excerpt">${fmt.esc(p.excerpt)}</p><div class="col__tags">${(p.tags || []).map(t => `<span>${fmt.esc(t)}</span>`).join('')}</div></a>`).join('');
+    colEl.closest('#column').hidden = false; reveal(colEl); if (hasGsap) requestAnimationFrame(() => ScrollTrigger.refresh());
+  }).catch(() => {});
+
   // ── 원장 추천사 (data/testimonials.json)
   const voEl = document.getElementById('voices-grid');
   if (voEl) fetch('/data/testimonials.json').then(r => r.json()).then(({ items }) => {
