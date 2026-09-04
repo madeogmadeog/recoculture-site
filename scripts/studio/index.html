@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>컬럼 스튜디오 — RECOCULTURE</title>
+<link rel="icon" href="/site/assets/favicon.svg">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{--orange:#FE6B00;--ink:#0E0E0E;--ink-2:#4a4a4a;--ink-3:#8a8a8a;--line:#e8e8e8;--bg:#fafafa;--bg-2:#f3f3f3;--ok:#1a9e5a;--warn:#c8791a;--bad:#d33}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{font-family:"Pretendard Variable",Pretendard,-apple-system,system-ui,sans-serif;color:var(--ink);background:var(--bg);font-size:15px;letter-spacing:-.01em}
+button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:10px 16px;background:var(--ink);color:#fff;font-weight:700}
+button.secondary{background:#fff;color:var(--ink);border:1px solid var(--line)}
+button.orange{background:var(--orange)}button.danger{background:#fff;color:var(--bad);border:1px solid #f1c4c4}
+button:disabled{opacity:.45;cursor:default}
+input,textarea,select{font:inherit;border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;background:#fff;color:var(--ink)}
+textarea{resize:vertical;line-height:1.6}
+.app{display:grid;grid-template-columns:240px minmax(0,1fr);height:100vh}
+.side{background:#fff;border-right:1px solid var(--line);padding:20px 14px;display:flex;flex-direction:column;gap:6px}
+.brand{display:flex;align-items:center;gap:10px;padding:6px 8px 18px;font-weight:800;letter-spacing:-.02em}
+.brand img{width:26px;height:26px}
+.nav a{display:block;padding:11px 12px;border-radius:10px;color:var(--ink-2);text-decoration:none;font-weight:600}
+.nav a.on{background:var(--bg-2);color:var(--ink)}
+.side .foot{margin-top:auto;font-size:12px;color:var(--ink-3);line-height:1.6;padding:8px}
+.side .foot b{color:var(--ink-2)}
+main{overflow:auto;padding:28px 32px}
+.view{display:none}.view.on{display:block}
+h1{font-size:24px;margin:0 0 6px;letter-spacing:-.03em}.sub{color:var(--ink-3);margin:0 0 22px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+.badge{display:inline-block;font-size:11px;font-weight:800;padding:3px 8px;border-radius:999px;letter-spacing:.03em}
+.badge.draft{background:#fff3e8;color:var(--orange)}.badge.published{background:#e6f6ec;color:var(--ok)}
+/* 컬럼 목록 + 편집 */
+.cols{display:grid;grid-template-columns:320px minmax(0,1fr);gap:18px;height:calc(100vh - 56px)}
+.list{overflow:auto;display:flex;flex-direction:column;gap:8px}
+.item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;cursor:pointer}
+.item.on{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.item .t{font-weight:700;margin:6px 0 4px;line-height:1.35}.item .m{font-size:12px;color:var(--ink-3)}
+.editor{display:flex;flex-direction:column;gap:12px;min-height:0}
+.editor .top{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:10px}.meta .full{grid-column:1/-1}
+label{font-size:12px;font-weight:700;color:var(--ink-3);display:block;margin-bottom:5px}
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;flex:1;min-height:420px}
+.split.one{grid-template-columns:1fr}
+.split textarea{height:100%;min-height:420px;font-size:14.5px;font-family:inherit}
+iframe{width:100%;height:100%;min-height:420px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.tools{display:flex;gap:6px;flex-wrap:wrap}.tools button{padding:6px 10px;font-size:12px;font-weight:600}
+.empty{color:var(--ink-3);padding:60px;text-align:center}
+/* 새 컬럼 */
+.news{display:grid;gap:8px;max-height:360px;overflow:auto}
+.news .n{padding:10px 12px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:#fff}
+.news .n:hover{border-color:var(--ink)}.news .n small{color:var(--ink-3);display:block;margin-top:3px}
+pre.log{background:var(--ink);color:#ddd;border-radius:12px;padding:14px;font-size:12px;line-height:1.5;max-height:320px;overflow:auto;white-space:pre-wrap}
+/* 스케줄 */
+.days{display:flex;gap:6px}.days label{display:flex;align-items:center;gap:4px;font-size:14px;color:var(--ink);font-weight:600;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer}
+.days input{width:auto}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:12px;font-weight:600;opacity:0;pointer-events:none;transition:.2s;z-index:9}
+.toast.on{opacity:1}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px;background:var(--ink-3)}.dot.ok{background:var(--ok)}.dot.warn{background:var(--orange)}
+@media (max-width:900px){.app{grid-template-columns:1fr}.side{flex-direction:row;flex-wrap:wrap;border-right:0;border-bottom:1px solid var(--line)}.side .foot{display:none}.cols{grid-template-columns:1fr;height:auto}.split{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><img src="/site/assets/favicon.svg" alt=""> 컬럼 스튜디오</div>
+    <nav class="nav">
+      <a href="#columns" class="on" data-v="columns">컬럼 보기·수정</a>
+      <a href="#new" data-v="new">새 컬럼 만들기</a>
+      <a href="#schedule" data-v="schedule">자동 실행</a>
+      <a href="#docs" data-v="docs">문체·주제 가이드</a>
+    </nav>
+    <div class="foot" id="status">상태 불러오는 중…</div>
+  </aside>
+  <main>
+    <!-- 컬럼 -->
+    <section class="view on" id="v-columns">
+      <div class="cols">
+        <div class="list" id="list"></div>
+        <div class="editor" id="editor"><div class="empty">왼쪽에서 컬럼을 고르세요.</div></div>
+      </div>
+    </section>
+
+    <!-- 새 컬럼 -->
+    <section class="view" id="v-new">
+      <h1>새 컬럼 만들기</h1>
+      <p class="sub">주제를 적거나 뉴스를 고르면 대표 문체로 초안을 씁니다. 3~6분 걸리고, 초안은 사이트에 올라가지 않습니다. 확인 후 발행 버튼을 누르세요.</p>
+      <div class="card" style="margin-bottom:14px">
+        <label>주제 (비우면 뉴스 중에서 알아서 고릅니다)</label>
+        <textarea id="topic" rows="3" placeholder="예: 병원 유튜브 고정댓글 활용법 — 검색어 '병원 유튜브 댓글'을 제목 앞에"></textarea>
+        <div class="row" style="margin-top:12px"><button class="orange" id="gen">초안 쓰기</button><span id="gen-state" style="color:var(--ink-3)"></span></div>
+      </div>
+      <div class="card" style="margin-bottom:14px">
+        <div class="row" style="justify-content:space-between"><b>최근 뉴스 (누르면 주제로 들어갑니다)</b><button class="secondary" id="news-refresh">뉴스 새로 받기</button></div>
+        <div class="news" id="news" style="margin-top:10px"></div>
+      </div>
+      <pre class="log" id="log" hidden></pre>
+    </section>
+
+    <!-- 스케줄 -->
+    <section class="view" id="v-schedule">
+      <h1>자동 실행</h1>
+      <p class="sub">정해진 요일·시간에 컬럼을 자동으로 씁니다. 그 시간에 맥이 켜져 있어야 합니다.</p>
+      <div class="card" style="max-width:640px">
+        <div class="row" style="justify-content:space-between;margin-bottom:16px"><div><span class="dot" id="sch-dot"></span><b id="sch-state">확인 중…</b></div><button id="sch-toggle">켜기</button></div>
+        <label>요일</label>
+        <div class="days" id="days"></div>
+        <div class="meta" style="margin-top:12px">
+          <div><label>시간</label><input type="time" id="sch-time" value="09:30"></div>
+          <div><label>결과</label><select id="sch-mode"><option value="draft">초안으로 저장 (내가 확인 후 발행)</option><option value="publish">바로 사이트에 발행</option></select></div>
+        </div>
+        <div class="row" style="margin-top:14px"><button class="secondary" id="sch-save">설정 저장</button><span style="color:var(--ink-3);font-size:13px">저장하면 켜진 상태로 적용됩니다.</span></div>
+      </div>
+      <div class="card" style="max-width:640px;margin-top:14px"><b>마지막 실행 기록</b><pre class="log" id="lastlog" style="margin:10px 0 0">-</pre></div>
+    </section>
+
+    <!-- 가이드 -->
+    <section class="view" id="v-docs">
+      <h1>문체·주제 가이드</h1>
+      <p class="sub">컬럼을 쓸 때 매번 읽는 문서입니다. 여기서 고치면 다음 컬럼부터 반영됩니다. 클라이언트 실명·계약 조건은 적지 마세요(저장소가 공개입니다).</p>
+      <div class="row" style="margin-bottom:10px">
+        <select id="doc-key" style="width:auto"><option value="voice">VOICE.md — 나의 문체·주장·가드레일</option><option value="topics">TOPICS.md — 주제 은행</option><option value="seo">BLOG-SEO.md — 검색 최적화 규칙</option><option value="prompt">PROMPT.md — 생성 지시문</option></select>
+        <button id="doc-save">저장</button><span id="doc-state" style="color:var(--ink-3)"></span>
+      </div>
+      <textarea id="doc-text" rows="30" style="font-family:ui-monospace,Menlo,monospace;font-size:13px"></textarea>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const api = async (p, opt = {}) => { const r = await fetch(p, { headers: { 'Content-Type': 'application/json' }, ...opt, body: opt.body ? JSON.stringify(opt.body) : undefined }); const t = r.headers.get('content-type') || ''; const d = t.includes('json') ? await r.json() : await r.text(); if (!r.ok) throw new Error(d.error || r.statusText); return d; };
+const toast = m => { const t = $('#toast'); t.textContent = m; t.classList.add('on'); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('on'), 2600); };
+const esc = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+
+// ── 뷰 전환
+function show(v) { document.querySelectorAll('.view').forEach(x => x.classList.toggle('on', x.id === 'v-' + v)); document.querySelectorAll('.nav a').forEach(a => a.classList.toggle('on', a.dataset.v === v)); if (v === 'schedule') loadSchedule(); if (v === 'docs') loadDoc(); if (v === 'new') loadNews(); }
+document.querySelectorAll('.nav a').forEach(a => a.onclick = e => { e.preventDefault(); location.hash = a.dataset.v; show(a.dataset.v); });
+show((location.hash || '#columns').slice(1));
+
+// ── 상태
+async function loadStatus() { try { const s = await api('/api/status'); $('#status').innerHTML = `<b>마지막 커밋</b><br>${esc(s.last)}<br>${s.ahead ? `<span style="color:var(--orange)">푸시 안 된 커밋 ${s.ahead}개</span>` : '사이트와 동기화됨'}<br><a href="${s.site}/columns.html" target="_blank" style="color:var(--ink-2)">사이트 컬럼 페이지 ↗</a>`; $('#lastlog').textContent = s.lastLog || '-'; } catch (e) { $('#status').textContent = '상태 확인 실패'; } }
+loadStatus();
+
+// ── 컬럼 목록
+let current = null, dirty = false;
+async function loadList(select) {
+  const list = await api('/api/columns');
+  $('#list').innerHTML = list.length ? list.map(c => `<div class="item ${current && current.file === c.file ? 'on' : ''}" data-f="${esc(c.file)}"><span class="badge ${c.status}">${c.status === 'draft' ? '초안' : '발행됨'}</span><div class="t">${esc(c.title)}</div><div class="m">${c.date} · ${c.chars.toLocaleString()}자</div></div>`).join('') : '<div class="empty">아직 컬럼이 없습니다.<br>"새 컬럼 만들기"에서 시작하세요.</div>';
+  document.querySelectorAll('.item').forEach(el => el.onclick = () => open(el.dataset.f));
+  if (select) open(select); else if (!current && list.length) open(list[0].file);
+}
+async function open(file) {
+  if (dirty && !confirm('저장하지 않은 수정이 있습니다. 버릴까요?')) return;
+  current = await api('/api/column/' + encodeURIComponent(file)); dirty = false;
+  document.querySelectorAll('.item').forEach(el => el.classList.toggle('on', el.dataset.f === file));
+  const m = current.meta; const isDraft = (m.status || 'published') !== 'published';
+  $('#editor').innerHTML = `
+    <div class="top">
+      <div><span class="badge ${isDraft ? 'draft' : 'published'}">${isDraft ? '초안 — 사이트에 안 보임' : '발행됨 — 사이트에 보임'}</span> <span style="color:var(--ink-3);font-size:13px">${esc(file)}</span></div>
+      <div class="row">
+        <button class="secondary" id="b-preview">미리보기 ${localStorage.pv === '0' ? '켜기' : '끄기'}</button>
+        <button class="secondary" id="b-save">저장</button>
+        ${isDraft ? '<button class="orange" id="b-publish">사이트에 발행</button>' : '<button class="orange" id="b-publish">수정 내용 사이트에 반영</button><button class="secondary" id="b-unpublish">사이트에서 내리기</button>'}
+        <button class="danger" id="b-delete">삭제</button>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="full"><label>제목 (검색어를 앞에, 20자 안팎)</label><input id="f-title" value="${esc(m.title)}"></div>
+      <div class="full"><label>요약 (검색 결과에 보이는 두 문장)</label><input id="f-excerpt" value="${esc(m.excerpt)}"></div>
+      <div><label>태그 (쉼표)</label><input id="f-tags" value="${esc(m.tags)}"></div>
+      <div><label>날짜</label><input id="f-date" value="${esc(m.date)}"></div>
+      <div><label>다룬 뉴스 제목</label><input id="f-st" value="${esc(m.source_title)}"></div>
+      <div><label>뉴스 링크</label><input id="f-su" value="${esc(m.source_url)}"></div>
+    </div>
+    <div class="tools">
+      <span style="font-size:12px;color:var(--ink-3);align-self:center">그림 카드 넣기:</span>
+      ${['flow', 'steps', 'compare', 'stat', 'check', 'quote'].map(t => `<button class="secondary" data-ins="${t}">${{ flow: '흐름', steps: '단계', compare: '비교', stat: '숫자', check: '체크', quote: '인용' }[t]}</button>`).join('')}
+      <button class="secondary" data-ins="h2">소제목</button>
+    </div>
+    <div class="split ${localStorage.pv === '0' ? 'one' : ''}"><textarea id="f-body">${esc(current.body)}</textarea><iframe id="pv" ${localStorage.pv === '0' ? 'hidden' : ''}></iframe></div>`;
+  const mark = () => { dirty = true; renderPreview(); };
+  ['#f-title', '#f-excerpt', '#f-tags', '#f-date', '#f-st', '#f-su', '#f-body'].forEach(s => $(s).addEventListener('input', mark));
+  $('#b-save').onclick = save; $('#b-delete').onclick = del; $('#b-preview').onclick = togglePreview;
+  if ($('#b-publish')) $('#b-publish').onclick = () => publish('publish'); if ($('#b-unpublish')) $('#b-unpublish').onclick = () => publish('unpublish');
+  document.querySelectorAll('[data-ins]').forEach(b => b.onclick = () => insert(b.dataset.ins));
+  renderPreview();
+}
+function collect() { return { meta: { ...current.meta, title: $('#f-title').value, excerpt: $('#f-excerpt').value, tags: $('#f-tags').value, date: $('#f-date').value, source_title: $('#f-st').value, source_url: $('#f-su').value }, body: $('#f-body').value }; }
+let pvT; function renderPreview() { const f = $('#pv'); if (!f || f.hidden) return; clearTimeout(pvT); pvT = setTimeout(async () => { const html = await api('/api/preview', { method: 'POST', body: collect() }); const y = f.contentWindow ? f.contentWindow.scrollY : 0; f.srcdoc = html; f.onload = () => f.contentWindow.scrollTo(0, y); }, 250); }
+function togglePreview() { const on = localStorage.pv === '0'; localStorage.pv = on ? '1' : '0'; $('#pv').hidden = !on; $('.split').classList.toggle('one', !on); $('#b-preview').textContent = '미리보기 ' + (on ? '끄기' : '켜기'); renderPreview(); }
+async function save() { const d = collect(); await api('/api/column/' + encodeURIComponent(current.file), { method: 'PUT', body: d }); current.meta = d.meta; current.body = d.body; dirty = false; toast('저장했습니다' + ((current.meta.status || 'published') === 'published' ? ' — 사이트에 올리려면 "수정 내용 사이트에 반영"을 누르세요' : '')); loadList(); }
+async function publish(action) {
+  if (dirty) await save();
+  if (action === 'publish' && !confirm('recoculture.com 에 이 글을 올립니다(수정 반영 포함). 진행할까요?')) return;
+  if (action === 'unpublish' && !confirm('사이트에서 이 글을 내립니다. 파일은 초안으로 남습니다.')) return;
+  toast(action === 'publish' ? '발행 중… (10~20초)' : '내리는 중…');
+  try { const r = await api('/api/column/' + encodeURIComponent(current.file) + '/' + action, { method: 'POST' }); toast(r.pushed ? (action === 'publish' ? '발행 완료. 1~2분 뒤 사이트에 보입니다.' : '내렸습니다.') : (r.committed ? '저장됐지만 푸시 실패: ' + r.pushErr : '변경 없음')); await loadList(current.file); loadStatus(); } catch (e) { toast('실패: ' + e.message); }
+}
+async function del() { if (!confirm('이 컬럼을 완전히 삭제합니다. 발행된 글이면 사이트에서도 사라집니다.')) return; await api('/api/column/' + encodeURIComponent(current.file), { method: 'DELETE' }); current = null; dirty = false; $('#editor').innerHTML = '<div class="empty">삭제했습니다.</div>'; loadList(); loadStatus(); }
+const TPL = { h2: '\n## 소제목\n\n', flow: '\n:::flow "캡션"\n첫 단계 | 설명\n둘째 단계 | 설명\n셋째 단계 | 설명\n:::\n\n', steps: '\n:::steps "캡션"\n첫째 | 설명\n둘째 | 설명\n셋째 | 설명\n:::\n\n', compare: '\n:::compare "캡션"\n왼쪽 제목 | 오른쪽 제목(강조)\n항목 | 항목\n항목 | 항목\n:::\n\n', stat: '\n:::stat "캡션"\n30% | 설명\n3~4분 | 설명\n80% | 설명\n:::\n\n', check: '\n:::check "캡션"\n점검 항목 하나\n점검 항목 둘\n점검 항목 셋\n:::\n\n', quote: '\n:::quote\n인용할 문장\n진성욱, 레코컬쳐\n:::\n\n' };
+function insert(t) { const ta = $('#f-body'); const s = ta.selectionStart; ta.value = ta.value.slice(0, s) + TPL[t] + ta.value.slice(s); ta.focus(); ta.selectionStart = ta.selectionEnd = s + TPL[t].length; dirty = true; renderPreview(); }
+loadList();
+
+// ── 새 컬럼
+async function loadNews() { try { const d = await api('/api/news'); $('#news').innerHTML = (d.items || []).slice(0, 40).map(n => `<div class="n" data-t="${esc(n.title)}" data-u="${esc(n.link)}">${esc(n.title)}<small>${esc(n.source || '')} · ${(n.date || '').slice(0, 10)}</small></div>`).join('') || '<div class="empty">뉴스가 없습니다. "뉴스 새로 받기"를 누르세요.</div>'; document.querySelectorAll('.news .n').forEach(el => el.onclick = () => { $('#topic').value = `이 뉴스를 다룬다: ${el.dataset.t} (${el.dataset.u})`; window.scrollTo(0, 0); }); } catch {} }
+$('#news-refresh').onclick = async () => { toast('뉴스 받는 중…'); await api('/api/news/refresh', { method: 'POST' }); loadNews(); toast('뉴스를 새로 받았습니다'); };
+let pollT;
+async function poll(id) { const j = await api('/api/jobs/' + id); $('#log').hidden = false; $('#log').textContent = j.log.slice(-4000) || '시작 중…'; $('#log').scrollTop = 1e9; if (!j.done) { pollT = setTimeout(() => poll(id), 2000); return; } $('#gen').disabled = false; if (j.code === 0 && j.newFile) { $('#gen-state').textContent = '완료. 컬럼 목록에서 확인하세요.'; toast('초안이 생겼습니다'); await loadList(j.newFile); location.hash = 'columns'; show('columns'); } else { $('#gen-state').textContent = '실패했습니다. 아래 기록을 확인하세요.'; } loadStatus(); }
+$('#gen').onclick = async () => { $('#gen').disabled = true; $('#gen-state').textContent = '쓰는 중… 3~6분'; try { const r = await api('/api/generate', { method: 'POST', body: { topic: $('#topic').value } }); poll(r.id); } catch (e) { $('#gen').disabled = false; $('#gen-state').textContent = e.message; } };
+(async () => { const js = await api('/api/jobs').catch(() => []); const run = js.find(j => !j.done); if (run) { $('#gen').disabled = true; $('#gen-state').textContent = '쓰는 중…'; poll(run.id); } })();
+
+// ── 스케줄
+const DAYS = ['일', '월', '화', '수', '목', '금', '토'];
+async function loadSchedule() {
+  const s = await api('/api/schedule');
+  $('#days').innerHTML = DAYS.map((d, i) => `<label><input type="checkbox" value="${i}" ${s.days.includes(i) ? 'checked' : ''}>${d}</label>`).join('');
+  $('#sch-time').value = `${String(s.hour).padStart(2, '0')}:${String(s.minute).padStart(2, '0')}`; $('#sch-mode').value = s.mode;
+  const on = s.installed && s.loaded; $('#sch-dot').className = 'dot ' + (on ? 'ok' : ''); $('#sch-state').textContent = on ? `켜짐 — ${s.days.map(d => DAYS[d]).join('·')} ${$('#sch-time').value}, ${s.mode === 'draft' ? '초안 저장' : '바로 발행'}` : '꺼짐'; $('#sch-toggle').textContent = on ? '끄기' : '켜기'; $('#sch-toggle').className = on ? 'secondary' : 'orange'; $('#sch-toggle').dataset.on = on ? '1' : '0';
+}
+function schBody(enabled) { const [h, m] = $('#sch-time').value.split(':'); return { enabled, mode: $('#sch-mode').value, days: [...document.querySelectorAll('#days input:checked')].map(i => Number(i.value)), hour: Number(h), minute: Number(m) }; }
+$('#sch-toggle').onclick = async () => { const on = $('#sch-toggle').dataset.on === '1'; try { await api('/api/schedule', { method: 'POST', body: schBody(!on) }); toast(on ? '자동 실행을 껐습니다' : '자동 실행을 켰습니다'); } catch (e) { toast('실패: ' + e.message); } loadSchedule(); };
+$('#sch-save').onclick = async () => { try { await api('/api/schedule', { method: 'POST', body: schBody(true) }); toast('저장했습니다'); } catch (e) { toast('실패: ' + e.message); } loadSchedule(); };
+
+// ── 가이드
+async function loadDoc() { const d = await api('/api/doc/' + $('#doc-key').value); $('#doc-text').value = d.text; $('#doc-state').textContent = d.path; }
+$('#doc-key').onchange = loadDoc;
+$('#doc-save').onclick = async () => { const r = await api('/api/doc/' + $('#doc-key').value, { method: 'PUT', body: { text: $('#doc-text').value } }); toast(r.pushed ? '저장하고 동기화했습니다' : '저장했습니다'); loadStatus(); };
+window.addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+</script>
+</body>
+</html>

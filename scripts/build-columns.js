@@ -9,7 +9,7 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const SRC = path.join(ROOT, 'content/columns'), OUT = path.join(ROOT, 'columns');
 const SITE = 'https://recoculture.com';
-const DRAFTS = process.argv.includes('--drafts');
+let DRAFTS = process.argv.includes('--drafts');
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 function inline(t) {
@@ -111,6 +111,8 @@ ${scripts}</body>
 </html>
 `;
 
+function build(opts = {}) {
+DRAFTS = !!opts.drafts;
 if (!fs.existsSync(OUT)) fs.mkdirSync(OUT, { recursive: true });
 const files = fs.existsSync(SRC) ? fs.readdirSync(SRC).filter(f => f.endsWith('.md') && !f.startsWith('._')) : [];
 const posts = [];
@@ -179,4 +181,7 @@ const sm = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.si
   `\n  <url><loc>${SITE}/columns.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>\n` +
   posts.map(p => `  <url><loc>${SITE}/columns/${p.slug}.html</loc><lastmod>${p.date}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>`).join('\n') + '\n</urlset>\n';
 fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sm);
-console.log(`컬럼 ${posts.length}편 빌드 완료${DRAFTS ? ' (초안 포함 — 배포 전 --drafts 없이 다시 빌드)' : ''}`);
+return posts;
+}
+module.exports = { md, fm, figure, page, build, ROOT, SRC, OUT, SITE };
+if (require.main === module) { const posts = build({ drafts: process.argv.includes('--drafts') }); console.log(`컬럼 ${posts.length}편 빌드 완료${DRAFTS ? ' (초안 포함 — 배포 전 --drafts 없이 다시 빌드)' : ''}`); }

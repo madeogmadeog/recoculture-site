@@ -49,6 +49,12 @@
 | 채용 공고 | `careers.html` |
 | 색·폰트 | `styles.css` `:root` |
 
+## 컬럼 스튜디오 (코딩 없이 쓰는 UI)
+
+- `scripts/studio/install.command` 더블클릭 → http://localhost:3300 (맥 켜질 때 자동 시작, launchd `com.recoculture.column-studio`)
+- 할 수 있는 것: 컬럼 목록·수정·실시간 미리보기·그림 카드 삽입, 사이트 발행/내리기/삭제(커밋·푸시 자동), 주제 입력 또는 뉴스 선택으로 새 초안 생성, 자동 실행 요일·시간·초안/발행 설정, 문체·주제 가이드 편집
+- 수동 실행: `node scripts/studio/server.js`
+
 ## 컬럼 자동 발행
 
 - 원고: `content/columns/YYYY-MM-DD-slug.md` (frontmatter: title, date, slug, excerpt, tags, source_title, source_url, status)
