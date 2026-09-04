@@ -36,9 +36,38 @@ function md(src) {
       out.push(`<${ordered ? 'ol' : 'ul'}>${items.map(x => `<li>${inline(x)}</li>`).join('')}</${ordered ? 'ol' : 'ul'}>`); continue;
     }
     if (/^```/.test(l)) { flush(); const c = []; i++; while (i < lines.length && !/^```/.test(lines[i])) c.push(lines[i]), i++; i++; out.push(`<pre><code>${esc(c.join('\n'))}</code></pre>`); continue; }
+    if ((m = l.match(/^:::(steps|compare|stat|check|quote|flow)\s*(?:"([^"]*)")?\s*$/))) {
+      flush(); const rows = []; i++; while (i < lines.length && !/^:::\s*$/.test(lines[i])) { if (lines[i].trim()) rows.push(lines[i].trim()); i++; } i++;
+      out.push(figure(m[1], m[2] || '', rows)); continue;
+    }
     para.push(l.trim()); i++;
   }
   flush(); return out.join('\n');
+}
+// 본문 그림 카드: 마크다운 안의 :::type "제목" … ::: 블록을 HTML 카드로 렌더
+function figure(type, title, rows) {
+  const split = r => r.split('|').map(x => x.trim());
+  const cap = title ? `<figcaption>${inline(title)}</figcaption>` : '';
+  if (type === 'steps' || type === 'flow') {
+    const items = rows.map((r, n) => { const [h, d] = split(r); return `<li><span class="fig__n">${String(n + 1).padStart(2, '0')}</span><div><b>${inline(h)}</b>${d ? `<p>${inline(d)}</p>` : ''}</div></li>`; }).join('');
+    return `<figure class="fig fig--${type}"><ol>${items}</ol>${cap}</figure>`;
+  }
+  if (type === 'compare') {
+    const [ha, hb] = split(rows[0] || '|'); const body = rows.slice(1).map(r => { const [a, b] = split(r); return `<div class="fig__cell fig__cell--a">${inline(a)}</div><div class="fig__cell fig__cell--b">${inline(b)}</div>`; }).join('');
+    return `<figure class="fig fig--compare"><div class="fig__grid"><div class="fig__head fig__head--a">${inline(ha)}</div><div class="fig__head fig__head--b">${inline(hb)}</div>${body}</div>${cap}</figure>`;
+  }
+  if (type === 'stat') {
+    const items = rows.map(r => { const [n, d] = split(r); return `<div class="fig__stat"><b>${inline(n)}</b><span>${inline(d || '')}</span></div>`; }).join('');
+    return `<figure class="fig fig--stat"><div class="fig__stats">${items}</div>${cap}</figure>`;
+  }
+  if (type === 'check') {
+    return `<figure class="fig fig--check"><ul>${rows.map(r => `<li>${inline(r.replace(/^[-*]\s*/, ''))}</li>`).join('')}</ul>${cap}</figure>`;
+  }
+  if (type === 'quote') {
+    const [q, by] = [rows[0] || '', rows[1] || ''];
+    return `<figure class="fig fig--quote"><blockquote><p>${inline(q)}</p>${by ? `<cite>${inline(by)}</cite>` : ''}</blockquote>${cap}</figure>`;
+  }
+  return '';
 }
 function fm(raw) {
   const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/); if (!m) return { meta: {}, body: raw };

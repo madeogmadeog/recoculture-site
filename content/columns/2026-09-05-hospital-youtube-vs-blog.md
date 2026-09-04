@@ -6,7 +6,7 @@ excerpt: 블로그는 검색하는 사람을 잡고, 유튜브는 아직 검색�
 tags: 병원 유튜브 마케팅, 병원 블로그, 퍼널
 source_title:
 source_url:
-status: draft
+status: published
 ---
 
 블로그는 잘 됩니다. 검색 상위에도 뜨고, 문의도 옵니다.
