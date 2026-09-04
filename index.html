@@ -12,12 +12,25 @@
 <meta property="og:image" content="https://recoculture.com/assets/og-image.png">
 <meta property="og:locale" content="ko_KR">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://recoculture.com/">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"Organization","@id":"https://recoculture.com/#org","name":"레코컬쳐","alternateName":"RECOCULTURE","url":"https://recoculture.com/","logo":"https://recoculture.com/assets/logo/symbol.svg","email":"og@recoculture.com","address":{"@type":"PostalAddress","addressLocality":"서울","addressCountry":"KR"},"description":"의사·치과의사 등 전문직의 유튜브 채널을 기획·제작·운영하는 미디어 브랜딩 회사"},
+ {"@type":"WebSite","@id":"https://recoculture.com/#site","url":"https://recoculture.com/","name":"RECOCULTURE","publisher":{"@id":"https://recoculture.com/#org"},"inLanguage":"ko"},
+ {"@type":"Service","name":"전문직 유튜브 채널 기획·제작·운영","provider":{"@id":"https://recoculture.com/#org"},"areaServed":"KR","audience":{"@type":"Audience","audienceType":"의사, 치과의사, 수의사, 변호사 등 전문직"}},
+ {"@type":"FAQPage","mainEntity":[
+  {"@type":"Question","name":"계약 기간은 얼마나 되나요?","acceptedAnswer":{"@type":"Answer","text":"최소 3개월로 시작하고 이후 1개월 단위로 연장합니다. 평균 계약 기간은 1년 6개월입니다."}},
+  {"@type":"Question","name":"비용은 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"월 4회 제작 기준 월 400만원에서 1,000만원 사이이며 첫 미팅 후 맞춤 견적으로 안내합니다."}},
+  {"@type":"Question","name":"대본 없이 어떻게 영상이 나오나요?","acceptedAnswer":{"@type":"Answer","text":"읽을 대본 대신 질문을 설계합니다. 전담 PD가 인터뷰어가 되어 진료실에서 하는 설명이 그대로 나오도록 대화를 이끕니다."}}
+ ]}
+]}
+</script>
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/assets/favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="preload" href="/data/channels.json" as="fetch" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="/styles.css?v=20260904222824">
+<link rel="stylesheet" href="/styles.css?v=20260904235646">
 <script>document.documentElement.classList.remove('no-js')</script>
 </head>
 <body>
@@ -109,6 +122,16 @@
         <a class="btn btn--ghost" href="/work.html" data-reveal data-magnetic>전체 작업 보기</a>
       </div>
       <div class="channels" id="channels-grid"></div>
+    </div>
+  </section>
+
+  <section class="section" id="voices">
+    <div class="wrap">
+      <div data-reveal>
+        <div class="eyebrow">Clients</div>
+        <h2 class="h2">함께한 원장님들의 말</h2>
+      </div>
+      <div class="voices" id="voices-grid"></div>
     </div>
   </section>
 
@@ -250,16 +273,21 @@
         <div class="eyebrow">FAQ</div>
         <h2 class="h2">자주 묻는<br>질문</h2>
         <p class="lead">여기 없는 질문은 아래 폼으로 보내주세요.</p>
+        <dl class="terms" data-reveal>
+          <div><dt>평균 계약 기간</dt><dd>1년 6개월</dd></div>
+          <div><dt>연장 단위</dt><dd>1개월</dd></div>
+          <div><dt>비용</dt><dd>월 400만~1,000만원 <small>월 4회 제작 기준</small></dd></div>
+        </dl>
       </div>
       <div class="faq__list" data-reveal>
-        <details><summary>계약 기간은 얼마나 되나요?</summary><p>최소 3개월 단위로 시작합니다. 첫 촬영까지 4주, 그 뒤로 매주 한 편이 쌓여야 채널이 방향을 잡기 때문입니다. 3개월 뒤 성과 리뷰에서 다음 방향을 함께 정합니다.</p></details>
+        <details><summary>계약 기간은 얼마나 되나요?</summary><p>최소 3개월로 시작하고, 이후는 1개월 단위로 연장합니다. 첫 촬영까지 4주, 그 뒤로 매주 한 편이 쌓여야 채널이 방향을 잡기 때문입니다. 함께한 채널의 평균 계약 기간은 1년 6개월입니다.</p></details>
         <details><summary>촬영은 얼마나 자주, 얼마나 오래 하나요?</summary><p>보통 월 1~2회, 한 번에 2~3시간 안에 여러 편을 촬영합니다. 촬영 일정은 진료 스케줄에 맞춰 잡습니다.</p></details>
         <details><summary>제가 직접 해야 하는 일은 무엇인가요?</summary><p>촬영 당일 카메라 앞에 앉아 평소처럼 말씀하시는 것, 그리고 기획안에 한 번 눈을 주시는 것뿐입니다. 주제 발굴, 기획, 편집, 업로드, 댓글 관리는 전담 PD가 맡습니다.</p></details>
         <details><summary>대본 없이 어떻게 영상이 나오나요?</summary><p>읽을 대본 대신 질문을 설계합니다. 진료실에서 환자에게 하시는 설명이 그대로 나오도록 PD가 인터뷰어가 되어 대화를 이끕니다. 편집에서 그 말을 재배열합니다.</p></details>
         <details><summary>의료광고 심의는 어떻게 하나요?</summary><p>기획 단계에서 심의 대상 여부를 먼저 확인하고, 표현 기준에 맞춰 기획안을 씁니다. 심의가 필요한 콘텐츠는 접수와 수정까지 함께 진행합니다.</p></details>
         <details><summary>조회수가 안 나오면 어떻게 되나요?</summary><p>우리는 조회수를 목표로 두지 않습니다. 영상을 본 사람이 실제로 찾아오는지를 매달 숫자로 함께 보고, 퍼널 어디가 막혔는지 찾아 다음 달 기획을 바꿉니다.</p></details>
         <details><summary>이미 운영 중인 채널이 있어도 되나요?</summary><p>네. 기존 채널의 데이터를 진단해 살릴 것과 바꿀 것을 나눕니다. 채널을 새로 파는 것보다 대부분 빠릅니다.</p></details>
-        <details><summary>비용은 어떻게 안내받나요?</summary><p>채널 상황과 제작 편수에 따라 달라서 첫 미팅 후 맞춤 견적으로 안내드립니다. 아래 폼에 채널 링크와 고민을 남겨주시면 미팅 일정을 잡아 연락드립니다.</p></details>
+        <details><summary>비용은 어떻게 되나요?</summary><p>월 4회 제작 기준으로 월 400만원에서 1,000만원 사이입니다. 채널 상황, 촬영 구성, 운영 범위에 따라 달라지며 첫 미팅 후 맞춤 견적으로 안내드립니다. 아래 폼에 채널 링크와 고민을 남겨주시면 미팅 일정을 잡아 연락드립니다.</p></details>
       </div>
     </div>
   </section>
@@ -331,6 +359,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Draggable.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/InertiaPlugin.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
-<script src="/main.js?v=20260904223336"></script>
+<script src="/main.js?v=20260904235646"></script>
 </body>
 </html>

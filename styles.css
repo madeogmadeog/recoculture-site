@@ -496,3 +496,21 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 @keyframes pulse-dot { 50% { opacity: .3; } }
 .stat__n { font-size: clamp(24px, 2.6vw, 38px); }
 .react__v { font-size: clamp(26px, 2.8vw, 40px); }
+
+/* 원장 추천사 */
+.voices { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; margin-top: 44px; }
+.voice { position: relative; border-radius: var(--r-lg); padding: 36px 36px 30px; background: var(--ink); color: #fff; overflow: hidden; }
+.voice:nth-child(2) { background: var(--orange); }
+.voice:nth-child(3) { background: #F4F4F1; color: var(--ink); }
+.voice:nth-child(4) { background: #fff; color: var(--ink); border: 1px solid var(--line); }
+.voice::before { content: '“'; position: absolute; left: 28px; top: 8px; font-size: 120px; line-height: 1; font-weight: 800; opacity: .12; }
+.voice p { position: relative; font-size: clamp(18px, 1.8vw, 23px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.45; }
+.voice__who { position: relative; margin-top: 22px; font-size: 13px; font-weight: 600; opacity: .7; display: flex; align-items: center; gap: 8px; }
+.voice__who::before { content: ''; width: 18px; height: 1px; background: currentColor; opacity: .6; }
+@media (max-width: 720px) { .voices { grid-template-columns: 1fr; } .voice { padding: 28px 24px 24px; } }
+/* 계약 조건 */
+.terms { margin-top: 28px; border-top: 1px solid var(--line); }
+.terms div { display: grid; grid-template-columns: 110px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.terms dt { color: var(--ink-2); }
+.terms dd { margin: 0; font-weight: 700; }
+.terms dd small { display: block; font-weight: 500; color: var(--ink-3); font-size: 12px; margin-top: 2px; }
