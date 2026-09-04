@@ -1,444 +1,336 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" class="no-js">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RECOCULTURE | 전문직 유튜브 미디어 브랜딩</title>
-<meta name="description" content="전문직을 위한 유튜브 미디어 브랜딩. 조회수가 아닌 실제 비즈니스 성장을 만드는 파트너, 레코컬쳐.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RECOCULTURE — 당신의 영향력을 디자인합니다</title>
+<meta name="description" content="레코컬쳐는 전문가의 말을 있는 그대로 영상에 담습니다. 의사·치과의사 등 전문직 유튜브 채널을 기획·제작·운영합니다.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://recoculture.com/">
-<meta property="og:title" content="RECOCULTURE | 전문직 유튜브 미디어 브랜딩">
-<meta property="og:description" content="전문직을 위한 유튜브 미디어 브랜딩. 조회수가 아닌 실제 비즈니스 성장을 만드는 파트너.">
+<meta property="og:title" content="RECOCULTURE — 당신의 영향력을 디자인합니다">
+<meta property="og:description" content="꾸밈없는 한 사람의 이야기가 가장 큰 영향력이 되도록, 기획부터 운영까지 설계합니다.">
 <meta property="og:image" content="https://recoculture.com/assets/og-image.png">
 <meta property="og:locale" content="ko_KR">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="assets/favicon.ico">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=2">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="preload" href="/data/channels.json" as="fetch" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="/styles.css?v=20260904222824">
+<script>document.documentElement.classList.remove('no-js')</script>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="nav">
-  <a href="./" class="nav__logo">
-    <span class="logo-text">REC<span class="logo-text__dot"></span>CULTURE</span>
-  </a>
-  <ul class="nav__links">
-    <li><a href="./" class="nav__link nav__link--active">ABOUT US</a></li>
-    <li><a href="portfolio.html" class="nav__link">Portfolio</a></li>
-    <li><a href="services.html" class="nav__link">Services</a></li>
-    <li><a href="careers.html" class="nav__link">Careers</a></li>
-    <li><a href="blog.html" class="nav__link">Blog</a></li>
-    <li><a href="services.html#contact" class="nav__cta">연락하기</a></li>
-  </ul>
-  <div class="nav__hamburger" onclick="document.querySelector('.nav__mobile-menu').classList.toggle('is-open')">
-    <span></span><span></span><span></span>
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a href="/" class="nav__logo" aria-label="RECOCULTURE"><img src="/assets/logo/signature.svg" alt="RECOCULTURE"></a>
+    <div class="nav__links">
+      <a href="#channels">Channels</a>
+      <a href="/work.html">Work</a>
+      <a href="#way">How we work</a>
+      <a href="/careers.html">Careers</a>
+    </div>
+    <a class="btn btn--primary btn--sm" href="#contact" data-magnetic>채널 문의</a>
   </div>
 </nav>
-<div class="nav__mobile-menu">
-  <a href="./" class="nav__link--active">ABOUT US</a>
-  <a href="portfolio.html">Portfolio</a>
-  <a href="services.html">Services</a>
-  <a href="careers.html">Careers</a>
-  <a href="blog.html">Blog</a>
-  <a href="services.html#contact">연락하기</a>
-</div>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero__bg"></div>
-  <div class="hero__thumbnails" aria-hidden="true">
-    <!-- 4줄 계단식: 1·3줄 ← 왼쪽, 2·4줄 → 오른쪽, 각각 다른 속도 -->
-    <div class="hero__thumbnails-row hero__thumbnails-row--1">
-      <div class="hero__thumbnails-track">
-        <div class="hero__thumbnails-strip">
-          <img src="https://img.youtube.com/vi/OGoD3pjPdpc/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/MaZnabYDYG4/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/BUMV0e-aTZM/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/gkv28WNJiHs/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/RCo7iMx9YrY/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/zTDDRkEu0cQ/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/BhvTHSE3Ls/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/0VarMSXsZ3o/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/j7LjP0QCv-I/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/6TuwFWwpY7s/mqdefault.jpg" alt="">
-        </div>
-        <div class="hero__thumbnails-strip">
-          <img src="https://img.youtube.com/vi/OGoD3pjPdpc/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/MaZnabYDYG4/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/BUMV0e-aTZM/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/gkv28WNJiHs/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/RCo7iMx9YrY/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/zTDDRkEu0cQ/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/BhvTHSE3Ls/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/0VarMSXsZ3o/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/j7LjP0QCv-I/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/6TuwFWwpY7s/mqdefault.jpg" alt="">
-        </div>
+<main>
+  <section class="hero">
+    <div class="hero__grid" aria-hidden="true"></div>
+    <div class="hero__blob" data-blob></div>
+    <div class="wrap hero__inner">
+      <div class="hero__live" data-hero><span class="dot"></span><span id="live-text"><b>11개 채널</b> 운영 중</span></div>
+      <h1 id="h1">
+        <span class="line"><span>당신의 <span class="sel" id="sel"><span class="sel__word" id="rot">영향력</span><i class="sel__h sel__h--tl"></i><i class="sel__h sel__h--tr"></i><i class="sel__h sel__h--bl"></i><i class="sel__h sel__h--br"></i><span class="sel__tag" id="rot-tag">INFLUENCE</span></span>을</span></span>
+        <span class="line"><span>디자인합니다.</span></span>
+      </h1>
+      <p class="hero__sub" data-hero>꾸밈없는 한 사람의 이야기가 가장 큰 영향력이 되도록,<br>기획부터 촬영·편집·운영까지 하나의 시스템으로 설계합니다.</p>
+      <div class="hero__cta" data-hero>
+        <a class="btn btn--orange" href="#contact" data-magnetic>채널 문의하기
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+        <a class="btn btn--ghost" href="#channels" data-magnetic>성과 채널 보기</a>
       </div>
-    </div>
-    <div class="hero__thumbnails-row hero__thumbnails-row--2">
-      <div class="hero__thumbnails-track">
-        <div class="hero__thumbnails-strip">
-          <img src="https://img.youtube.com/vi/hHSrVt28xzA/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/P2xLP-g1LA0/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/ehbWoKNK3ss/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/G7ogUEpPEL0/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/Xdw76U6x0dQ/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/ZvEqTJKtPN0/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/feHnxuftsyI/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/3xuIdKdMGww/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/1pPPIBGoR78/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/4q23LOxUHcM/mqdefault.jpg" alt="">
-        </div>
-        <div class="hero__thumbnails-strip">
-          <img src="https://img.youtube.com/vi/hHSrVt28xzA/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/P2xLP-g1LA0/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/ehbWoKNK3ss/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/G7ogUEpPEL0/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/Xdw76U6x0dQ/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/ZvEqTJKtPN0/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/feHnxuftsyI/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/3xuIdKdMGww/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/1pPPIBGoR78/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/4q23LOxUHcM/mqdefault.jpg" alt="">
-        </div>
-      </div>
-    </div>
-    <div class="hero__thumbnails-row hero__thumbnails-row--3">
-      <div class="hero__thumbnails-track">
-        <div class="hero__thumbnails-strip">
-          <img src="https://img.youtube.com/vi/b5FiwJKCf_w/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/I8iO-y4nXIY/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/kEHDVFOMxks/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/f-UYrTXvrvU/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/YWv6ppeJRGY/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/bJoPzoRSR9M/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/wF2tnX7rNbo/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/oxdedv2hudY/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/qvNxbtWg-Gg/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/mGiNdBK5ZFQ/mqdefault.jpg" alt="">
-        </div>
-        <div class="hero__thumbnails-strip">
-          <img src="https://img.youtube.com/vi/b5FiwJKCf_w/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/I8iO-y4nXIY/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/kEHDVFOMxks/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/f-UYrTXvrvU/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/YWv6ppeJRGY/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/bJoPzoRSR9M/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/wF2tnX7rNbo/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/oxdedv2hudY/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/qvNxbtWg-Gg/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/mGiNdBK5ZFQ/mqdefault.jpg" alt="">
-        </div>
-      </div>
-    </div>
-    <div class="hero__thumbnails-row hero__thumbnails-row--4">
-      <div class="hero__thumbnails-track">
-        <div class="hero__thumbnails-strip">
-          <img src="https://img.youtube.com/vi/NXevsWOK8uo/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/lfDdfGY_DHo/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/WY0bY674fvo/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/YKWns8sEYvY/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/l-on0ELk1uk/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/L9xf8jMx5dc/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/JyAWWodx8yM/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/xCcVmn9GdU0/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/V1Tw7pAo2TU/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/emfxexEvPMA/mqdefault.jpg" alt="">
-        </div>
-        <div class="hero__thumbnails-strip">
-          <img src="https://img.youtube.com/vi/NXevsWOK8uo/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/lfDdfGY_DHo/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/WY0bY674fvo/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/YKWns8sEYvY/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/l-on0ELk1uk/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/L9xf8jMx5dc/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/JyAWWodx8yM/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/xCcVmn9GdU0/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/V1Tw7pAo2TU/mqdefault.jpg" alt=""><img src="https://img.youtube.com/vi/emfxexEvPMA/mqdefault.jpg" alt="">
-        </div>
-      </div>
-    </div>
-    <div class="hero__thumbnails-dim"></div>
-  </div>
-  <div class="hero__grid"></div>
-  <div class="hero__content">
-    <p class="hero__label">Professional YouTube Branding</p>
-    <h1 class="hero__title">
-      저 의사들은 어떻게<br><em>유튜브를 하고 있을까?</em>
-    </h1>
-    <p class="hero__sub">
-      누구나 시작할 수는 있지만<br>
-      모두가 잘 되지는 않습니다.
-    </p>
-    <div class="hero__ctas">
-      <a href="services.html#contact" class="btn btn--primary">연락하기 <span class="btn__arrow">→</span></a>
-      <a href="services.html" class="btn btn--ghost">서비스 자세히보기</a>
-    </div>
-    <div class="hero__stat-bar">
-      <div class="hero__stat">
-        <div class="hero__stat-num">10<span class="hero__stat-unit">+</span></div>
-        <div class="hero__stat-label">운영 채널</div>
-      </div>
-      <div class="hero__stat">
-        <div class="hero__stat-num">5,700<span class="hero__stat-unit">만+</span></div>
-        <div class="hero__stat-label">누적 조회수</div>
-      </div>
-      <div class="hero__stat">
-        <div class="hero__stat-num">2<span class="hero__stat-unit">년</span></div>
-        <div class="hero__stat-label">평균 계약 유지기간</div>
-      </div>
-      <div class="hero__stat">
-        <div class="hero__stat-num">40<span class="hero__stat-unit">만+</span></div>
-        <div class="hero__stat-label">총 구독자</div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- 매니지먼트 채널 -->
-<section class="section section--alt">
-  <div class="section__inner reveal">
-    <div class="section__label">Management</div>
-    <h2 class="section__title">매니지먼트 채널</h2>
-    <p class="section__desc">레코컬쳐가 매니지먼트하는 대표 채널입니다.</p>
-    <div class="channel-cards-scene mt-48">
-      <div class="channel-cards">
-        <div class="channel-card-v" data-channel-id="UCvQCmSsCRb8z3q0SO5JW8Pw">
-          <div class="channel-card-v__profile">
-            <img class="channel-card-v__avatar" data-avatar="" src="" alt="" width="120" height="120">
-            <div class="channel-card-v__name">하원장 강동현</div>
-            <div class="channel-card-v__meta">미용의원 · 피부과</div>
+      <div class="float" aria-hidden="true">
+        <div class="fl chip chip--views" data-float="2" style="right:3%;top:2%"><span class="chip__ic chip__ic--play"></span><div><b data-chip-live="views" data-n="150000000">150,000,000 회</b><small>누적 조회수 · 쇼츠 포함</small></div></div>
+        <a class="fl mini mini--long" data-float="3" style="right:20%;top:18%" id="mini-1" href="#" target="_blank" rel="noopener noreferrer"><img alt=""><span class="mini__views"></span></a>
+        <div class="fl chip chip--subs" data-float="1" style="right:1%;top:40%"><span class="chip__ic chip__ic--user"></span><div><b data-chip-live="subs" data-n="410000">410,000 명</b><small>총 구독자</small></div></div>
+        <div class="fl rec" data-float="4" style="right:31%;top:58%"><span class="rec__dot"></span>REC <b id="rec-time">00:00:00</b></div>
+        <a class="fl mini mini--short" data-float="2" style="right:7%;top:62%" id="mini-2" href="#" target="_blank" rel="noopener noreferrer"><img alt=""><span class="mini__views"></span></a>
+        <div class="fl swatch" data-float="3" style="right:20%;top:88%"><i style="background:#FE6B00"></i><i style="background:#0E0E0E"></i><i style="background:#fff"></i><span>#FE6B00</span></div>
+        <div class="fl cursor" data-float="5" style="right:36%;top:34%"><svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 2-3 6z" fill="#FE6B00" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg><span>RECO PD</span></div>
+      </div>
+    </div>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="wrap"><div class="marquee__label">롱폼 · 조회수 <b>10만 회 이상</b></div></div>
+      <div class="marquee__row"><div class="marquee__track" id="track-long" data-speed="1"></div></div>
+      <div class="wrap"><div class="marquee__label">쇼츠 · 조회수 <b>30만 회 이상</b></div></div>
+      <div class="marquee__row"><div class="marquee__track" id="track-short" data-speed="-1"></div></div>
+    </div>
+
+    <div class="wrap">
+      <div class="stats" data-stats>
+        <div class="stat" data-reveal><div class="stat__n" data-n="150000000" data-suffix="회" data-live="views">0</div><div class="stat__l">누적 조회수 · 쇼츠 포함</div></div>
+        <div class="stat" data-reveal><div class="stat__n" data-n="410000" data-suffix="명" data-live="subs">0</div><div class="stat__l">총 구독자</div></div>
+        <div class="stat" data-reveal><div class="stat__n" data-n="1000" data-suffix="+">0</div><div class="stat__l">제작한 영상</div></div>
+        <div class="stat" data-reveal><div class="stat__n" data-n="30" data-suffix="+">0</div><div class="stat__l">함께한 채널</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pain" id="pain">
+    <div class="wrap">
+      <div data-reveal>
+        <div class="eyebrow">Check</div>
+        <h2 class="h2">혹시 지금,<br>이런 상태인가요?</h2>
+      </div>
+      <ul class="pain__list">
+        <li data-reveal><span class="pain__n">01</span>채널은 열었는데, 다음 영상을 뭘 찍어야 할지 모르겠다.</li>
+        <li data-reveal><span class="pain__n">02</span>조회수는 나오는데, 문의는 늘지 않는다.</li>
+        <li data-reveal><span class="pain__n">03</span>대본을 읽는 촬영이 어색하고, 그게 화면에 그대로 보인다.</li>
+        <li data-reveal><span class="pain__n">04</span>편집자에게 맡겼더니 두 달 만에 채널이 멈췄다.</li>
+        <li data-reveal><span class="pain__n">05</span>본업이 바빠서 유튜브는 늘 뒤로 밀린다.</li>
+      </ul>
+      <p class="pain__foot" data-reveal>하나라도 해당된다면, 문제는 영상이 아니라 <b>시스템</b>입니다. <a href="#process">우리가 만드는 시스템 보기<span class="notch"></span></a></p>
+    </div>
+  </section>
+
+  <section class="section channels-sec" id="channels">
+    <div class="rain" id="rain" aria-hidden="true"><div class="rain__stage" id="rain-stage"></div></div>
+    <div class="wrap channels-sec__inner">
+      <div class="section__head">
+        <div data-reveal>
+          <div class="eyebrow">Live channels</div>
+          <h2 class="h2">지금 이 순간에도<br>영향력이 만들어지고 있습니다.</h2>
+          <p class="lead">레코컬쳐가 함께 만든 채널 중 성과가 검증된 채널입니다. 숫자는 매일 아침 갱신됩니다.</p>
+        </div>
+        <a class="btn btn--ghost" href="/work.html" data-reveal data-magnetic>전체 작업 보기</a>
+      </div>
+      <div class="channels" id="channels-grid"></div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="proof">
+    <div class="wrap">
+      <div class="section__head">
+        <div data-reveal>
+          <div class="eyebrow">Proof</div>
+          <h2 class="h2">영향력은 화면 밖에서<br>증명됩니다.</h2>
+          <p class="lead">조회수는 화면에 남지만, 진짜 성과는 문을 열고 들어옵니다. 우리가 만든 채널의 손님들이 남긴 말입니다.</p>
+        </div>
+        <div class="proof__quote" data-reveal>“<b>유튜브 보고</b> 왔어요”</div>
+      </div>
+      <div class="reviews" id="reviews"></div>
+      <p class="proof__note" data-reveal>* 실제 방문자 후기에서 발췌했으며, 개인정보는 가렸습니다.</p>
+    </div>
+  </section>
+
+  <section class="way" id="way">
+    <div class="wrap way__head" data-reveal>
+      <div class="eyebrow">Our way</div>
+      <h2 class="h2">한 사람의 가장 사적인 이야기가,<br>가장 큰 영향력이 됩니다.</h2>
+      <p class="lead way__lead">우리는 유명해지는 법을 팔지 않습니다. 당신이라는 사람이 그대로 전해지도록 설계합니다.</p>
+    </div>
+    <div class="wrap stack" id="stack">
+      <article class="scard scard--1"><div class="scard__n">01</div><div class="scard__body"><h3>당신을 연출하지 않습니다.</h3><p>대본도, 캐릭터도 만들지 않습니다. 평소의 말투와 생각, 망설임까지 그대로 담습니다. 꾸미지 않은 사람 앞에서 사람들은 가장 오래 머무릅니다.</p></div><div class="scard__big">01</div></article>
+      <article class="scard scard--2"><div class="scard__n">02</div><div class="scard__body"><h3>단 한 사람을 향해 설계합니다.</h3><p>누구에게 닿아야 하는지부터 정합니다. 그 사람의 언어로 쓴 썸네일과 카피로, 스크롤하던 그 한 사람이 멈춰 서게 만듭니다.</p></div><div class="scard__big">02</div></article>
+      <article class="scard scard--3"><div class="scard__n">03</div><div class="scard__body"><h3>조회수가 아니라 행동을 셉니다.</h3><p>영상을 본 사람이 실제로 찾아오고, 사고, 문의하는지까지 추적합니다. 퍼널이 흐르는지 매달 숫자로 함께 봅니다.</p></div><div class="scard__big">03</div></article>
+      <article class="scard scard--4"><div class="scard__n">04</div><div class="scard__body"><h3>당신은 철학만 보여주면 됩니다.</h3><p>카메라 앞에서 평소의 생각을 말씀하세요. 그 철학을 콘텐츠로 번역하고, 채널로 쌓고, 필요한 사람에게 닿게 하는 일은 전담 PD가 끝까지 맡습니다.</p></div><div class="scard__big">04</div></article>
+    </div>
+  </section>
+
+  <section class="section" id="fit">
+    <div class="wrap">
+      <div data-reveal>
+        <div class="eyebrow">Fit check</div>
+        <h2 class="h2">이런 분과는<br>함께하지 않습니다.</h2>
+        <p class="lead">브랜딩은 준비 없이 갑자기 만들어지지 않습니다. 서로의 시간을 아끼기 위해 먼저 말씀드립니다.</p>
+      </div>
+      <div class="fit" data-reveal>
+        <div class="fit__col fit__col--no">
+          <h3>함께하기 어려운 경우</h3>
+          <ul>
+            <li>1~2개월 안에 단기 성과를 최우선으로 원하시는 경우</li>
+            <li>"알아서 잘 해주세요" — 전적으로 위임만 원하시는 경우</li>
+            <li>조회수만을 성과 지표로 삼고 싶으신 경우</li>
+            <li>대본을 100% 써서 그대로 읽는 촬영을 원하시는 경우</li>
+          </ul>
+        </div>
+        <div class="fit__col fit__col--yes">
+          <h3>이런 분과 잘 맞습니다</h3>
+          <ul>
+            <li>유튜브를 장기적인 신뢰 자산으로 생각하시는 분</li>
+            <li>본인의 전문성과 소신을 콘텐츠에 담고 싶으신 분</li>
+            <li>"내 고객이 될 한 사람"에게 닿고 싶으신 분</li>
+            <li>최소 3개월 이상의 여유를 가지고 시작하실 수 있는 분</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="vs">
+    <div class="wrap">
+      <div data-reveal>
+        <div class="eyebrow">Difference</div>
+        <h2 class="h2">영상 제작 대행과<br>브랜딩 파트너는 다릅니다.</h2>
+      </div>
+      <div class="vs" data-reveal>
+        <div class="vs__head"><span>일반 영상 대행</span><span class="vs__us">RECOCULTURE</span></div>
+        <div class="vs__row"><span>월 N회 납품, 횟수가 목표</span><span>한 사람에게 닿는 퍼널이 목표</span></div>
+        <div class="vs__row"><span>대본 100% 작성 → 그대로 읽기</span><span>질문 설계 → 당신의 말이 그대로</span></div>
+        <div class="vs__row"><span>조회수 보고서 한 장</span><span>유입 → 행동까지 추적한 월간 리포트</span></div>
+        <div class="vs__row"><span>편집자 한 명이 담당</span><span>기획·촬영·편집·운영 전담 PD 배정</span></div>
+        <div class="vs__row"><span>최신 장비를 어필</span><span>브랜딩 컨셉에 맞춘 촬영 환경</span></div>
+        <div class="vs__row"><span>예능식 편집, 재미 위주</span><span>신뢰가 쌓이는 편집, 과한 효과 없음</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="process">
+    <div class="wrap process">
+      <div class="process__side" data-reveal>
+        <div class="eyebrow">Process</div>
+        <h2 class="h2">영상 한 편이 아니라,<br>시스템을 만듭니다.</h2>
+        <p class="lead">첫 촬영까지 4주. 그 뒤로는 매주 한 편이 같은 방향을 향해 쌓입니다.</p>
+      </div>
+      <ol class="timeline" id="timeline">
+        <div class="timeline__rail"><i id="timeline-fill"></i></div>
+        <li class="tl" data-reveal>
+          <div class="tl__dot"></div>
+          <div class="tl__meta"><span class="tl__n">01</span><span class="tl__phase">1주차</span></div>
+          <h3>진단 — 채널을 숫자로 뜯어봅니다</h3>
+          <p>지금 채널과 경쟁 채널을 데이터로 분석하고, 당신의 영상이 반드시 닿아야 할 '한 사람'을 정의합니다. 첫 미팅에서 지금 당장 바꿔야 할 세 가지를 드립니다.</p>
+          <ul class="tl__tags"><li>채널·경쟁사 분석</li><li>타겟 페르소나 정의</li><li>진단 리포트</li></ul>
+        </li>
+        <li class="tl" data-reveal>
+          <div class="tl__dot"></div>
+          <div class="tl__meta"><span class="tl__n">02</span><span class="tl__phase">2–3주차</span></div>
+          <h3>설계 — 당신만의 콘텐츠 퍼널</h3>
+          <p>관심을 끄는 콘텐츠, 신뢰를 쌓는 콘텐츠, 행동으로 이끄는 랜딩까지 네 단계 퍼널을 설계합니다. 영상 하나하나가 따로 놀지 않고 하나의 시스템으로 작동하도록, 3개월 로드맵을 함께 그립니다.</p>
+          <ul class="tl__tags"><li>Base → Main → Landing → Goal</li><li>채널 컨셉·톤</li><li>3개월 로드맵</li></ul>
+        </li>
+        <li class="tl" data-reveal>
+          <div class="tl__dot"></div>
+          <div class="tl__meta"><span class="tl__n">03</span><span class="tl__phase">매 편</span></div>
+          <h3>기획 — 대본 대신 질문을 씁니다</h3>
+          <p>읽을 대본은 만들지 않습니다. 대신 당신의 진짜 생각이 나오도록 질문을 설계합니다. 주제 선정부터 썸네일 문구까지 13개 항목의 기획안을 촬영 전에 전달합니다.</p>
+          <ul class="tl__tags"><li>13항목 기획안</li><li>질문 설계</li><li>주제 발굴</li></ul>
+        </li>
+        <li class="tl" data-reveal>
+          <div class="tl__dot"></div>
+          <div class="tl__meta"><span class="tl__n">04</span><span class="tl__phase">4주차 첫 촬영</span></div>
+          <h3>촬영 — 대화처럼 찍습니다</h3>
+          <p>전담 PD가 카메라 뒤에서 인터뷰어가 됩니다. 브랜딩 컨셉에 맞춰 공간을 세팅하고, 긴장이 풀릴 때까지 기다립니다. 촬영장에서 당신이 할 일은 평소처럼 말하는 것뿐입니다.</p>
+          <ul class="tl__tags"><li>전담 PD 디렉션</li><li>촬영 환경 세팅</li><li>인터뷰형 진행</li></ul>
+        </li>
+        <li class="tl" data-reveal>
+          <div class="tl__dot"></div>
+          <div class="tl__meta"><span class="tl__n">05</span><span class="tl__phase">매주</span></div>
+          <h3>편집·썸네일 — 클릭은 패턴, 시청은 진심</h3>
+          <p>클릭을 만드는 썸네일은 데이터로 검증하고, 시청을 붙잡는 편집은 당신의 말을 재배열하는 데 집중합니다. 과한 효과와 예능식 자막은 쓰지 않습니다.</p>
+          <ul class="tl__tags"><li>썸네일 검증</li><li>공감 트리거 카피</li><li>스토리 재구성</li></ul>
+        </li>
+        <li class="tl" data-reveal>
+          <div class="tl__dot"></div>
+          <div class="tl__meta"><span class="tl__n">06</span><span class="tl__phase">업로드 후</span></div>
+          <h3>운영·추적 — 업로드 후가 진짜 시작입니다</h3>
+          <p>설명란과 고정댓글에 행동 경로를 설계하고, 링크 추적으로 영상을 본 사람이 실제로 움직였는지 확인합니다. 댓글은 매일 살피고, 매달 숫자를 놓고 다음 달 전략을 함께 정합니다.</p>
+          <ul class="tl__tags"><li>고정댓글·코드라인 설계</li><li>유입→행동 추적</li><li>월간 리포트·전략 리뷰</li></ul>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="wrap faq">
+      <div class="faq__side" data-reveal>
+        <div class="eyebrow">FAQ</div>
+        <h2 class="h2">자주 묻는<br>질문</h2>
+        <p class="lead">여기 없는 질문은 아래 폼으로 보내주세요.</p>
+      </div>
+      <div class="faq__list" data-reveal>
+        <details><summary>계약 기간은 얼마나 되나요?</summary><p>최소 3개월 단위로 시작합니다. 첫 촬영까지 4주, 그 뒤로 매주 한 편이 쌓여야 채널이 방향을 잡기 때문입니다. 3개월 뒤 성과 리뷰에서 다음 방향을 함께 정합니다.</p></details>
+        <details><summary>촬영은 얼마나 자주, 얼마나 오래 하나요?</summary><p>보통 월 1~2회, 한 번에 2~3시간 안에 여러 편을 촬영합니다. 촬영 일정은 진료 스케줄에 맞춰 잡습니다.</p></details>
+        <details><summary>제가 직접 해야 하는 일은 무엇인가요?</summary><p>촬영 당일 카메라 앞에 앉아 평소처럼 말씀하시는 것, 그리고 기획안에 한 번 눈을 주시는 것뿐입니다. 주제 발굴, 기획, 편집, 업로드, 댓글 관리는 전담 PD가 맡습니다.</p></details>
+        <details><summary>대본 없이 어떻게 영상이 나오나요?</summary><p>읽을 대본 대신 질문을 설계합니다. 진료실에서 환자에게 하시는 설명이 그대로 나오도록 PD가 인터뷰어가 되어 대화를 이끕니다. 편집에서 그 말을 재배열합니다.</p></details>
+        <details><summary>의료광고 심의는 어떻게 하나요?</summary><p>기획 단계에서 심의 대상 여부를 먼저 확인하고, 표현 기준에 맞춰 기획안을 씁니다. 심의가 필요한 콘텐츠는 접수와 수정까지 함께 진행합니다.</p></details>
+        <details><summary>조회수가 안 나오면 어떻게 되나요?</summary><p>우리는 조회수를 목표로 두지 않습니다. 영상을 본 사람이 실제로 찾아오는지를 매달 숫자로 함께 보고, 퍼널 어디가 막혔는지 찾아 다음 달 기획을 바꿉니다.</p></details>
+        <details><summary>이미 운영 중인 채널이 있어도 되나요?</summary><p>네. 기존 채널의 데이터를 진단해 살릴 것과 바꿀 것을 나눕니다. 채널을 새로 파는 것보다 대부분 빠릅니다.</p></details>
+        <details><summary>비용은 어떻게 안내받나요?</summary><p>채널 상황과 제작 편수에 따라 달라서 첫 미팅 후 맞춤 견적으로 안내드립니다. 아래 폼에 채널 링크와 고민을 남겨주시면 미팅 일정을 잡아 연락드립니다.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" id="contact">
+    <div class="wrap">
+      <div class="cta__box cta__box--form" id="cta-box" data-reveal>
+        <div class="cta__copy">
+          <div class="eyebrow eyebrow--light">Contact</div>
+          <h2>당신의 이야기,<br>꾸밈없이 시작해볼까요?</h2>
+          <p>채널 링크와 지금의 고민을 남겨주세요. 확인 후 담당자가 직접 연락드립니다.</p>
+          <ul class="cta__points">
+            <li>첫 미팅은 채널 방향에 대한 대화입니다. 견적부터 내밀지 않습니다.</li>
+            <li>최소 3개월, 매주 한 편이 가능한지 함께 봅니다.</li>
+            <li>맞지 않으면 그렇게 말씀드립니다.</li>
+          </ul>
+          <div class="cta__alt">폼이 번거로우시면 <a href="mailto:og@recoculture.com">og@recoculture.com</a> 또는 <a href="http://pf.kakao.com/_PxfyFn/chat" target="_blank" rel="noopener noreferrer">카카오톡 채널</a>로 보내주셔도 됩니다.</div>
+        </div>
+        <form class="form" id="lead-form" novalidate>
+          <input type="text" name="_honey" class="form__honey" tabindex="-1" autocomplete="off">
+          <div class="form__row">
+            <label class="form__field"><span>이름</span><input type="text" name="이름" placeholder="이름을 입력해주세요" required></label>
+            <label class="form__field"><span>연락처</span><input type="tel" name="연락처" placeholder="010-0000-0000" required></label>
           </div>
-          <div class="channel-card-v__perf">
-            <div class="channel-card-v__label">누적 조회수</div>
-            <div class="channel-card-v__slot" data-slot="views" aria-hidden="true">0</div>
+          <div class="form__row">
+            <label class="form__field"><span>분야</span>
+              <select name="업종" required>
+                <option value="" disabled selected>분야를 선택해주세요</option>
+                <option>의료 (병·의원)</option><option>치과</option><option>피부과 · 성형외과</option><option>한의원</option><option>동물병원</option><option>법률 (법무법인 · 변호사)</option><option>재무 (세무사 · 회계사 · 재무설계사)</option><option>기타 전문직</option>
+              </select></label>
+            <label class="form__field"><span>현재 상태</span>
+              <select name="현재상태">
+                <option value="" disabled selected>선택</option>
+                <option>채널이 없어요</option><option>채널은 있는데 멈춰 있어요</option><option>운영 중이고 더 키우고 싶어요</option><option>다른 업체와 하다가 바꾸려고요</option>
+              </select></label>
           </div>
-        </div>
-        <div class="channel-card-v" data-channel-id="UCa16_cbdgo7BDjHbJvJowGw">
-          <div class="channel-card-v__profile">
-            <img class="channel-card-v__avatar" data-avatar="" src="" alt="" width="120" height="120">
-            <div class="channel-card-v__name">친절한 송이씨</div>
-            <div class="channel-card-v__meta">미용의원 · 피부과</div>
-          </div>
-          <div class="channel-card-v__perf">
-            <div class="channel-card-v__label">누적 조회수</div>
-            <div class="channel-card-v__slot" data-slot="views" aria-hidden="true">0</div>
-          </div>
-        </div>
-        <div class="channel-card-v" data-channel-id="UCa4XAtZ_04zXUAh28HFbJQw">
-          <div class="channel-card-v__profile">
-            <img class="channel-card-v__avatar" data-avatar="" src="" alt="" width="120" height="120">
-            <div class="channel-card-v__name">이바다 이야기</div>
-            <div class="channel-card-v__meta">치과의사</div>
-          </div>
-          <div class="channel-card-v__perf">
-            <div class="channel-card-v__label">누적 조회수</div>
-            <div class="channel-card-v__slot" data-slot="views" aria-hidden="true">0</div>
-          </div>
-        </div>
-        <div class="channel-card-v" data-channel-id="UCdRgh9GCeMs8Bo86QMSuiuA">
-          <div class="channel-card-v__profile">
-            <img class="channel-card-v__avatar" data-avatar="" src="" alt="" width="120" height="120">
-            <div class="channel-card-v__name">권의 시선</div>
-            <div class="channel-card-v__meta">치과의사</div>
-          </div>
-          <div class="channel-card-v__perf">
-            <div class="channel-card-v__label">누적 조회수</div>
-            <div class="channel-card-v__slot" data-slot="views" aria-hidden="true">0</div>
-          </div>
-        </div>
+          <label class="form__field"><span>유튜브 채널 링크 <em>(있다면)</em></span><input type="url" name="유튜브채널" placeholder="https://youtube.com/@channel"></label>
+          <label class="form__field"><span>하고 싶은 이야기</span><textarea name="문의내용" rows="3" placeholder="지금 고민이나 목표를 한두 줄로 알려주세요."></textarea></label>
+          <button class="btn btn--orange form__submit" type="submit" data-magnetic>채널 문의 보내기
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+          <p class="form__note">보내주신 정보는 회신에만 사용합니다.</p>
+        </form>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</main>
 
-<!-- ABOUT -->
-<section class="section">
-  <div class="section__inner reveal">
-    <div class="section__label">About</div>
-    <p class="about-statement">
-      우리는 전문직의 전문지식과 경험을<br>
-      콘텐츠로 연결하고<br>
-      사람들을 <span class="text-orange">행동</span>하게 만듭니다.
-    </p>
-    <div class="about-nums">
-      <div>
-        <div class="about-num__value">5,700<span class="about-num__unit">만+</span></div>
-        <div class="about-num__label">누적 조회수</div>
-      </div>
-      <div>
-        <div class="about-num__value">456<span class="about-num__unit">+</span></div>
-        <div class="about-num__label">제작 영상</div>
-      </div>
-      <div>
-        <div class="about-num__value">9</div>
-        <div class="about-num__label">직접 운영 채널</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- OUR DIFFERENCE -->
-<section class="section section--alt">
-  <div class="section__inner reveal">
-    <div class="section__label">Our Difference</div>
-    <h2 class="section__title">우리는 단순히 영상을<br>만들지 않습니다</h2>
-    <p class="section__desc" style="margin-bottom:48px;">조회수는 허영 지표입니다.<br>올바른 사람에게 도달해서 실제 행동을 만들어냅니다.</p>
-
-    <div class="vs">
-      <div class="vs__side vs__side--old">
-        <div class="vs__label">일반 유튜브 대행사</div>
-        <div class="vs__title">제작에 집중</div>
-        <div class="vs__items">
-          <div class="vs__item"><span class="vs__icon">✕</span><span>월 N회 콘텐츠 납품 (횟수 중심)</span></div>
-          <div class="vs__item"><span class="vs__icon">✕</span><span>조회수 중심 KPI</span></div>
-          <div class="vs__item"><span class="vs__icon">✕</span><span>전문직 특성 이해 부족</span></div>
-        </div>
-      </div>
-      <div class="vs__divider"><div class="vs__badge">VS</div></div>
-      <div class="vs__side vs__side--new">
-        <div class="vs__label">RECOCULTURE</div>
-        <div class="vs__title">브랜딩에 집중</div>
-        <div class="vs__items">
-          <div class="vs__item"><span class="vs__icon">✓</span><span>퍼스널 브랜딩 기반 콘텐츠 기획</span></div>
-          <div class="vs__item"><span class="vs__icon">✓</span><span>비틀리 퍼널로 실제 내원 추적</span></div>
-          <div class="vs__item"><span class="vs__icon">✓</span><span>대체 불가능한 신뢰 기반 브랜딩</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div style="text-align:center; margin-top:48px;">
-      <a href="services.html" class="btn btn--ghost">서비스 상세 보기 →</a>
-    </div>
-  </div>
-</section>
-
-<!-- IMPACT -->
-<section class="section">
-  <div class="section__inner">
-    <div class="reveal">
-      <div class="section__label">Real Impact</div>
-      <h2 class="section__title">숫자가 증명합니다</h2>
-      <p class="section__desc">영상을 본 사람들이 실제로 행동했습니다.</p>
-    </div>
-
-    <div class="impact-grid mt-64 reveal">
-      <div class="impact-card">
-        <div class="impact-card__num">400%</div>
-        <div class="impact-card__label">신환 증가율</div>
-      </div>
-      <div class="impact-card">
-        <div class="impact-card__num">95%</div>
-        <div class="impact-card__label">유튜브 내원율</div>
-      </div>
-      <div class="impact-card">
-        <div class="impact-card__num">5x</div>
-        <div class="impact-card__label">객단가 상승</div>
-      </div>
-      <div class="impact-card">
-        <div class="impact-card__num">70%</div>
-        <div class="impact-card__label">클라이언트</div>
-        <div class="impact-card__context">병원 확장이전 or 페이닥터 채용</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="cta-section">
-  <div class="reveal">
-    <h2 class="cta-section__title">전문직의 이야기를<br><span class="text-orange">콘텐츠로 연결</span>합니다</h2>
-    <p class="cta-section__desc">지금 무료 채널 진단을 시작하세요.</p>
-    <a href="services.html#contact" class="btn btn--primary" style="font-size:17px; padding:18px 48px;">연락하기 <span class="btn__arrow">→</span></a>
-  </div>
-</section>
-
-<!-- FOOTER -->
 <footer class="footer">
-  <div class="footer__top">
-    <div>
-      <a href="./" class="footer__logo">
-        <span class="logo-text">REC<span class="logo-text__dot"></span>CULTURE</span>
-      </a>
-      <p class="footer__tagline">전문직 유튜브 미디어 브랜딩</p>
-    </div>
-    <div class="footer__links">
-      <div class="footer__col">
-        <div class="footer__col-title">Menu</div>
-        <a href="./">ABOUT US</a>
-        <a href="portfolio.html">Portfolio</a>
-        <a href="services.html">Services</a>
-        <a href="careers.html">Careers</a>
-        <a href="blog.html">Blog</a>
-      </div>
-      <div class="footer__col">
-        <div class="footer__col-title">Contact</div>
-        <a href="mailto:og@recoculture.com">og@recoculture.com</a>
-        <a href="http://pf.kakao.com/_PxfyFn/chat" target="_blank" rel="noopener noreferrer">KakaoTalk →</a>
+  <div class="wrap">
+    <div class="footer__top">
+      <img src="/assets/logo/logotype.svg" alt="RECOCULTURE">
+      <div class="footer__links">
+        <a href="/work.html">Work</a>
+        <a href="/careers.html">Careers</a>
+        <a href="mailto:og@recoculture.com">Contact</a>
+        <a href="http://pf.kakao.com/_PxfyFn/chat" target="_blank" rel="noopener noreferrer">KakaoTalk</a>
       </div>
     </div>
-  </div>
-  <div class="footer__bottom">
-    <p>© 2025-2026 주식회사 레코컬쳐(RECOCULTURE). All rights reserved.</p>
-    <p>주식회사 레코컬쳐 | 대표: 진성욱</p>
+    <div class="footer__bottom">
+      <span>주식회사 레코컬쳐 · 대표 진성욱 · 서울</span>
+      <span>© 2025–2026 RECOCULTURE. All rights reserved.</span>
+    </div>
   </div>
 </footer>
 
-<script>
-// Scroll Reveal
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.classList.add('is-visible');
-  });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-// 채널 카드 슬롯 머신 조회수 — 실시간 반영 (주기 재조회)
-(function(){
-  const API_KEY = 'AIzaSyA1GYd6qA5-4A_TSernWSAFPirQDyfDIFs';
-  const REFRESH_MIN = 5;
-  const cards = document.querySelectorAll('.channel-card-v[data-channel-id]');
-  if (!cards.length) return;
-  const ids = Array.from(cards).map(c => c.getAttribute('data-channel-id'));
-  const slotEls = Array.from(cards).map(c => c.querySelector('.channel-card-v__slot[data-slot="views"]'));
-  let states = [];
-
-  function fmt(n) { return Math.floor(n).toLocaleString('en-US'); }
-  function buildSlots(container, s) {
-    container.innerHTML = '';
-    for (const ch of s) {
-      if (ch === ',') {
-        const sep = document.createElement('span');
-        sep.className = 'cc-sep';
-        sep.textContent = ',';
-        container.appendChild(sep);
-      } else {
-        const w = document.createElement('span');
-        w.className = 'cc-digit';
-        const inner = document.createElement('span');
-        inner.className = 'cc-digit-inner';
-        for (let d = 0; d <= 9; d++) {
-          const s2 = document.createElement('span');
-          s2.textContent = d;
-          inner.appendChild(s2);
-        }
-        w.appendChild(inner);
-        container.appendChild(w);
-        inner.style.transition = 'none';
-        inner.style.transform = 'translateY(-' + parseInt(ch) + 'em)';
-        requestAnimationFrame(function() { inner.style.transition = ''; });
-      }
-    }
-  }
-  function setDigits(container, s, digitRefs) {
-    var j = 0;
-    for (var i = 0; i < s.length; i++) {
-      if (s[i] === ',') continue;
-      if (digitRefs[j]) digitRefs[j].style.transform = 'translateY(-' + parseInt(s[i]) + 'em)';
-      j++;
-    }
-  }
-  function tick() {
-    var done = true;
-    states.forEach(function(state, i) {
-      if (state.current < state.target) {
-        state.current += Math.max(1, (state.target - state.current) * 0.1);
-        if (state.current > state.target) state.current = state.target;
-        done = false;
-      }
-      var r = Math.floor(state.current);
-      if (r !== state.lastDisplay) {
-        state.lastDisplay = r;
-        var str = fmt(r);
-        if (str.length !== state.lastStr.length) {
-          buildSlots(slotEls[i], str);
-          state.digitRefs = Array.from(slotEls[i].querySelectorAll('.cc-digit-inner'));
-        } else {
-          setDigits(slotEls[i], str, state.digitRefs);
-        }
-        state.lastStr = str;
-      }
-    });
-    if (!done) requestAnimationFrame(tick);
-  }
-  function applyViewCounts(viewCounts) {
-    if (!viewCounts || viewCounts.length !== slotEls.length) return;
-    var needTick = false;
-    viewCounts.forEach(function(v, i) {
-      if (!states[i]) {
-        states[i] = { current: 0, target: v, lastDisplay: -1, lastStr: '0', digitRefs: [] };
-        buildSlots(slotEls[i], '0');
-        states[i].digitRefs = Array.from(slotEls[i].querySelectorAll('.cc-digit-inner'));
-        needTick = true;
-      } else {
-        states[i].target = v;
-        if (states[i].current < v) needTick = true;
-      }
-    });
-    if (needTick) requestAnimationFrame(tick);
-  }
-  function fetchAndApply() {
-    fetch('https://www.googleapis.com/youtube/v3/channels?part=statistics,snippet&id=' + ids.join(',') + '&key=' + API_KEY)
-      .then(r => r.json())
-      .then(data => {
-        if (!data.items || data.items.length === 0) return;
-        var itemMap = {};
-        data.items.forEach(function(item) { itemMap[item.id] = item; });
-        var viewCounts = ids.map(function(id) {
-          var item = itemMap[id];
-          return item ? parseInt(item.statistics.viewCount || 0) : 0;
-        });
-        ids.forEach(function(id, i) {
-          var item = itemMap[id];
-          if (!item || !cards[i]) return;
-          var thumb = item.snippet && item.snippet.thumbnails && (item.snippet.thumbnails.medium || item.snippet.thumbnails.default);
-          if (thumb) {
-            var img = cards[i].querySelector('.channel-card-v__avatar');
-            if (img) img.src = thumb.url;
-          }
-        });
-        applyViewCounts(viewCounts);
-      })
-      .catch(function() {
-        if (states.length === 0) slotEls.forEach(function(el) { if (el) el.textContent = '—'; });
-      });
-  }
-
-  fetchAndApply();
-  setInterval(fetchAndApply, REFRESH_MIN * 60 * 1000);
-})();
-</script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Draggable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/InertiaPlugin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
+<script src="/main.js?v=20260904223336"></script>
 </body>
 </html>
