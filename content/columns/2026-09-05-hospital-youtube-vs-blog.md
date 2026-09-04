@@ -4,8 +4,8 @@ date: 2026-09-05
 slug: hospital-youtube-vs-blog
 excerpt: 블로그는 검색하는 사람을 잡고, 유튜브는 아직 검색하지 않는 사람을 만납니다. 둘의 역할 차이와 원장님이 속으로 던지는 반박 4가지를 하나씩 지웁니다.
 tags: 병원 유튜브 마케팅, 병원 블로그, 퍼널
-source_title:
-source_url:
+source_title: 
+source_url: 
 status: published
 ---
 
