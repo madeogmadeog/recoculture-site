@@ -42,6 +42,7 @@
 |---|---|
 | 카피 전반 | `index.html` (섹션별 텍스트가 그대로 들어 있음) |
 | 연락처·폼 수신 주소 | `index.html` Contact 섹션, `main.js`의 formsubmit 주소 |
+| 문의 폼 (3단계) | `index.html` `#lead-form`, `main.js` 리드 폼 블록 — Supabase `inquiries` 저장 + FormSubmit 메일 이중 발송, 접수 건은 오피스 상황판에서 확인 |
 | 통계 고정값 (1.5억 등) | `index.html` `.stat__n[data-n]` |
 | 채널 추가·제외 | `data/channels.config.json` → 스크립트 실행 |
 | 후기 카드 | `data/reviews.json` |

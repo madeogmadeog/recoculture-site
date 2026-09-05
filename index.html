@@ -321,29 +321,103 @@
           </ul>
           <div class="cta__alt">폼이 번거로우시면 <a href="mailto:og@recoculture.com">og@recoculture.com</a> 또는 <a href="http://pf.kakao.com/_PxfyFn/chat" target="_blank" rel="noopener noreferrer">카카오톡 채널</a>로 보내주셔도 됩니다.</div>
         </div>
-        <form class="form" id="lead-form" novalidate>
-          <input type="text" name="_honey" class="form__honey" tabindex="-1" autocomplete="off">
-          <div class="form__row">
-            <label class="form__field"><span>이름</span><input type="text" name="이름" placeholder="이름을 입력해주세요" required></label>
-            <label class="form__field"><span>연락처</span><input type="tel" name="연락처" placeholder="010-0000-0000" required></label>
+        <form class="form form--steps" id="lead-form" novalidate data-step="1" data-version="v2">
+          <input type="text" name="_honey" class="form__honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="form__progress">
+            <span class="form__progress-text">1 / 3 · 기본 정보</span>
+            <span class="form__progress-bar"><b style="width:33.33%"></b></span>
           </div>
-          <div class="form__row">
-            <label class="form__field"><span>분야</span>
+
+          <fieldset class="form__step" data-step="1">
+            <legend class="form__legend">기본 정보</legend>
+            <div class="form__row">
+              <label class="form__field"><span>이름 <em class="req">필수</em></span><input type="text" name="이름" maxlength="40" autocomplete="name" placeholder="이름을 입력해주세요" required></label>
+              <label class="form__field"><span>연락처 <em class="req">필수</em></span><input type="tel" name="연락처" maxlength="30" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" required></label>
+            </div>
+            <div class="form__row">
+              <label class="form__field"><span>회사명</span><input type="text" name="회사명" maxlength="60" autocomplete="organization" placeholder="병원/회사명"></label>
+              <label class="form__field"><span>직함</span>
+                <select name="직함">
+                  <option value="" selected>선택</option>
+                  <option>원장</option><option>실장</option><option>마케팅 담당</option><option>기타</option>
+                </select></label>
+            </div>
+            <div class="form__row">
+              <label class="form__field"><span>이메일</span><input type="email" name="이메일" maxlength="120" autocomplete="email" placeholder="name@example.com"></label>
+              <label class="form__field"><span>지역</span><input type="text" name="지역" maxlength="60" placeholder="예: 서울 강남구"></label>
+            </div>
+            <label class="form__field"><span>분야 <em class="req">필수</em></span>
               <select name="업종" required>
                 <option value="" disabled selected>분야를 선택해주세요</option>
                 <option>의료 (병·의원)</option><option>치과</option><option>피부과 · 성형외과</option><option>한의원</option><option>동물병원</option><option>법률 (법무법인 · 변호사)</option><option>재무 (세무사 · 회계사 · 재무설계사)</option><option>기타 전문직</option>
               </select></label>
+          </fieldset>
+
+          <fieldset class="form__step" data-step="2" hidden>
+            <legend class="form__legend">채널 현황</legend>
             <label class="form__field"><span>현재 상태</span>
               <select name="현재상태">
-                <option value="" disabled selected>선택</option>
+                <option value="" selected>선택</option>
                 <option>채널이 없어요</option><option>채널은 있는데 멈춰 있어요</option><option>운영 중이고 더 키우고 싶어요</option><option>다른 업체와 하다가 바꾸려고요</option>
               </select></label>
+            <label class="form__field"><span>채널 링크 <em>(있다면)</em></span><input type="url" name="유튜브채널" maxlength="300" placeholder="https://youtube.com/@channel"></label>
+            <div class="form__field"><span>목표 <em>(복수 선택)</em></span>
+              <div class="form__checks">
+                <label><input type="checkbox" name="목표" value="신환 유입"><span>신환 유입</span></label>
+                <label><input type="checkbox" name="목표" value="브랜딩"><span>브랜딩</span></label>
+                <label><input type="checkbox" name="목표" value="채용"><span>채용</span></label>
+                <label><input type="checkbox" name="목표" value="온라인 강의·상품"><span>온라인 강의·상품</span></label>
+                <label><input type="checkbox" name="목표" value="기타"><span>기타</span></label>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="form__step" data-step="3" hidden>
+            <legend class="form__legend">조건과 고민</legend>
+            <div class="form__row">
+              <label class="form__field"><span>월 예산</span>
+                <select name="월예산">
+                  <option value="" selected>선택</option>
+                  <option>400만원 미만</option><option>400~600만원</option><option>600~1,000만원</option><option>1,000만원 이상</option><option>미정</option>
+                </select></label>
+              <label class="form__field"><span>시작 시기</span>
+                <select name="시작시기">
+                  <option value="" selected>선택</option>
+                  <option>바로</option><option>1개월 내</option><option>3개월 내</option><option>미정</option>
+                </select></label>
+            </div>
+            <div class="form__row">
+              <label class="form__field"><span>촬영 빈도</span>
+                <select name="촬영빈도">
+                  <option value="" selected>선택</option>
+                  <option>주 1회</option><option>격주</option><option>월 1회</option><option>미정</option>
+                </select></label>
+              <label class="form__field"><span>담당자</span>
+                <select name="담당자">
+                  <option value="" selected>선택</option>
+                  <option>원장 직접</option><option>실장·직원</option><option>대행사</option>
+                </select></label>
+            </div>
+            <label class="form__field"><span>유입 경로</span>
+              <select name="유입경로">
+                <option value="" selected>선택</option>
+                <option>검색</option><option>유튜브</option><option>소개</option><option>컬럼</option><option>기타</option>
+              </select></label>
+            <label class="form__field"><span>상세 고민</span><textarea name="문의내용" rows="4" maxlength="2000" placeholder="지금 고민이나 목표를 자유롭게 적어주세요."></textarea></label>
+          </fieldset>
+
+          <div class="form__nav">
+            <button class="btn btn--ghost btn--sm form__back" type="button" hidden>이전</button>
+            <button class="btn btn--orange form__next" type="button" data-magnetic>다음
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+            <button class="btn btn--orange form__submit" type="submit" data-magnetic hidden>채널 문의 보내기
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
           </div>
-          <label class="form__field"><span>유튜브 채널 링크 <em>(있다면)</em></span><input type="url" name="유튜브채널" placeholder="https://youtube.com/@channel"></label>
-          <label class="form__field"><span>하고 싶은 이야기</span><textarea name="문의내용" rows="3" placeholder="지금 고민이나 목표를 한두 줄로 알려주세요."></textarea></label>
-          <button class="btn btn--orange form__submit" type="submit" data-magnetic>채널 문의 보내기
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
-          <p class="form__note">보내주신 정보는 회신에만 사용합니다.</p>
+          <p class="form__note">보내주신 정보는 회신에만 사용합니다. 필수는 이름·연락처·분야 3가지입니다.</p>
+          <div class="form__done" hidden role="status">
+            <strong>접수됐습니다.</strong>
+            <p>영업일 기준 1일 내 연락드릴게요.</p>
+          </div>
         </form>
       </div>
     </div>
@@ -375,6 +449,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Draggable.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/InertiaPlugin.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
-<script src="/main.js?v=20260905014541"></script>
+<script src="/main.js?v=20260905143809"></script>
 </body>
 </html>
