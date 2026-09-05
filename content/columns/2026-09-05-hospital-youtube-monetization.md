@@ -4,9 +4,9 @@ date: 2026-09-05
 slug: hospital-youtube-monetization
 excerpt: 유튜브가 홈쇼핑 3사와 손잡고 크리에이터 수익화를 넓혔습니다. 병원 유튜브는 조회수로 돈을 버는 채널이 아니라서, 광고를 켜기 전에 계산할 숫자가 따로 있습니다.
 tags: 병원 유튜브 수익화, 병원 유튜브, 퍼널
-source_title: "크리에이터 수만명을 쇼호스트로"…유튜브 손잡은 홈쇼핑 3사
+source_title: 크리에이터 수만명을 쇼호스트로"…유튜브 손잡은 홈쇼핑 3사
 source_url: https://www.hankyung.com/article/202608263325i
-status: draft
+status: published
 ---
 
 한국경제 보도에 따르면 유튜브는 8월 26일 유튜브 쇼핑 제휴 프로그램에 롯데홈쇼핑·GS샵·현대홈쇼핑을 추가했습니다.
