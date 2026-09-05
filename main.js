@@ -207,24 +207,154 @@
   let toastT;
   function toast(msg) { if (!toastEl) return; toastEl.textContent = msg; toastEl.classList.add('is-on'); clearTimeout(toastT); toastT = setTimeout(() => toastEl.classList.remove('is-on'), 4200); }
 
-  // ── 리드 폼 (FormSubmit AJAX)
+  // ── 리드 폼 (3단계 · FormSubmit 메일 + Supabase 저장 이중 발송)
+  const SB_URL = 'https://kcudbxmatyzxblqcjoye.supabase.co';
+  const SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjdWRieG1hdHl6eGJscWNqb3llIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk4MDg1NTEsImV4cCI6MjA4NTM4NDU1MX0.CCIHrR6gibFkNYk-WSyIf6b8O3buep2d0cemDnpLsOE'; // 공개 가능한 anon 키 — RLS로 inquiries insert만 허용
+  const COLS = { '이름': 'name', '회사명': 'company', '직함': 'role', '연락처': 'phone', '이메일': 'email', '업종': 'industry', '지역': 'region', '현재상태': 'yt_status', '유튜브채널': 'yt_url', '목표': 'goals', '월예산': 'budget', '시작시기': 'start_when', '촬영빈도': 'shoot_freq', '담당자': 'owner', '유입경로': 'referral', '문의내용': 'message' };
+
   const form = document.getElementById('lead-form');
-  if (form) form.addEventListener('submit', async e => {
-    e.preventDefault();
-    let ok = true;
-    form.querySelectorAll('[required]').forEach(el => { const f = el.closest('.form__field'); const bad = !el.value.trim(); f && f.classList.toggle('is-error', bad); if (bad) ok = false; });
-    if (!ok) return toast('이름, 연락처, 분야를 입력해주세요.');
-    const btn = form.querySelector('.form__submit'); btn.disabled = true; btn.firstChild.textContent = '보내는 중… ';
-    const fd = new FormData(form);
-    fd.append('_subject', '[레코컬쳐] 무료 채널 진단 신청'); fd.append('_captcha', 'false'); fd.append('_template', 'table');
-    try {
+  if (form) {
+    const steps = Array.from(form.querySelectorAll('.form__step'));
+    const LAST = steps.length;
+    const titles = ['기본 정보', '채널 현황', '조건과 고민'];
+    const backBtn = form.querySelector('.form__back');
+    const nextBtn = form.querySelector('.form__next');
+    const submitBtn = form.querySelector('.form__submit');
+    const progressEl = form.querySelector('.form__progress');
+    const progressText = form.querySelector('.form__progress-text');
+    const progressBar = form.querySelector('.form__progress-bar b');
+    const navEl = form.querySelector('.form__nav');
+    const noteEl = form.querySelector('.form__note');
+    const doneEl = form.querySelector('.form__done');
+    let step = 1;
+
+    const focusEl = el => { if (!el) return; try { el.focus({ preventScroll: true }); } catch (err) { el.focus(); } };
+
+    function show(n, withFocus) {
+      step = Math.min(Math.max(n, 1), LAST);
+      steps.forEach(s => { s.hidden = Number(s.dataset.step) !== step; });
+      form.dataset.step = String(step);
+      backBtn.hidden = step === 1;
+      nextBtn.hidden = step === LAST;
+      submitBtn.hidden = step !== LAST;
+      progressText.textContent = `${step} / ${LAST} · ${titles[step - 1] || ''}`;
+      progressBar.style.width = (step / LAST * 100).toFixed(2) + '%';
+      if (withFocus !== false) focusEl(steps[step - 1].querySelector('input:not([type="checkbox"]), select, textarea'));
+    }
+
+    const inputsOf = n => Array.from(steps[n - 1].querySelectorAll('input, select, textarea')).filter(el => el.type !== 'checkbox');
+
+    function validate(n) {
+      let firstBad = null, badFormat = false;
+      inputsOf(n).forEach(el => {
+        const val = el.value.trim();
+        let bad = false, fmt = false;
+        if (el.required && !val) bad = true;
+        else if (val && !el.checkValidity()) { bad = true; fmt = true; }
+        else if (val && el.type === 'tel' && val.replace(/\D/g, '').length < 8) { bad = true; fmt = true; }
+        const field = el.closest('.form__field');
+        if (field) field.classList.toggle('is-error', bad);
+        el.setAttribute('aria-invalid', bad ? 'true' : 'false');
+        if (bad && !firstBad) { firstBad = el; badFormat = fmt; }
+      });
+      if (!firstBad) return true;
+      focusEl(firstBad);
+      toast(badFormat ? '입력 형식을 확인해주세요.' : '이름, 연락처, 분야를 확인해주세요.');
+      return false;
+    }
+
+    nextBtn.addEventListener('click', () => { if (validate(step)) show(step + 1); });
+    backBtn.addEventListener('click', () => show(step - 1));
+    form.addEventListener('keydown', e => {
+      if (e.key !== 'Enter' || e.target.tagName === 'TEXTAREA' || step >= LAST) return;
+      e.preventDefault();
+      if (validate(step)) show(step + 1);
+    });
+
+    function collect() {
+      const fd = new FormData(form), d = {};
+      for (const [k, v] of fd.entries()) {
+        if (k === '_honey' || k === '목표') continue;
+        const s = String(v).trim();
+        if (s) d[k] = s;
+      }
+      const goals = fd.getAll('목표').map(v => String(v).trim()).filter(Boolean);
+      if (goals.length) d['목표'] = goals;
+      return d;
+    }
+
+    async function sendMail(d) {
+      const fd = new FormData();
+      Object.keys(d).forEach(k => fd.append(k, Array.isArray(d[k]) ? d[k].join(', ') : d[k]));
+      fd.append('_subject', `[레코컬쳐] 채널 문의 — ${d['이름'] || ''} (${d['업종'] || ''})`);
+      fd.append('_captcha', 'false');
+      fd.append('_template', 'table');
       const r = await fetch('https://formsubmit.co/ajax/og@recoculture.com', { method: 'POST', headers: { Accept: 'application/json' }, body: fd });
-      const j = await r.json();
-      if (r.ok && (j.success === 'true' || j.success === true)) { toast('신청이 접수됐습니다. 영업일 기준 1일 내 회신드릴게요.'); form.reset(); }
-      else toast('전송에 실패했습니다. 이메일이나 카카오톡으로 보내주세요.');
-    } catch (err) { toast('네트워크 오류가 발생했습니다. 다시 시도해주세요.'); }
-    btn.disabled = false; btn.firstChild.textContent = '무료 채널 진단 신청';
-  });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !(j.success === 'true' || j.success === true)) throw new Error('mail failed');
+    }
+
+    function clientId() {
+      try {
+        let id = localStorage.getItem('rc_cid');
+        if (!id) {
+          id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+          localStorage.setItem('rc_cid', id);
+        }
+        return id;
+      } catch (err) { return null; }
+    }
+
+    async function saveDb(d) {
+      const row = {};
+      Object.keys(d).forEach(k => { if (COLS[k]) row[COLS[k]] = d[k]; });
+      row.source_page = location.pathname + location.hash;
+      row.user_agent = (navigator.userAgent || '').slice(0, 300);
+      row.client_id = clientId();
+      row.form_version = form.dataset.version || 'v2';
+      const r = await fetch(`${SB_URL}/rest/v1/inquiries`, {
+        method: 'POST',
+        headers: { apikey: SB_ANON, Authorization: `Bearer ${SB_ANON}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+        body: JSON.stringify(row),
+      });
+      if (!r.ok) throw new Error(`db failed ${r.status}`);
+    }
+
+    function done() {
+      steps.forEach(s => { s.hidden = true; });
+      progressEl.hidden = true;
+      navEl.hidden = true;
+      noteEl.hidden = true;
+      doneEl.hidden = false;
+    }
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      for (let n = 1; n <= LAST; n++) {
+        if (step !== n) show(n, false);
+        if (!validate(n)) return;
+      }
+      if (form.querySelector('[name="_honey"]').value) return done();
+      let lastAt = 0;
+      try { lastAt = Number(localStorage.getItem('rc_lead_at')) || 0; } catch (err) { lastAt = 0; }
+      if (lastAt && Date.now() - lastAt < 60000) return toast('방금 접수됐습니다. 잠시 후 다시 시도해주세요.');
+
+      const d = collect();
+      const label = submitBtn.firstChild;
+      submitBtn.disabled = true; label.textContent = '보내는 중… ';
+      const results = await Promise.allSettled([sendMail(d), saveDb(d)]);
+      if (results.some(r => r.status === 'fulfilled')) {
+        try { localStorage.setItem('rc_lead_at', String(Date.now())); } catch (err) { /* 저장 실패는 무시 */ }
+        done();
+        toast('접수됐습니다. 영업일 기준 1일 내 회신드릴게요.');
+      } else {
+        toast('전송에 실패했습니다. 이메일이나 카카오톡으로 보내주세요.');
+        submitBtn.disabled = false; label.textContent = '채널 문의 보내기 ';
+      }
+    });
+
+    show(1, false);
+  }
 
   // ── work.html: 영향력 마인드맵 + 영상 그리드
   const imap = document.getElementById('imap'), wFilters = document.getElementById('filters');
