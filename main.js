@@ -145,7 +145,7 @@
   const scards = hasGsap ? gsap.utils.toArray('.scard') : [];
   if (scards.length && !reduced && hasGsap) scards.forEach((card, i) => {
     const next = scards[i + 1]; if (!next) return;
-    gsap.to(card, { scale: .94, opacity: .55, ease: 'none', scrollTrigger: { trigger: next, start: 'top bottom', end: 'top top+=120', scrub: true } });
+    gsap.to(card, { scale: .94, '--dim': .45, ease: 'none', scrollTrigger: { trigger: next, start: 'top 60%', end: 'top top+=120', scrub: true } });
   });
 
   // ── 프로세스 라인
