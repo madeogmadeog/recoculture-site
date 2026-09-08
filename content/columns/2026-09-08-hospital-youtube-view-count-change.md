@@ -6,7 +6,7 @@ excerpt: 유튜브가 8월 24일부터 조회수 세는 방식을 바꿨습니�
 tags: 병원 유튜브 조회수, 유튜브 수익화, 시청지속시간
 source_title: 유튜브에서 수익을 창출하는 영상 크리에이터들이 직면한 새로운 과제들
 source_url: https://baohatinh.vn/thach-thuc-moi-cho-nguoi-lam-video-kiem-tien-tren-youtube-post316738.html
-status: draft
+status: published
 ---
 
 베트남 하띤신문이 9월 7일 유튜브의 변화 두 가지를 정리했습니다.
