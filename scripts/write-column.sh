@@ -45,6 +45,15 @@ NEW=$(git status --porcelain -uall -- content/columns | awk '{print $2}' | grep 
 if [[ -z "$NEW" ]]; then echo "새 컬럼 파일이 없음"; exit 1; fi
 echo "생성: $NEW"
 
+# 게이트 실검사 (VOICE §7 가드레일·§8 숫자). FAIL 이면 발행하지 않고 draft 로 떨어뜨린다.
+# "PASS 라고 쓰는 것"이 아니라 "exit 0 을 보는 것" — 기획제작 gates.py 와 같은 원칙.
+if ! node scripts/gate-column.js "$NEW"; then
+  echo "게이트 FAIL → draft 로 강등, 푸시하지 않는다"
+  /usr/bin/sed -i '' 's/^status: published$/status: draft/' "$NEW"
+  DRAFT=1
+  osascript -e 'display notification "컬럼이 게이트에 걸려 draft 로 남았습니다. 확인이 필요합니다." with title "컬럼 파이프라인" subtitle "발행 보류" sound name "Basso"' 2>/dev/null || true
+fi
+
 # 사용한 뉴스 기록 (다음 회차 중복 방지)
 node -e '
 const fs=require("fs");const f=process.argv[1];const raw=fs.readFileSync(f,"utf8");const m=raw.match(/^source_url:\s*(.+)$/m);
