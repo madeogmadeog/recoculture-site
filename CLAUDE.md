@@ -4,6 +4,7 @@
 
 ## 현재 상태 (2026-09-05)
 - 2026-09 리빌드 버전 라이브. 페이지: `index.html`(메인) · `work.html`(함께 만들어갈 영향력) · `careers.html` · `columns.html` + `columns/*.html`(컬럼).
+- `hospital-youtube.html` (2026-09-16): '병원유튜브제작' 검색 랜딩. title·H1·본문에 검색어를 앞세운 SEO 전용 페이지. 내비·푸터 링크는 `index.html` 셸에서 컬럼 빌드가 복사하므로 내비를 바꾸면 `node scripts/build-columns.js` 로 컬럼도 재빌드. 사이트맵 고정 URL 은 `build-columns.js` 의 `fixed` 배열. 진료과별 하위 페이지(피부과·치과)는 이 페이지를 복제해 만든다.
 - 배포: `git push origin main` → GitHub Actions(`.github/workflows/deploy.yml`) → GitHub Pages. 푸시는 `git -c credential.helper='!gh auth git-credential' push`.
 - 채널 데이터는 매일 자동 갱신(`refresh-channels.yml`, secret `YOUTUBE_API_KEY`).
 - 컬럼 2편 발행됨. 컬럼 파이프라인·스튜디오 완성.
@@ -32,3 +33,15 @@
 - 문체를 바꾸려면 VOICE.md만 고친다. 자청 방법론 원자료(영상 121편·네이버 글 59편)는 세션 스크래치에만 있었고 정리본이 BLOG-SEO.md다.
 - 대표가 ~/Library/LaunchAgents 쓰기·launchctl은 직접 해야 할 수 있다(에이전트 권한 분류기가 막음). 스튜디오 UI의 버튼은 대표가 누르면 된다.
 - 세션 시작 시 `git status --short --branch`와 `curl -s localhost:3300/api/columns`로 현재 상태를 먼저 본다.
+
+## 외부 서비스 폴링 금지 (2026-09-14 사고 재발 방지)
+
+**기다리려고 남의 서버를 반복 호출하지 않는다.** 배포·빌드·작업 완료를 기다린다고 운영 도메인이나 외부 API 를 짧은 간격으로 연타하면 봇으로 잡히고, 그 계정·프로젝트가 막힌다.
+
+- 기본은 **기다리지 않는 것**이다. 백그라운드 작업은 끝나면 알림이 오고, 진행 상황은 **로컬 로그 파일**로 본다
+- 외부 주소를 꼭 확인해야 하면 **간격 30초 이상 · 총 10회 이하**. 대개는 **1회 확인이면 충분하다**
+- 상태는 전용 수단으로 묻는다 — 배포는 `vercel ls`·상태 API, 서비스는 헬스 엔드포인트 **1회**. 결과물 URL 을 반복해서 받아 상태를 유추하지 않는다
+- 대기 루프의 종료 조건은 **파싱 실패를 성공으로 오인하지 않게** 짠다 (빈 값·오류 페이지 ≠ 새 버전)
+- 같은 배포·빌드 명령을 **동시에 두 번 띄우지 않는다**. 느리다고 다시 실행하면 큐만 엉킨다
+
+**사고 기록**: 쇼루이 배포를 기다린다고 `shorui.vercel.app/updates.json` 을 100회 가까이 연타 → Vercel Security Checkpoint 발동 → 이후 배포 5건이 전부 `BLOCKED`. 코드·로컬 빌드·테스트는 전부 정상이었는데 배포만 반나절 막혔다. 사유는 CLI·API 어디에도 안 나와 대표가 대시보드를 직접 열어야 했다.
