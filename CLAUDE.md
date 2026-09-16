@@ -4,7 +4,7 @@
 
 ## 현재 상태 (2026-09-05)
 - 2026-09 리빌드 버전 라이브. 페이지: `index.html`(메인) · `work.html`(함께 만들어갈 영향력) · `careers.html` · `columns.html` + `columns/*.html`(컬럼).
-- `hospital-youtube.html` (2026-09-16): '병원유튜브제작' 검색 랜딩. title·H1·본문에 검색어를 앞세운 SEO 전용 페이지. 내비·푸터 링크는 `index.html` 셸에서 컬럼 빌드가 복사하므로 내비를 바꾸면 `node scripts/build-columns.js` 로 컬럼도 재빌드. 사이트맵 고정 URL 은 `build-columns.js` 의 `fixed` 배열. 진료과별 하위 페이지(피부과·치과)는 이 페이지를 복제해 만든다.
+- `hospital-youtube.html` (2026-09-16): '병원유튜브제작' 검색 랜딩. title·H1·본문에 검색어를 앞세운 SEO 전용 페이지. 내비·푸터 링크는 `index.html` 셸에서 컬럼 빌드가 복사하므로 내비를 바꾸면 `node scripts/build-columns.js` 로 컬럼도 재빌드. 사이트맵 고정 URL 은 `build-columns.js` 의 `fixed` 배열. 진료과별 하위 페이지 `dermatology-youtube.html`(피부과·성형외과)·`dental-youtube.html`(치과)이 있다. 후기·추천사는 `#reviews[data-industry]`·`#voices-grid[data-role]`로 진료과별 필터(main.js). 새 진료과를 추가하면 이 둘을 복제하고 `build-columns.js` `fixed`에 URL을 넣는다. 컬럼 하단 CTA는 hospital-youtube.html로 간다.
 - 배포: `git push origin main` → GitHub Actions(`.github/workflows/deploy.yml`) → GitHub Pages. 푸시는 `git -c credential.helper='!gh auth git-credential' push`.
 - 채널 데이터는 매일 자동 갱신(`refresh-channels.yml`, secret `YOUTUBE_API_KEY`).
 - 컬럼 2편 발행됨. 컬럼 파이프라인·스튜디오 완성.

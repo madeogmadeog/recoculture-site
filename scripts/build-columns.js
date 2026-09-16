@@ -138,7 +138,7 @@ for (const f of files) {
 ${html}
       </div>
       <div class="post__foot" data-reveal>
-        <div class="post__cta"><div><b>당신의 채널에도 적용해 볼 수 있습니다.</b><p>채널 링크와 고민을 남겨주시면 첫 미팅에서 함께 봅니다.</p></div><a class="btn btn--orange" href="/#contact">채널 문의</a></div>
+        <div class="post__cta"><div><b>당신의 채널에도 적용해 볼 수 있습니다.</b><p>레코컬쳐의 <a href="/hospital-youtube.html">병원 유튜브 제작 방식</a>을 먼저 보시고, 채널 링크와 고민을 남겨주시면 첫 통화에서 함께 봅니다.</p></div><a class="btn btn--orange" href="/hospital-youtube.html#contact">채널 문의</a></div>
         <a class="post__back" href="/columns.html">← 모든 컬럼</a>
       </div>
     </div>
@@ -175,7 +175,7 @@ ${list || '        <p class="empty">첫 컬럼을 준비 중입니다.</p>'}
 fs.writeFileSync(path.join(ROOT, 'columns.html'), page({ title: '컬럼', desc: '전문직 유튜브를 만들고 운영하며 배우는 것. 레코컬쳐 대표 진성욱의 컬럼.', url: `${SITE}/columns.html`, body: indexBody }).replace(' — RECOCULTURE</title>', ' — RECOCULTURE</title>'));
 
 // sitemap: 기존 고정 URL 유지 + 컬럼 추가
-const fixed = ['/', '/work.html', '/hospital-youtube.html', '/careers.html'];
+const fixed = ['/', '/work.html', '/hospital-youtube.html', '/dermatology-youtube.html', '/dental-youtube.html', '/careers.html'];
 const sm = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
   fixed.map(u => `  <url><loc>${SITE}${u}</loc><changefreq>weekly</changefreq><priority>${u === '/' ? '1.0' : '0.8'}</priority></url>`).join('\n') +
   `\n  <url><loc>${SITE}/columns.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>\n` +
