@@ -177,6 +177,8 @@
   // ── 원장 추천사 (data/testimonials.json)
   const voEl = document.getElementById('voices-grid');
   if (voEl) fetch('/data/testimonials.json').then(r => r.json()).then(({ items }) => {
+    const wantRole = voEl.dataset.role; if (wantRole) items = items.filter(t => (t.role || '').includes(wantRole));
+    if (!items.length) { voEl.closest('#voices').hidden = true; return; }
     voEl.innerHTML = items.map(t => `<div class="voice" data-reveal><p>${fmt.esc(t.text)}</p><div class="voice__who">${fmt.esc(t.role)} · ${fmt.esc(t.since)}</div></div>`).join('');
     reveal(voEl); if (hasGsap) requestAnimationFrame(() => ScrollTrigger.refresh());
   }).catch(() => { voEl.closest('#voices').hidden = true; });
@@ -184,6 +186,8 @@
   // ── 후기 (data/reviews.json)
   const rvEl = document.getElementById('reviews');
   if (rvEl) fetch('/data/reviews.json').then(r => r.json()).then(({ items }) => {
+    const wantInd = rvEl.dataset.industry; if (wantInd) items = items.filter(r => (r.industry || '').includes(wantInd));
+    if (!items.length) { rvEl.closest('#proof').hidden = true; return; }
     const hl = t => fmt.esc(t).replace(/((?:유튜브|유툽|YouTube)(?:에서|를|로|도|나|를 통해|로만|구독자)?[^,.!?]{0,16}?(?:보고|봤|보게|보면서|보다가|채널을|알게|통해|구독하다가|찾아|시청))/g, '<mark>$1</mark>');
     rvEl.innerHTML = items.map(r => r.type === 'image'
       ? `<figure class="rv rv--img" data-reveal><img src="${fmt.esc(r.src)}" alt="${fmt.esc(r.alt || '방문자 후기 캡처')}" loading="lazy">${r.sample ? '<span class="rv__sample">SAMPLE</span>' : ''}</figure>`
