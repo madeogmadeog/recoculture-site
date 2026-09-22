@@ -599,3 +599,56 @@
     if (hasGsap) requestAnimationFrame(() => ScrollTrigger.refresh());
   }).catch(e => { grid.innerHTML = '<p style="color:#9a9a9a">채널 정보를 불러오지 못했습니다.</p>'; console.error(e); });
 })();
+
+/* ── 공지 팝업 — 문구·노출 조건은 아래 NOTICE 만 고치면 된다.
+      끄려면 show: false. id 를 바꾸면 이미 닫은 사람에게도 다시 뜬다. */
+(function () {
+  const NOTICE = {
+    show: true,
+    id: 'derma-2026-09',
+    badge: '공지',
+    title: '피부과(미용) 문의 안내',
+    body: '현재 피부과(미용) 문의는 받지 않습니다.<br>죄송합니다.',
+    button: '확인'
+  };
+  if (!NOTICE.show) return;
+
+  const KEY = 'reco-notice-' + NOTICE.id;
+  try { if (sessionStorage.getItem(KEY)) return; } catch (e) {}
+
+  const el = document.createElement('div');
+  el.className = 'notice';
+  el.hidden = true;
+  el.innerHTML = `
+    <div class="notice__veil" data-close></div>
+    <div class="notice__card" role="dialog" aria-modal="true" aria-labelledby="notice-title">
+      <button class="notice__x" type="button" data-close aria-label="닫기"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
+      <span class="notice__badge">${NOTICE.badge}</span>
+      <h2 id="notice-title">${NOTICE.title}</h2>
+      <p>${NOTICE.body}</p>
+      <button class="btn btn--primary" type="button" data-close>${NOTICE.button}</button>
+    </div>`;
+
+  const prev = document.activeElement;
+  const close = () => {
+    el.classList.remove('is-open');
+    document.documentElement.classList.remove('notice-open');
+    removeEventListener('keydown', onKey);
+    try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+    setTimeout(() => el.remove(), 400);
+    if (prev && prev.focus) prev.focus();
+  };
+  const onKey = e => { if (e.key === 'Escape') close(); };
+
+  setTimeout(() => {
+    document.body.appendChild(el);
+    el.hidden = false;
+    el.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', close));
+    addEventListener('keydown', onKey);
+    document.documentElement.classList.add('notice-open');
+    requestAnimationFrame(() => {
+      el.classList.add('is-open');
+      el.querySelector('.btn').focus({ preventScroll: true });
+    });
+  }, 600);
+})();
