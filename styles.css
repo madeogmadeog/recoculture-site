@@ -606,3 +606,19 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .fig--quote blockquote p { margin: 0; }
 .fig--quote cite { display: block; margin-top: 12px; font-style: normal; font-size: 13px; color: rgba(255,255,255,.6); }
 @media (max-width: 640px) { .fig--flow ol { grid-template-columns: 1fr; } .fig--flow li:not(:last-child)::after { content: '↓'; right: auto; left: 18px; top: auto; bottom: -22px; } .fig--flow ol { gap: 26px; } .fig__stat b { font-size: 26px; } }
+
+/* 공지 팝업 */
+.notice { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 20px; opacity: 0; visibility: hidden; transition: opacity .28s var(--ease), visibility .28s; }
+.notice.is-open { opacity: 1; visibility: visible; }
+.notice__veil { position: absolute; inset: 0; background: rgba(14,14,14,.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.notice__card { position: relative; width: min(400px, 100%); padding: 38px 32px 28px; border-radius: var(--r-lg); background: #fff; box-shadow: var(--shadow-lg); text-align: center; transform: translateY(14px) scale(.97); transition: transform .38s var(--ease); }
+.notice.is-open .notice__card { transform: none; }
+.notice__badge { display: inline-block; height: 26px; padding: 0 12px; border-radius: 999px; background: rgba(254,107,0,.1); color: var(--orange); font-size: 12px; font-weight: 700; line-height: 26px; letter-spacing: .02em; }
+.notice h2 { margin-top: 16px; font-size: 21px; font-weight: 700; letter-spacing: -0.035em; }
+.notice p { margin-top: 12px; font-size: 15px; line-height: 1.7; color: var(--ink-2); }
+.notice .btn { margin-top: 26px; width: 100%; justify-content: center; }
+.notice__x { position: absolute; top: 12px; right: 12px; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; color: var(--ink-3); transition: background .2s, color .2s; }
+.notice__x:hover { background: var(--bg-2); color: var(--ink); }
+.notice__x svg { width: 16px; height: 16px; }
+html.notice-open, html.notice-open body { overflow: hidden; }
+@media (prefers-reduced-motion: reduce) { .notice, .notice__card { transition: none; } }
