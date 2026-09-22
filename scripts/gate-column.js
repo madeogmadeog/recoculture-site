@@ -11,7 +11,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
-const REGISTRY = path.resolve(ROOT, '../../2-제작/기획제작/channels/registry.json');
+const REGISTRY = path.resolve(ROOT, '../../../2-제작/기획제작/_프로그램/channels/registry.json');
 
 const file = process.argv[2];
 if (!file) { console.error('사용법: node scripts/gate-column.js <컬럼.md>'); process.exit(2); }

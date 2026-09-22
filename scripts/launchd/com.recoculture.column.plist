@@ -7,15 +7,15 @@
   <array>
     <string>/bin/zsh</string>
     <string>-lc</string>
-    <string>/Users/nam/Code/3-마케팅/홈페이지/scripts/write-column.sh</string>
+    <string>/Users/nam/Code/3-마케팅/홈페이지/_프로그램/scripts/write-column.sh</string>
   </array>
   <key>StartCalendarInterval</key>
   <array>
     <dict><key>Weekday</key><integer>1</integer><key>Hour</key><integer>9</integer><key>Minute</key><integer>30</integer></dict>
     <dict><key>Weekday</key><integer>4</integer><key>Hour</key><integer>9</integer><key>Minute</key><integer>30</integer></dict>
   </array>
-  <key>StandardOutPath</key><string>/Users/nam/Code/3-마케팅/홈페이지/.omc/logs/column-launchd.out</string>
-  <key>StandardErrorPath</key><string>/Users/nam/Code/3-마케팅/홈페이지/.omc/logs/column-launchd.err</string>
+  <key>StandardOutPath</key><string>/Users/nam/Code/3-마케팅/홈페이지/_프로그램/.omc/logs/column-launchd.out</string>
+  <key>StandardErrorPath</key><string>/Users/nam/Code/3-마케팅/홈페이지/_프로그램/.omc/logs/column-launchd.err</string>
   <key>RunAtLoad</key><false/>
 </dict>
 </plist>

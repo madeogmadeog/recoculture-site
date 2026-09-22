@@ -6,14 +6,14 @@
   <key>ProgramArguments</key>
   <array>
     <string>/Users/nam/.nvm/versions/node/v24.11.1/bin/node</string>
-    <string>/Users/nam/Code/3-마케팅/홈페이지/scripts/studio/server.js</string>
+    <string>/Users/nam/Code/3-마케팅/홈페이지/_프로그램/scripts/studio/server.js</string>
   </array>
-  <key>WorkingDirectory</key><string>/Users/nam/Code/3-마케팅/홈페이지</string>
+  <key>WorkingDirectory</key><string>/Users/nam/Code/3-마케팅/홈페이지/_프로그램</string>
   <key>EnvironmentVariables</key>
   <dict><key>PATH</key><string>/Users/nam/.nvm/versions/node/v24.11.1/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string><key>HOME</key><string>/Users/nam</string></dict>
   <key>RunAtLoad</key><true/>
   <key>KeepAlive</key><true/>
-  <key>StandardOutPath</key><string>/Users/nam/Code/3-마케팅/홈페이지/.omc/logs/column-studio.out</string>
-  <key>StandardErrorPath</key><string>/Users/nam/Code/3-마케팅/홈페이지/.omc/logs/column-studio.err</string>
+  <key>StandardOutPath</key><string>/Users/nam/Code/3-마케팅/홈페이지/_프로그램/.omc/logs/column-studio.out</string>
+  <key>StandardErrorPath</key><string>/Users/nam/Code/3-마케팅/홈페이지/_프로그램/.omc/logs/column-studio.err</string>
 </dict>
 </plist>
