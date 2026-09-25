@@ -107,7 +107,7 @@
         .fromTo(rot, { yPercent: 60, opacity: 0 }, { yPercent: 0, opacity: 1, duration: .45, ease: 'power3.out' });
     }, 2600);
     addEventListener('resize', () => gsap.set(sel, { width: 'auto' }));
-    if (document.fonts) document.fonts.addEventListener('loadingdone', () => gsap.set(sel, { width: 'auto' })); // 웹폰트 교체 뒤 대체 글꼴로 잰 폭을 버린다
+    if (document.fonts) document.fonts.ready.then(() => gsap.set(sel, { width: 'auto' })); // 웹폰트가 늦게 오면 대체 글꼴로 잰 폭을 버린다 (1회)
   }
 
   // ── 스크롤 리빌
@@ -541,7 +541,7 @@
       track.innerHTML = set;
       const setW = track.scrollWidth + parseFloat(getComputedStyle(track).gap || 14);
       const copies = Math.max(2, Math.ceil((innerWidth * 2) / setW) + 1);
-      track.innerHTML = set + setLazy.repeat(copies - 1);
+      track.insertAdjacentHTML('beforeend', setLazy.repeat(copies - 1)); // 첫 세트(LCP 후보 썸네일)는 지우지 않고 뒤에 덧붙인다
       if (reduced || !hasGsap) return;
       const dir = +track.dataset.speed || 1;
       const dur = setW / 55; // px/s
@@ -555,7 +555,7 @@
         gsap.to(track, { skewX: gsap.utils.clamp(-6, 6, v / 300), duration: .3, overwrite: 'auto', onComplete: () => gsap.to(track, { skewX: 0, duration: .8, ease: 'power2.out' }) });
       } });
     }
-    const mini = (id, v, kind) => { const el = document.getElementById(id); if (!el || !v) return; el.href = 'https://www.youtube.com/watch?v=' + v.id; el.querySelector('img').src = `https://i.ytimg.com/vi/${v.id}/${kind === 'short' ? 'oar2' : 'mqdefault'}.jpg`; el.querySelector('.mini__views').textContent = fmt.views(v.views); };
+    const mini = (id, v, kind) => { const el = document.getElementById(id); if (!el || !v) return; el.href = 'https://www.youtube.com/watch?v=' + v.id; const im = el.querySelector('img'), t = kind === 'short' ? 'oar2' : 'mqdefault'; im.onerror = () => { im.onerror = null; im.src = `https://i.ytimg.com/vi/${v.id}/${t}.jpg`; }; im.src = `https://i.ytimg.com/vi_webp/${v.id}/${t}.webp`; el.querySelector('.mini__views').textContent = fmt.views(v.views); };
     mini('mini-1', data.featured.long[0], 'long');
     mini('mini-2', data.featured.shorts[0], 'short');
     // 채널 섹션 뒤 레인
@@ -567,7 +567,7 @@
         const col = document.createElement('div'); col.className = 'rain__col' + (c % 3 === 1 ? ' rain__col--hot' : '');
         col.style.left = (c / cols * 100 + 1) + '%';
         const pick = pool.slice(c * per, c * per + per);
-        col.innerHTML = [...pick, ...pick].map(x => `<img data-src="https://i.ytimg.com/vi_webp/${x.i}/mqdefault.webp" data-fallback="https://i.ytimg.com/vi/${x.i}/mqdefault.jpg" alt="" loading="lazy">`).join('');
+        col.innerHTML = [...pick, ...pick].map(x => `<img data-src="https://i.ytimg.com/vi_webp/${x.i}/mqdefault.webp" data-fallback="https://i.ytimg.com/vi/${x.i}/mqdefault.jpg" alt="">`).join('');
         stage.appendChild(col);
         if (!reduced && hasGsap) {
           const dir = c % 2 ? 1 : -1;
@@ -597,7 +597,7 @@
     const subs = c => c.subscribers >= 5000 ? `구독자 <b>${fmt.ko(c.subscribers).v}${fmt.ko(c.subscribers).u}</b>` : '<b class="new">NEW</b> 새로 시작한 채널';
     const card = (c, feat) => `
       <a class="ch${feat ? ' ch--feat' : ''}" href="https://www.youtube.com/channel/${c.id}" target="_blank" rel="noopener noreferrer" data-reveal>
-        <div class="ch__video"><img src="https://i.ytimg.com/vi/${c.latest.id}/${feat ? 'hqdefault' : 'mqdefault'}.jpg" alt="" loading="lazy"><span class="ch__ago">${eye}${fmt.views(c.latest.views)}</span></div>
+        <div class="ch__video"><img src="https://i.ytimg.com/vi_webp/${c.latest.id}/${feat ? 'hqdefault' : 'mqdefault'}.webp" alt="" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${c.latest.id}/${feat ? 'hqdefault' : 'mqdefault'}.jpg'"><span class="ch__ago">${eye}${fmt.views(c.latest.views)}</span></div>
         ${feat ? '<div class="ch__side"><span class="ch__badge">FEATURED</span>' : ''}
         <div class="ch__body"><img class="ch__avatar" src="${c.avatar}" alt="" loading="lazy" referrerpolicy="no-referrer"><div><div class="ch__name">${fmt.esc(c.name)}</div><div class="ch__meta">${fmt.esc(c.industry)} · ${subs(c)}</div></div></div>
         <div class="ch__title">${fmt.esc(c.latest.title)}</div>
