@@ -12,6 +12,7 @@
 - 배포: `git push origin main` → GitHub Actions(`.github/workflows/deploy.yml`) → GitHub Pages. 푸시는 `git -c credential.helper='!gh auth git-credential' push`.
 - 채널 데이터는 매일 자동 갱신(`refresh-channels.yml`, secret `YOUTUBE_API_KEY`).
 - 컬럼 2편 발행됨. 컬럼 파이프라인·스튜디오 완성.
+- **성능 (2026-09-25)**: Anthropic "claude.ai 3배 빠르게" 방식(측정→수정→재측정→상한 고정)을 적용한 1차. 글꼴 CSS 는 `assets/fonts/pretendard.css`(jsDelivr 사본, 글꼴 파일은 계속 jsDelivr)를 `rel=preload` 로 비동기 로드해 화면 그리기를 막지 않고, `cdn.jsdelivr.net`·`cdnjs`·`i.ytimg.com` 은 preconnect. 마퀴·배경 썸네일은 유튜브 WebP(`/vi_webp/…`, 같은 화질에 절반 용량) 우선 + jpg 대체, 배경 레인 70장은 채널 섹션이 가까워질 때만 받는다(main.js). 로컬 실측(devtools 스로틀 3회 중앙값): 전송량 3.7→2.1MB, 이미지 3.0→1.3MB, LCP 6.97→6.44s, FCP 1.56→1.50s. **남은 병목**: LCP 가 JS 로 그리는 마퀴 첫 썸네일이라 스크립트 체인 뒤에 온다 — 첫 타일을 HTML 에 미리 넣는 것(refresh-channels 빌드 단계)이 다음 레버. 히어로 문장이 GSAP 로 투명→표시되며 FCP 뒤 다시 사라졌다 나타나는 것도 남은 과제(디자인 결정 필요). 재측정은 `scripts/perf-server.py` 머리말의 명령으로, 배포 후엔 실서비스 1회만.
 
 ## 컬럼 시스템 (핵심)
 - 원고: `content/columns/YYYY-MM-DD-slug.md` (frontmatter `status: draft|published`, draft는 빌드 제외)

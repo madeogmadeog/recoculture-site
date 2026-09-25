@@ -107,6 +107,7 @@
         .fromTo(rot, { yPercent: 60, opacity: 0 }, { yPercent: 0, opacity: 1, duration: .45, ease: 'power3.out' });
     }, 2600);
     addEventListener('resize', () => gsap.set(sel, { width: 'auto' }));
+    if (document.fonts) document.fonts.addEventListener('loadingdone', () => gsap.set(sel, { width: 'auto' })); // 웹폰트 교체 뒤 대체 글꼴로 잰 폭을 버린다
   }
 
   // ── 스크롤 리빌
@@ -531,14 +532,16 @@
 
     // 마퀴 — 세트를 뷰포트 2배 이상 채울 만큼 복제하고 px 단위로 무한 루프
     const eye = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
-    const tile = (v, kind) => `<a class="tile tile--${kind}" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="https://i.ytimg.com/vi/${v.id}/${kind === 'short' ? 'oar2' : 'mqdefault'}.jpg" alt="" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${v.id}/hqdefault.jpg'"><span class="tile__ch">${fmt.esc(v.channel)}</span><span class="tile__views">${eye}${fmt.views(v.views)}</span></a>`;
+    // 썸네일은 WebP(같은 화질, 절반 용량) 먼저, 없거나 못 읽는 브라우저면 jpg → hqdefault 순으로 대체
+    const tile = (v, kind, i) => { const t = kind === 'short' ? 'oar2' : 'mqdefault'; return `<a class="tile tile--${kind}" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="https://i.ytimg.com/vi_webp/${v.id}/${t}.webp" alt="" loading="${i < 3 ? 'eager' : 'lazy'}" onerror="this.onerror=function(){this.onerror=null;this.src='https://i.ytimg.com/vi/${v.id}/hqdefault.jpg'};this.src='https://i.ytimg.com/vi/${v.id}/${t}.jpg'"><span class="tile__ch">${fmt.esc(v.channel)}</span><span class="tile__views">${eye}${fmt.views(v.views)}</span></a>`; };
     function marquee(track, list, kind) {
       if (!track || !list.length) return;
-      const set = list.map(v => tile(v, kind)).join('');
+      const set = list.map((v, i) => tile(v, kind, i)).join('');           // 첫 세트: 앞 3장 즉시 로드
+      const setLazy = list.map(v => tile(v, kind, Infinity)).join('');    // 반복 복사본: 전부 지연 로드 (URL 이 같아 요청은 늘지 않음)
       track.innerHTML = set;
       const setW = track.scrollWidth + parseFloat(getComputedStyle(track).gap || 14);
       const copies = Math.max(2, Math.ceil((innerWidth * 2) / setW) + 1);
-      track.innerHTML = set.repeat(copies);
+      track.innerHTML = set + setLazy.repeat(copies - 1);
       if (reduced || !hasGsap) return;
       const dir = +track.dataset.speed || 1;
       const dur = setW / 55; // px/s
@@ -564,13 +567,19 @@
         const col = document.createElement('div'); col.className = 'rain__col' + (c % 3 === 1 ? ' rain__col--hot' : '');
         col.style.left = (c / cols * 100 + 1) + '%';
         const pick = pool.slice(c * per, c * per + per);
-        col.innerHTML = [...pick, ...pick].map(x => `<img src="https://i.ytimg.com/vi/${x.i}/mqdefault.jpg" alt="" loading="lazy">`).join('');
+        col.innerHTML = [...pick, ...pick].map(x => `<img data-src="https://i.ytimg.com/vi_webp/${x.i}/mqdefault.webp" data-fallback="https://i.ytimg.com/vi/${x.i}/mqdefault.jpg" alt="" loading="lazy">`).join('');
         stage.appendChild(col);
         if (!reduced && hasGsap) {
           const dir = c % 2 ? 1 : -1;
           gsap.fromTo(col, { yPercent: dir > 0 ? -50 : 0 }, { yPercent: dir > 0 ? 0 : -50, duration: 45 + c * 7, ease: 'none', repeat: -1 });
         }
       }
+      // 배경용 썸네일 수십 장은 채널 섹션이 화면 가까이 올 때만 받는다 (첫 로드 이미지 절감)
+      const load = () => stage.querySelectorAll('img[data-src]').forEach(im => { im.onerror = () => { im.onerror = null; im.src = im.dataset.fallback; }; im.src = im.dataset.src; im.removeAttribute('data-src'); });
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); load(); } }, { rootMargin: '800px 0px' });
+        io.observe(stage);
+      } else load();
     }).catch(() => {});
     marquee(tLong, data.featured.long, 'long');
     marquee(tShort, data.featured.shorts, 'short');
