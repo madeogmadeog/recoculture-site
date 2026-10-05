@@ -65,5 +65,7 @@ node scripts/build-columns.js
 git add -A content/columns columns columns.html data/columns.json data/news-used.json sitemap.xml
 git -c core.quotepath=false commit -q -m "column: $(grep -m1 '^title:' "$NEW" | sed 's/^title: *//')" || { echo "커밋할 변경 없음"; exit 0; }
 if [[ $DRAFT == 1 ]]; then echo "draft 모드: 푸시 생략 (확인 후 git push)"; exit 0; fi
+# 작성 중에 채널 데이터 자동 갱신이 먼저 올라가면 push 가 거절된다(2026-10-05) — 직전에 다시 받는다
+git pull --rebase -q origin main
 git -c credential.helper= -c 'credential.helper=!gh auth git-credential' push -q origin main
 echo "== done $(date '+%F %T')"
