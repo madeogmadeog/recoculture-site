@@ -250,7 +250,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .footer { padding: 64px 0 40px; }
 .footer__top { display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; flex-wrap: wrap; }
 .footer__top img { height: 18px; }
-.footer__links { display: flex; gap: 28px; font-size: 14px; color: var(--ink-2); }
+.footer__links { display: flex; flex-wrap: wrap; gap: 12px 28px; font-size: 14px; color: var(--ink-2); }
 .footer__links a:hover { color: var(--ink); }
 .footer__bottom { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; font-size: 13px; color: var(--ink-3); }
 
@@ -622,3 +622,11 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .notice__x svg { width: 16px; height: 16px; }
 html.notice-open, html.notice-open body { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) { .notice, .notice__card { transition: none; } }
+
+/* 카톡 상담 떠 있는 버튼 (2026-10-06) */
+.kakao-fab { position: fixed; right: max(20px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom)); z-index: 55; display: inline-flex; align-items: center; gap: 8px; height: 52px; padding: 0 20px 0 16px; border-radius: 999px; background: var(--orange); color: #fff; font-size: 15px; font-weight: 700; letter-spacing: -0.01em; box-shadow: 0 10px 28px -6px rgba(254,107,0,.55), 0 2px 6px rgba(0,0,0,.12); transition: transform .2s var(--ease), box-shadow .2s var(--ease); }
+.kakao-fab svg { width: 22px; height: 22px; flex: none; }
+.kakao-fab:hover { transform: translateY(-2px); box-shadow: 0 14px 32px -6px rgba(254,107,0,.65), 0 2px 6px rgba(0,0,0,.12); }
+.kakao-fab:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+@media (max-width: 720px) { .kakao-fab { height: 48px; padding: 0 16px 0 14px; font-size: 14px; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); } }
+@media (prefers-reduced-motion: reduce) { .kakao-fab { transition: none; } .kakao-fab:hover { transform: none; } }
