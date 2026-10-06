@@ -21,7 +21,7 @@
 | 항목 | 값 |
 |---|---|
 | 이메일 | og@recoculture.com |
-| 카카오톡 채널 | http://pf.kakao.com/_PxfyFn/chat (target=_blank) 표기 `KakaoTalk →` |
+| 카카오톡 채널 | https://pf.kakao.com/_xfxgxgxiX/chat (target=_blank) 표기 `KakaoTalk →` |
 | 전화번호 | 없음 (blog 템플릿에만 010-2749-5144 잔존 — 본 페이지엔 없음) |
 | 주소 | services 연락처 블록 `Location: 서울특별시` |
 | 회사명 | 주식회사 레코컬쳐(RECOCULTURE) / 대표 진성욱 |
