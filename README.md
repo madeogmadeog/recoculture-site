@@ -50,23 +50,11 @@
 | 채용 공고 | `careers.html` |
 | 색·폰트 | `styles.css` `:root` |
 
-## 컬럼 스튜디오 (코딩 없이 쓰는 UI)
+## 컬럼 (2026-10-09 중지 — 발행본만 유지)
 
-- `scripts/studio/install.command` 더블클릭 → http://localhost:3300 (맥 켜질 때 자동 시작, launchd `com.recoculture.column-studio`)
-- 할 수 있는 것: 컬럼 목록·수정·실시간 미리보기·그림 카드 삽입, 사이트 발행/내리기/삭제(커밋·푸시 자동), 주제 입력 또는 뉴스 선택으로 새 초안 생성, 자동 실행 요일·시간·초안/발행 설정, 문체·주제 가이드 편집
-- 수동 실행: `node scripts/studio/server.js`
-
-## 컬럼 자동 발행
-
-- 원고: `content/columns/YYYY-MM-DD-slug.md` (frontmatter: title, date, slug, excerpt, tags, source_title, source_url, status)
-- 빌드: `node scripts/build-columns.js` → `columns/*.html`, `columns.html`, `data/columns.json`, `sitemap.xml`
-- 자동 생성: `scripts/write-column.sh` — 뉴스 수집(`scripts/fetch-news.js`) → `claude -p`가 `docs/column/VOICE.md`(대표 문체·주장·가드레일)와 `PROMPT.md`로 컬럼 작성 → 빌드 → 커밋·푸시
-  - 초안만: `scripts/write-column.sh --draft` (status: draft로 저장·커밋, 푸시 없음). 초안은 빌드에서 제외되므로 확인하려면 `node scripts/build-columns.js --drafts` 후 로컬에서 열고, 발행하려면 frontmatter `status: published`로 바꾼 뒤 `node scripts/build-columns.js && git add -A && git commit && git push`
-  - 주제 지정: `scripts/write-column.sh --topic "고정댓글 활용법"`
-- 스케줄: `scripts/launchd/com.recoculture.column.plist` (월·목 09:30). 설치: `cp scripts/launchd/com.recoculture.column.plist ~/Library/LaunchAgents/ && launchctl load ~/Library/LaunchAgents/com.recoculture.column.plist`. 해제: `launchctl unload ...`
-- 로그: `.omc/logs/column-*.log`
-- 대표 문체를 바꾸려면 `docs/column/VOICE.md`를 고친다. 이 파일이 곧 "나의 시각"이다. 뉴스가 없을 때 고르는 주제 목록은 `docs/column/TOPICS.md`.
-- 저장소가 공개(public)이므로 VOICE.md·TOPICS.md·컬럼 원고에 클라이언트 실명·계약 조건을 쓰지 않는다.
+- 새 컬럼은 만들지 않는다. 자동 작성·발행 게이트·컬럼 스튜디오·예약 실행·문체 가이드는 삭제했다(git 기록에 있음)
+- 발행된 원고 `content/columns/*.md` 와 페이지(`columns.html`, `columns/*.html`, `data/columns.json`)는 그대로 둔다
+- `node scripts/build-columns.js` 는 남아 있다 — 내비·푸터를 바꾸면 컬럼 페이지에도 반영하려고 다시 돌린다
 
 ## 로컬 확인
 
