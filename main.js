@@ -696,11 +696,11 @@
       <button class="film__x" type="button" aria-label="닫기"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
       <div class="film__box">
         <video src="${SRC}" poster="/assets/film/reco-film-poster.jpg" playsinline controls preload="auto"></video>
-        <div class="film__end">
+      </div>
+      <div class="film__end">
           <button class="btn btn--ghost" type="button" data-replay>다시 보기</button>
           <a class="btn btn--orange" href="#contact" data-film-cta>채널 문의하기
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-        </div>
       </div>`;
     document.body.appendChild(el);
     const v = el.querySelector('video'), end = el.querySelector('.film__end');
