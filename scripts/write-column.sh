@@ -22,7 +22,8 @@ while [[ $# -gt 0 ]]; do
   shift
 done
 
-git pull --rebase -q origin main || true
+# 시작할 때 받기 — 다른 세션 수정이 있어도 멈추지 않게 --autostash. 실패해도 올릴 때(publish-column.sh) 다시 맞춘다
+git pull --rebase --autostash -q origin main || echo "(시작 받기 실패 — 올릴 때 다시 맞춘다)"
 node scripts/fetch-news.js
 
 TODAY=$(date +%F)
@@ -62,10 +63,7 @@ if(m){used.push({link:m[1].trim(),date:new Date().toISOString().slice(0,10),file
 ' "$NEW"
 
 node scripts/build-columns.js
-git add -A content/columns columns columns.html data/columns.json data/news-used.json sitemap.xml
-git -c core.quotepath=false commit -q -m "column: $(grep -m1 '^title:' "$NEW" | sed 's/^title: *//')" || { echo "커밋할 변경 없음"; exit 0; }
-if [[ $DRAFT == 1 ]]; then echo "draft 모드: 푸시 생략 (확인 후 git push)"; exit 0; fi
-# 작성 중에 채널 데이터 자동 갱신이 먼저 올라가면 push 가 거절된다(2026-10-05) — 직전에 다시 받는다
-git pull --rebase -q origin main
-git -c credential.helper= -c 'credential.helper=!gh auth git-credential' push -q origin main
+# 커밋·받기·올리기 — 다른 세션 수정이 섞이지 않게, 못 올리면 대표에게 쉬운 말로 (2026-10-09)
+if [[ $DRAFT == 1 ]]; then scripts/publish-column.sh "$NEW" --no-push; echo "draft 모드: 푸시 생략 (확인 후 git push)"; exit 0; fi
+scripts/publish-column.sh "$NEW"
 echo "== done $(date '+%F %T')"

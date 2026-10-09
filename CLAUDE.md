@@ -19,6 +19,7 @@
 - 원고: `content/columns/YYYY-MM-DD-slug.md` (frontmatter `status: draft|published`, draft는 빌드 제외)
 - 빌드: `node scripts/build-columns.js` → `columns/`, `columns.html`, `data/columns.json`, `sitemap.xml`. 본문 그림 카드는 `:::flow|steps|compare|stat|check|quote` 블록.
 - 자동 생성: `scripts/write-column.sh [--draft] [--topic "…"]` — 뉴스 수집 → `claude -p`가 `docs/column/`의 VOICE.md(문체·주장·가드레일) + BLOG-SEO.md(자청식 검색 최적화 규칙) + TOPICS.md(주제 은행) + PROMPT.md(지시문)로 작성 → 빌드 → 커밋(·푸시).
+  - 커밋·받기·올리기는 `scripts/publish-column.sh <컬럼.md> [--no-push]` (2026-10-09, 감독관 요청): 그 컬럼 파일과 빌드 결과 경로만 커밋하고(다른 세션 수정·스테이징은 안 건드림), 받기는 `rebase --autostash`, 겹친 곳이 빌드 결과(목록·사이트맵·사용한 뉴스)뿐이면 다시 빌드해서 스스로 푼다. 못 올리면 대표에게 쉬운 말 한 줄(오피스 소식+할 일+맥 알림)을 보내고 원문 오류는 로그에만, **exit 0** — 자동화 감시가 원문 경고를 또 보내지 않게. 이유: 다른 세션의 미커밋 수정 때문에 `git pull --rebase` 가 멈춰 10/5·10/8 두 번 "종료 코드 128" 만 갔다. 시험은 `COLUMN_NOTIFY_DRY=1` 로 저장소 사본에서
 - 자동 실행: launchd `com.recoculture.column` (스튜디오에서 요일·시간·초안/발행 설정).
 - **컬럼 스튜디오**: `node scripts/studio/server.js` → http://localhost:3300. 목록·편집·미리보기·발행·새 초안·자동 실행·가이드 편집. 상시 실행 등록은 `scripts/studio/install.command` 더블클릭 (launchd `com.recoculture.column-studio`).
 - 로그: `.omc/logs/column-*.log`
