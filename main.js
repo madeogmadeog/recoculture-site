@@ -661,3 +661,64 @@
     });
   }, 600);
 })();
+
+/* ── 브랜드 필름 — 첫 화면 「브랜드 필름」 버튼 → 전체 화면 재생 (2026-10-09).
+      파일은 누르는 순간에만 받는다(첫 화면 속도 영향 없음). 폰·데이터 절약 모드는 720p(2.7MB), 그 외 1080p(7.1MB) */
+(function () {
+  const btn = document.querySelector('[data-film]');
+  if (!btn) return;
+  const small = matchMedia('(max-width: 760px)').matches || (navigator.connection && navigator.connection.saveData);
+  const SRC = small ? '/assets/film/reco-film-720.mp4' : '/assets/film/reco-film-1080.mp4';
+  let el = null, prev = null;
+
+  const close = () => {
+    if (!el) return;
+    const v = el.querySelector('video');
+    v.pause(); v.removeAttribute('src'); v.load(); // 닫으면 내려받기도 멈춘다
+    el.classList.remove('is-open');
+    document.documentElement.classList.remove('film-open');
+    removeEventListener('keydown', onKey);
+    const dead = el; el = null;
+    setTimeout(() => dead.remove(), 350);
+    if (prev && prev.focus) prev.focus({ preventScroll: true });
+  };
+  const onKey = e => { if (e.key === 'Escape') close(); };
+
+  btn.addEventListener('click', () => {
+    prev = document.activeElement;
+    el = document.createElement('div');
+    el.className = 'film';
+    el.setAttribute('role', 'dialog');
+    el.setAttribute('aria-modal', 'true');
+    el.setAttribute('aria-label', '레코컬쳐 브랜드 필름');
+    el.setAttribute('data-lenis-prevent', '');
+    el.innerHTML = `
+      <button class="film__x" type="button" aria-label="닫기"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
+      <div class="film__box">
+        <video src="${SRC}" poster="/assets/film/reco-film-poster.jpg" playsinline controls preload="auto"></video>
+        <div class="film__end">
+          <button class="btn btn--ghost" type="button" data-replay>다시 보기</button>
+          <a class="btn btn--orange" href="#contact" data-film-cta>채널 문의하기
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+        </div>
+      </div>`;
+    document.body.appendChild(el);
+    const v = el.querySelector('video'), end = el.querySelector('.film__end');
+    el.querySelector('.film__x').addEventListener('click', close);
+    el.addEventListener('click', e => { if (e.target === el) close(); });
+    v.addEventListener('ended', () => end.classList.add('is-on'));
+    v.addEventListener('play', () => end.classList.remove('is-on'));
+    el.querySelector('[data-replay]').addEventListener('click', () => { v.currentTime = 0; v.play(); });
+    el.querySelector('[data-film-cta]').addEventListener('click', e => {
+      e.preventDefault(); close();
+      const t = document.getElementById('contact');
+      if (t) setTimeout(() => t.scrollIntoView({ behavior: 'smooth' }), 360);
+    });
+    addEventListener('keydown', onKey);
+    document.documentElement.classList.add('film-open');
+    requestAnimationFrame(() => el.classList.add('is-open'));
+    // 버튼을 누른 동작이라 소리와 함께 재생된다. 브라우저가 막으면 컨트롤로 직접 누르면 된다
+    const p = v.play(); if (p && p.catch) p.catch(() => {});
+    el.querySelector('.film__x').focus({ preventScroll: true });
+  });
+})();

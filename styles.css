@@ -630,3 +630,23 @@ html.notice-open, html.notice-open body { overflow: hidden; }
 .kakao-fab:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
 @media (max-width: 720px) { .kakao-fab { height: 48px; padding: 0 16px 0 14px; font-size: 14px; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); } }
 @media (prefers-reduced-motion: reduce) { .kakao-fab { transition: none; } .kakao-fab:hover { transform: none; } }
+
+/* 브랜드 필름 (2026-10-09) — 첫 화면 버튼 → 전체 화면 재생. 파일은 누를 때만 받는다 */
+.btn--film { gap: 10px; padding: 0 22px 0 14px; }
+.btn--film small { font-size: 13px; font-weight: 600; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.film-ic { position: relative; width: 26px; height: 26px; border-radius: 50%; background: var(--orange); }
+.film-ic::after { content: ''; position: absolute; left: 10px; top: 8px; border-left: 9px solid #fff; border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+.film { position: fixed; inset: 0; z-index: 110; display: grid; place-items: center; padding: 20px; background: rgba(14,14,14,.97); opacity: 0; visibility: hidden; transition: opacity .3s var(--ease), visibility .3s; }
+.film.is-open { opacity: 1; visibility: visible; }
+.film__box { position: relative; width: min(1280px, 100%, calc((100vh - 120px) * 16 / 9)); aspect-ratio: 16 / 9; background: #000; border-radius: 12px; overflow: hidden; transform: scale(.97); transition: transform .4s var(--ease); }
+.film.is-open .film__box { transform: none; }
+.film__box video { display: block; width: 100%; height: 100%; }
+.film__x { position: absolute; top: 18px; right: 18px; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; color: #fff; background: rgba(255,255,255,.08); transition: background .2s; }
+.film__x:hover { background: rgba(255,255,255,.18); }
+.film__x svg { width: 18px; height: 18px; }
+.film__end { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; background: rgba(14,14,14,.55); opacity: 0; visibility: hidden; transition: opacity .3s var(--ease), visibility .3s; }
+.film__end.is-on { opacity: 1; visibility: visible; }
+.film__end .btn--ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,.4); }
+.film__end .btn--ghost:hover { border-color: #fff; }
+html.film-open, html.film-open body { overflow: hidden; }
+@media (prefers-reduced-motion: reduce) { .film, .film__box, .film__end { transition: none; } }
