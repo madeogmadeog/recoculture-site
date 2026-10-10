@@ -20,4 +20,8 @@ jobs:
             content/
             scripts/
             .github/
+            .githooks/
+            .gitignore
             README.md
+            CLAUDE.md
+            AGENTS.md

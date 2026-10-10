@@ -23,6 +23,7 @@
 ## 규칙
 - 실서비스 소스. 삭제·대규모 변경 전 대표 확인. 변경 후 로컬(`python3 scripts/dev-server.py 8080`)에서 확인하고 커밋.
 - 저장소는 **public**. 클라이언트 실명·계약 조건·매출 수치를 넣지 않는다. 병원명은 ○○의원/○○치과로 마스킹.
+- 지침 문서(`CLAUDE.md`·`AGENTS.md`)·`.githooks/`·`.gitignore` 는 사이트에 올리지 않는다 — `deploy.yml` `exclude_assets`. 루트에 사람이 보면 안 되는 파일을 새로 두면 여기에 같이 넣는다 (2026-10-10 레드팀: recoculture.com/CLAUDE.md 로 내부 절차가 열려 있었다)
 - 회사 숫자(누적 조회수·구독자·제작 영상·함께한 채널)는 `index.html` 의 stats 와 같게 쓴다. 근거였던 인용 범위표(옛 `docs/column/VOICE.md` §8)는 컬럼 중지로 삭제 — git 기록에만 있다
 - 대표가 ~/Library/LaunchAgents 쓰기·launchctl은 직접 해야 할 수 있다(에이전트 권한 분류기가 막음).
 - 세션 시작 시 `git status --short --branch` 로 현재 상태를 먼저 본다.
